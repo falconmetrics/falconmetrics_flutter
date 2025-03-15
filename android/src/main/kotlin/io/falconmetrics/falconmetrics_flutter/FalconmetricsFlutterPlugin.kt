@@ -1,5 +1,6 @@
 package io.falconmetrics.falconmetrics_flutter
 
+import io.falconmetrics.sdk.FalconMetrics
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
@@ -21,7 +22,7 @@ class FalconmetricsFlutterPlugin: FlutterPlugin, MethodCallHandler {
 
   override fun onMethodCall(call: MethodCall, result: Result) {
     if (call.method == "getPlatformVersion") {
-      result.success("Android ${android.os.Build.VERSION.RELEASE}")
+      result.success(FalconMetrics.sayHello())
     } else {
       result.notImplemented()
     }
