@@ -7,21 +7,30 @@ void main() {
 
   MethodChannelFalconmetricsFlutter platform = MethodChannelFalconmetricsFlutter();
   const MethodChannel channel = MethodChannel('falconmetrics_flutter');
-
+  
+  final List<MethodCall> log = <MethodCall>[];
+  
   setUp(() {
     TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger.setMockMethodCallHandler(
       channel,
       (MethodCall methodCall) async {
-        return '42';
+        log.add(methodCall);
+        return null;
       },
     );
   });
 
   tearDown(() {
     TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger.setMockMethodCallHandler(channel, null);
+    log.clear();
   });
 
-  test('getPlatformVersion', () async {
-    expect(await platform.getPlatformVersion(), '42');
+  test('It calls init with the correct arguments', () async {
+    const String testApiKey = 'test_api_key_123';
+    await platform.init(apiKey: testApiKey);
+    
+    expect(log, hasLength(1));
+    expect(log.first.method, 'init');
+    expect(log.first.arguments, {'apiKey': testApiKey});
   });
 }

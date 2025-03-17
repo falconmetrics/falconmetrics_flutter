@@ -9,7 +9,7 @@ class MockFalconmetricsFlutterPlatform
     implements FalconmetricsFlutterPlatform {
 
   @override
-  Future<String?> getPlatformVersion() => Future.value('42');
+  Future<void> init({required String apiKey}) => Future.value();
 }
 
 void main() {
@@ -23,7 +23,8 @@ void main() {
     FalconmetricsFlutter falconmetricsFlutterPlugin = FalconmetricsFlutter();
     MockFalconmetricsFlutterPlatform fakePlatform = MockFalconmetricsFlutterPlatform();
     FalconmetricsFlutterPlatform.instance = fakePlatform;
+    await falconmetricsFlutterPlugin.init(apiKey: '123');
 
-    expect(await falconmetricsFlutterPlugin.getPlatformVersion(), '42');
+    
   });
 }
