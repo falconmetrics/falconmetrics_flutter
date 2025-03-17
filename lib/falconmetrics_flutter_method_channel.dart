@@ -10,8 +10,7 @@ class MethodChannelFalconmetricsFlutter extends FalconmetricsFlutterPlatform {
   final methodChannel = const MethodChannel('falconmetrics_flutter');
 
   @override
-  Future<String?> getPlatformVersion() async {
-    final version = await methodChannel.invokeMethod<String>('getPlatformVersion');
-    return version;
+  Future<void> init({required String apiKey}) async {
+    await methodChannel.invokeMethod<void>('init', {'apiKey': apiKey});
   }
 }

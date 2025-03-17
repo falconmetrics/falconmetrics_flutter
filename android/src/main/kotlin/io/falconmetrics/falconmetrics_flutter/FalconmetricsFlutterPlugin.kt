@@ -1,6 +1,7 @@
 package io.falconmetrics.falconmetrics_flutter
 
 import io.falconmetrics.sdk.FalconMetrics
+import io.falconmetrics.sdk.FalconMetricsSdk
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
@@ -15,14 +16,19 @@ class FalconmetricsFlutterPlugin: FlutterPlugin, MethodCallHandler {
   /// when the Flutter Engine is detached from the Activity
   private lateinit var channel : MethodChannel
 
+  private lateinit var falconMetrics: FalconMetrics
+
   override fun onAttachedToEngine(flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
     channel = MethodChannel(flutterPluginBinding.binaryMessenger, "falconmetrics_flutter")
+    falconMetrics = FalconMetricsSdk.create(flutterPluginBinding.applicationContext)
     channel.setMethodCallHandler(this)
   }
 
   override fun onMethodCall(call: MethodCall, result: Result) {
-    if (call.method == "getPlatformVersion") {
-      result.success(FalconMetrics.sayHello())
+    if (call.method == "init") {
+      val apiKey = call.argument<String>("apiKey") ?: ""
+      falconMetrics.init(apiKey)
+      result.success(null)
     } else {
       result.notImplemented()
     }

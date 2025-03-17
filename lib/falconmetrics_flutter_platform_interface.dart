@@ -23,7 +23,10 @@ abstract class FalconmetricsFlutterPlatform extends PlatformInterface {
     _instance = instance;
   }
 
-  Future<String?> getPlatformVersion() {
-    throw UnimplementedError('platformVersion() has not been implemented.');
+  /// Initialise the falconmetrics plugin
+  /// 
+  /// Supply your unique [apiKey] to initialise the plugin for your app.
+  Future<void> init({required String apiKey}) {
+    throw UnimplementedError('init() has not been implemented.');
   }
 }
