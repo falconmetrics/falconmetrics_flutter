@@ -11,6 +11,7 @@ buildscript {
     dependencies {
         classpath("com.android.tools.build:gradle:8.7.3")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version")
+        classpath 'com.google.protobuf:protobuf-gradle-plugin:0.9.4'
     }
 }
 
@@ -30,6 +31,7 @@ allprojects {
 
 apply plugin: "com.android.library"
 apply plugin: "kotlin-android"
+apply plugin: 'com.google.protobuf'
 
 android {
     namespace = "io.falconmetrics.falconmetrics_flutter"
@@ -48,14 +50,37 @@ android {
     sourceSets {
         main.java.srcDirs += "src/main/kotlin"
         test.java.srcDirs += "src/test/kotlin"
+        main {
+            proto {
+                srcDir '../proto/'
+            }
+        }
     }
 
     defaultConfig {
         minSdk = 21
     }
 
+    protobuf {
+        protoc {
+            artifact = 'com.google.protobuf:protoc:3.25.3'
+        }
+
+        generateProtoTasks {
+            all().each { task ->
+                task.builtins {
+                    java {
+                        option "lite"
+                    }
+                }
+            }
+        }
+    }
+
+
     dependencies {
         implementation("io.falconmetrics:falconmetrics:0.0.4")
+        implementation 'com.google.protobuf:protobuf-javalite:3.25.3'
         testImplementation("org.jetbrains.kotlin:kotlin-test")
         testImplementation("org.mockito:mockito-core:5.0.0")
     }
