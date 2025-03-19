@@ -4,13 +4,13 @@ import PackageDescription
 let package = Package(
     name: "falconmetrics_flutter",
     platforms: [
-        .iOS(.v12)
+        .iOS(.v13)
     ],
     products: [
         .library(name: "falconmetrics-flutter", targets: ["falconmetrics_flutter"])
     ],
     dependencies: [
-        .package(id: "falconmetrics.falconmetrics_ios", from: "0.0.7")
+        .package(id: "falconmetrics.falconmetrics_ios", from: "0.0.14")
     ],
     targets: [
         .target(

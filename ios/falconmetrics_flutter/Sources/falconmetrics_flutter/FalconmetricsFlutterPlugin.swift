@@ -11,10 +11,11 @@ public class FalconmetricsFlutterPlugin: NSObject, FlutterPlugin {
 
   public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
       
-    let sdk = FalconMetricsSdk()
+    let sdk = FalconMetricsSdk.create()
+      
     switch call.method {
-    case "getPlatformVersion":
-        result(sdk.sayHello())
+    case "init":
+        sdk.initialize(apiKey: "YOUR_API_KEY")
     default:
       result(FlutterMethodNotImplemented)
     }
