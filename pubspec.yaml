@@ -1,7 +1,7 @@
 name: falconmetrics_flutter
 description: "A new Flutter plugin project."
 version: 0.0.1
-homepage:
+# homepage:
 
 environment:
   sdk: ^3.7.0
@@ -12,6 +12,7 @@ dependencies:
   flutter:
     sdk: flutter
   plugin_platform_interface: ^2.0.2
+  protobuf: ^3.1.0
 
 dev_dependencies:
   flutter_test:

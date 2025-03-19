@@ -1,6 +1,6 @@
 import 'package:falconmetrics_flutter/events.dart';
 
-import 'falconmetrics_flutter_platform_interface.dart';
+import 'platform/falconmetrics_flutter_platform_interface.dart';
 
 /// The main class for the Falconmetrics Flutter plugin.
 ///

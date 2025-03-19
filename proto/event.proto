@@ -1,0 +1,46 @@
+syntax = "proto3";
+
+// Base message for all tracking events
+message TrackingEvent {
+  oneof event {
+    UserSignedUpOrLoggedInEvent user_signed_up_or_logged_in = 1;
+    AddedToCartEvent added_to_cart = 2;
+    CouponAppliedEvent coupon_applied = 3;
+    PurchaseEvent purchase = 4;
+  }
+}
+
+// Event to track a user signing up or logging in
+message UserSignedUpOrLoggedInEvent {}
+
+// Event to track a product being added to the cart
+message AddedToCartEvent {
+  string item_id = 1;           // The unique id of the item or product
+  int32 quantity = 2;           // The quantity of the item or product
+  int32 product_price_in_cents = 3; // The price in cents or lowest currency unit
+  string currency = 4;          // The currency in ISO 4217 format (e.g., USD, JPY)
+  optional string product_category = 5; // The category of the product (optional)
+  optional string cart_id = 6;  // The id (session id) of the cart (optional)
+}
+
+// Event to track a coupon being applied to a cart
+message CouponAppliedEvent {
+  string coupon_code = 1;       // The unique code of the coupon
+  optional string cart_id = 2;  // The id (session id) of the cart (optional)
+}
+
+// Event to track a purchase
+message PurchaseEvent {
+  string item_id = 1;           // The unique id of the item or product
+  int32 quantity = 2;           // The quantity of the item or product
+  string transaction_id = 3;    // The unique id of the transaction
+  int32 product_price_in_cents = 4; // The price in cents or lowest currency unit
+  string currency = 5;          // The currency in ISO 4217 format (e.g., USD, JPY)
+  int32 revenue_in_cents = 6;   // The revenue in cents or lowest currency unit
+  optional string product_category = 7; // The category of the product (optional)
+  optional string cart_id = 8;  // The id (session id) of the cart (optional)
+  optional string payment_method = 9; // The payment method (e.g., credit card, paypal) (optional)
+  optional int32 tax_in_cents = 10;   // The tax amount in cents (optional)
+  optional int32 shipping_cost_in_cents = 11; // The shipping cost in cents (optional)
+  optional int32 discount_in_cents = 12; // The discount amount in cents (optional)
+}
