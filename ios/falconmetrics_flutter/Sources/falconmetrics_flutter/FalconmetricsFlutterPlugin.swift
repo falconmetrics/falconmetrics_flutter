@@ -1,6 +1,5 @@
 import Flutter
 import UIKit
-import falconmetrics_ios
 
 public class FalconmetricsFlutterPlugin: NSObject, FlutterPlugin {
   public static func register(with registrar: FlutterPluginRegistrar) {
@@ -11,10 +10,9 @@ public class FalconmetricsFlutterPlugin: NSObject, FlutterPlugin {
 
   public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
       
-    let sdk = FalconMetricsSdk()
     switch call.method {
     case "getPlatformVersion":
-        result(sdk.sayHello())
+        result("iOS " + UIDevice.current.systemVersion)
     default:
       result(FlutterMethodNotImplemented)
     }

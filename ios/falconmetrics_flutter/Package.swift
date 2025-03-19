@@ -10,7 +10,7 @@ let package = Package(
         .library(name: "falconmetrics-flutter", targets: ["falconmetrics_flutter"])
     ],
     dependencies: [
-        .package(id: "falconmetrics.falconmetrics_ios", from: "0.0.7")
+        .package(id: "falconmetrics.falconmetrics_ios", from: "0.0.14")
     ],
     targets: [
         .target(
