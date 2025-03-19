@@ -4,7 +4,7 @@ import PackageDescription
 let package = Package(
     name: "falconmetrics_flutter",
     platforms: [
-        .iOS(.v12)
+        .iOS(.v13)
     ],
     products: [
         .library(name: "falconmetrics-flutter", targets: ["falconmetrics_flutter"])
