@@ -1,3 +1,4 @@
+import 'package:falconmetrics_flutter/events.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
@@ -12,5 +13,10 @@ class MethodChannelFalconmetricsFlutter extends FalconmetricsFlutterPlatform {
   @override
   Future<void> init({required String apiKey}) async {
     await methodChannel.invokeMethod<void>('init', {'apiKey': apiKey});
+  }
+
+  @override
+  Future<void> trackEvent({required TrackingEvent event}) async {
+    await methodChannel.invokeMethod<void>('trackEvent', {'event': event});
   }
 }

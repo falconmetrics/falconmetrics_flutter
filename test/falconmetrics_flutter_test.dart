@@ -1,19 +1,23 @@
-import 'package:flutter_test/flutter_test.dart';
+import 'package:falconmetrics_flutter/events.dart';
 import 'package:falconmetrics_flutter/falconmetrics_flutter.dart';
-import 'package:falconmetrics_flutter/falconmetrics_flutter_platform_interface.dart';
 import 'package:falconmetrics_flutter/falconmetrics_flutter_method_channel.dart';
+import 'package:falconmetrics_flutter/falconmetrics_flutter_platform_interface.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 class MockFalconmetricsFlutterPlatform
     with MockPlatformInterfaceMixin
     implements FalconmetricsFlutterPlatform {
-
   @override
   Future<void> init({required String apiKey}) => Future.value();
+
+  @override
+  Future<void> trackEvent({required TrackingEvent event}) => Future.value();
 }
 
 void main() {
-  final FalconmetricsFlutterPlatform initialPlatform = FalconmetricsFlutterPlatform.instance;
+  final FalconmetricsFlutterPlatform initialPlatform =
+      FalconmetricsFlutterPlatform.instance;
 
   test('$MethodChannelFalconmetricsFlutter is the default instance', () {
     expect(initialPlatform, isInstanceOf<MethodChannelFalconmetricsFlutter>());
@@ -21,10 +25,9 @@ void main() {
 
   test('getPlatformVersion', () async {
     FalconmetricsFlutter falconmetricsFlutterPlugin = FalconmetricsFlutter();
-    MockFalconmetricsFlutterPlatform fakePlatform = MockFalconmetricsFlutterPlatform();
+    MockFalconmetricsFlutterPlatform fakePlatform =
+        MockFalconmetricsFlutterPlatform();
     FalconmetricsFlutterPlatform.instance = fakePlatform;
     await falconmetricsFlutterPlugin.init(apiKey: '123');
-
-    
   });
 }
