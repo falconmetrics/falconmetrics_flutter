@@ -1,4 +1,6 @@
-import 'falconmetrics_flutter_platform_interface.dart';
+import 'package:falconmetrics_flutter/events.dart';
+
+import 'platform/falconmetrics_flutter_platform_interface.dart';
 
 /// The main class for the Falconmetrics Flutter plugin.
 ///
@@ -11,5 +13,10 @@ class FalconmetricsFlutter {
   /// Supply your unique [apiKey] to initialise the plugin for your app.
   Future<void> init({required String apiKey}) {
     return FalconmetricsFlutterPlatform.instance.init(apiKey: apiKey);
+  }
+
+  /// Tracks a conversion event
+  Future<void> trackEvent({required TrackingEvent event}) {
+    return FalconmetricsFlutterPlatform.instance.trackEvent(event: event);
   }
 }

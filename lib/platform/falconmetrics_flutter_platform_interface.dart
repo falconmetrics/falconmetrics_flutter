@@ -1,3 +1,4 @@
+import 'package:falconmetrics_flutter/events.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 import 'falconmetrics_flutter_method_channel.dart';
@@ -8,7 +9,8 @@ abstract class FalconmetricsFlutterPlatform extends PlatformInterface {
 
   static final Object _token = Object();
 
-  static FalconmetricsFlutterPlatform _instance = MethodChannelFalconmetricsFlutter();
+  static FalconmetricsFlutterPlatform _instance =
+      MethodChannelFalconmetricsFlutter();
 
   /// The default instance of [FalconmetricsFlutterPlatform] to use.
   ///
@@ -24,9 +26,14 @@ abstract class FalconmetricsFlutterPlatform extends PlatformInterface {
   }
 
   /// Initialise the falconmetrics plugin
-  /// 
+  ///
   /// Supply your unique [apiKey] to initialise the plugin for your app.
   Future<void> init({required String apiKey}) {
     throw UnimplementedError('init() has not been implemented.');
+  }
+
+  /// Tracks a conversion event
+  Future<void> trackEvent({required TrackingEvent event}) {
+    throw UnimplementedError('trackEvent() has not been implemented.');
   }
 }

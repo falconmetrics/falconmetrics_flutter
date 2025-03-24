@@ -1,6 +1,7 @@
 import Flutter
 import UIKit
 import falconmetrics_ios
+import SwiftProtobuf
 
 public class FalconmetricsFlutterPlugin: NSObject, FlutterPlugin {
   public static func register(with registrar: FlutterPluginRegistrar) {
@@ -11,11 +12,34 @@ public class FalconmetricsFlutterPlugin: NSObject, FlutterPlugin {
 
   public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
       
-    let sdk = FalconMetricsSdk.create()
+    let sdk = FalconMetricsSdk.create(context: UIApplication.shared)
       
     switch call.method {
     case "init":
-        sdk.initialize(apiKey: "YOUR_API_KEY")
+        Task {
+            await sdk.initialize(apiKey: "YOUR_API_KEY")
+            result(nil)
+        }
+    case "trackEvent":
+        guard let eventData = call.arguments as? FlutterStandardTypedData else {
+                result(FlutterError(code: "INVALID_ARGUMENTS", message: "Expected byte array", details: nil))
+                return
+            }
+            do {
+                // Step 1: Deserialize from protobuf
+                let protoEvent = try Pb_TrackingEvent(serializedData: eventData.data)
+
+                // Step 2: Convert to SDK tracking event
+                let event = try convertTrackingEvent(event: protoEvent)
+
+                // Step 3: Call your SDK's trackEvent asynchronously
+                Task {
+                    await sdk.trackEvent(event: event)
+                    result(nil)
+                }
+            } catch {
+                result(FlutterError(code: "PARSE_ERROR", message: "Failed to parse TrackingEvent", details: error.localizedDescription))
+            }
     default:
       result(FlutterMethodNotImplemented)
     }
