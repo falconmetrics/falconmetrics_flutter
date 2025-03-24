@@ -21,41 +21,41 @@ fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAP
 }
 
 /// Base message for all tracking events
-struct TrackingEvent: Sendable {
+struct Pb_TrackingEvent: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var event: TrackingEvent.OneOf_Event? = nil
+  var event: Pb_TrackingEvent.OneOf_Event? = nil
 
-  var userSignedUpOrLoggedIn: UserSignedUpOrLoggedInEvent {
+  var userSignedUpOrLoggedIn: Pb_UserSignedUpOrLoggedInEvent {
     get {
       if case .userSignedUpOrLoggedIn(let v)? = event {return v}
-      return UserSignedUpOrLoggedInEvent()
+      return Pb_UserSignedUpOrLoggedInEvent()
     }
     set {event = .userSignedUpOrLoggedIn(newValue)}
   }
 
-  var addedToCart: AddedToCartEvent {
+  var addedToCart: Pb_AddedToCartEvent {
     get {
       if case .addedToCart(let v)? = event {return v}
-      return AddedToCartEvent()
+      return Pb_AddedToCartEvent()
     }
     set {event = .addedToCart(newValue)}
   }
 
-  var couponApplied: CouponAppliedEvent {
+  var couponApplied: Pb_CouponAppliedEvent {
     get {
       if case .couponApplied(let v)? = event {return v}
-      return CouponAppliedEvent()
+      return Pb_CouponAppliedEvent()
     }
     set {event = .couponApplied(newValue)}
   }
 
-  var purchase: PurchaseEvent {
+  var purchase: Pb_PurchaseEvent {
     get {
       if case .purchase(let v)? = event {return v}
-      return PurchaseEvent()
+      return Pb_PurchaseEvent()
     }
     set {event = .purchase(newValue)}
   }
@@ -63,10 +63,10 @@ struct TrackingEvent: Sendable {
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   enum OneOf_Event: Equatable, Sendable {
-    case userSignedUpOrLoggedIn(UserSignedUpOrLoggedInEvent)
-    case addedToCart(AddedToCartEvent)
-    case couponApplied(CouponAppliedEvent)
-    case purchase(PurchaseEvent)
+    case userSignedUpOrLoggedIn(Pb_UserSignedUpOrLoggedInEvent)
+    case addedToCart(Pb_AddedToCartEvent)
+    case couponApplied(Pb_CouponAppliedEvent)
+    case purchase(Pb_PurchaseEvent)
 
   }
 
@@ -74,7 +74,7 @@ struct TrackingEvent: Sendable {
 }
 
 /// Event to track a user signing up or logging in
-struct UserSignedUpOrLoggedInEvent: Sendable {
+struct Pb_UserSignedUpOrLoggedInEvent: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -85,7 +85,7 @@ struct UserSignedUpOrLoggedInEvent: Sendable {
 }
 
 /// Event to track a product being added to the cart
-struct AddedToCartEvent: Sendable {
+struct Pb_AddedToCartEvent: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -131,7 +131,7 @@ struct AddedToCartEvent: Sendable {
 }
 
 /// Event to track a coupon being applied to a cart
-struct CouponAppliedEvent: Sendable {
+struct Pb_CouponAppliedEvent: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -157,7 +157,7 @@ struct CouponAppliedEvent: Sendable {
 }
 
 /// Event to track a purchase
-struct PurchaseEvent: Sendable {
+struct Pb_PurchaseEvent: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -254,8 +254,10 @@ struct PurchaseEvent: Sendable {
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
-extension TrackingEvent: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "TrackingEvent"
+fileprivate let _protobuf_package = "pb"
+
+extension Pb_TrackingEvent: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = _protobuf_package + ".TrackingEvent"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "user_signed_up_or_logged_in"),
     2: .standard(proto: "added_to_cart"),
@@ -270,7 +272,7 @@ extension TrackingEvent: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementa
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try {
-        var v: UserSignedUpOrLoggedInEvent?
+        var v: Pb_UserSignedUpOrLoggedInEvent?
         var hadOneofValue = false
         if let current = self.event {
           hadOneofValue = true
@@ -283,7 +285,7 @@ extension TrackingEvent: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementa
         }
       }()
       case 2: try {
-        var v: AddedToCartEvent?
+        var v: Pb_AddedToCartEvent?
         var hadOneofValue = false
         if let current = self.event {
           hadOneofValue = true
@@ -296,7 +298,7 @@ extension TrackingEvent: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementa
         }
       }()
       case 3: try {
-        var v: CouponAppliedEvent?
+        var v: Pb_CouponAppliedEvent?
         var hadOneofValue = false
         if let current = self.event {
           hadOneofValue = true
@@ -309,7 +311,7 @@ extension TrackingEvent: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementa
         }
       }()
       case 4: try {
-        var v: PurchaseEvent?
+        var v: Pb_PurchaseEvent?
         var hadOneofValue = false
         if let current = self.event {
           hadOneofValue = true
@@ -353,15 +355,15 @@ extension TrackingEvent: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementa
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: TrackingEvent, rhs: TrackingEvent) -> Bool {
+  static func ==(lhs: Pb_TrackingEvent, rhs: Pb_TrackingEvent) -> Bool {
     if lhs.event != rhs.event {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
 }
 
-extension UserSignedUpOrLoggedInEvent: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "UserSignedUpOrLoggedInEvent"
+extension Pb_UserSignedUpOrLoggedInEvent: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = _protobuf_package + ".UserSignedUpOrLoggedInEvent"
   static let _protobuf_nameMap = SwiftProtobuf._NameMap()
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -373,14 +375,14 @@ extension UserSignedUpOrLoggedInEvent: SwiftProtobuf.Message, SwiftProtobuf._Mes
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: UserSignedUpOrLoggedInEvent, rhs: UserSignedUpOrLoggedInEvent) -> Bool {
+  static func ==(lhs: Pb_UserSignedUpOrLoggedInEvent, rhs: Pb_UserSignedUpOrLoggedInEvent) -> Bool {
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
 }
 
-extension AddedToCartEvent: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "AddedToCartEvent"
+extension Pb_AddedToCartEvent: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = _protobuf_package + ".AddedToCartEvent"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "item_id"),
     2: .same(proto: "quantity"),
@@ -433,7 +435,7 @@ extension AddedToCartEvent: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: AddedToCartEvent, rhs: AddedToCartEvent) -> Bool {
+  static func ==(lhs: Pb_AddedToCartEvent, rhs: Pb_AddedToCartEvent) -> Bool {
     if lhs.itemID != rhs.itemID {return false}
     if lhs.quantity != rhs.quantity {return false}
     if lhs.productPriceInCents != rhs.productPriceInCents {return false}
@@ -445,8 +447,8 @@ extension AddedToCartEvent: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
   }
 }
 
-extension CouponAppliedEvent: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "CouponAppliedEvent"
+extension Pb_CouponAppliedEvent: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = _protobuf_package + ".CouponAppliedEvent"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "coupon_code"),
     2: .standard(proto: "cart_id"),
@@ -479,7 +481,7 @@ extension CouponAppliedEvent: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: CouponAppliedEvent, rhs: CouponAppliedEvent) -> Bool {
+  static func ==(lhs: Pb_CouponAppliedEvent, rhs: Pb_CouponAppliedEvent) -> Bool {
     if lhs.couponCode != rhs.couponCode {return false}
     if lhs._cartID != rhs._cartID {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
@@ -487,8 +489,8 @@ extension CouponAppliedEvent: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
   }
 }
 
-extension PurchaseEvent: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = "PurchaseEvent"
+extension Pb_PurchaseEvent: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = _protobuf_package + ".PurchaseEvent"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "item_id"),
     2: .same(proto: "quantity"),
@@ -571,7 +573,7 @@ extension PurchaseEvent: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementa
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: PurchaseEvent, rhs: PurchaseEvent) -> Bool {
+  static func ==(lhs: Pb_PurchaseEvent, rhs: Pb_PurchaseEvent) -> Bool {
     if lhs.itemID != rhs.itemID {return false}
     if lhs.quantity != rhs.quantity {return false}
     if lhs.transactionID != rhs.transactionID {return false}
