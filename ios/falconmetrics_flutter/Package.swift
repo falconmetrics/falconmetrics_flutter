@@ -10,7 +10,8 @@ let package = Package(
         .library(name: "falconmetrics-flutter", targets: ["falconmetrics_flutter"])
     ],
     dependencies: [
-        .package(id: "falconmetrics.falconmetrics_ios", from: "0.0.14")
+        .package(id: "falconmetrics.falconmetrics_ios", from: "0.0.16"),
+        .package(url: "https://github.com/apple/swift-protobuf.git", from: "1.29.0")
     ],
     targets: [
         .target(
