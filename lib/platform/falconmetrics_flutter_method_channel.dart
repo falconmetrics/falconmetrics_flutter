@@ -24,4 +24,14 @@ class MethodChannelFalconmetricsFlutter extends FalconmetricsFlutterPlatform {
       protoEvent.writeToBuffer(),
     );
   }
+
+  @override
+  Future<void> setTrackingEnabled({required bool enabled}) async {
+    await methodChannel.invokeMethod<void>('setTrackingEnabled', enabled);
+  }
+
+  @override
+  Future<bool> isTrackingEnabled() async {
+    return await methodChannel.invokeMethod<bool>('isTrackingEnabled') ?? true;
+  }
 }

@@ -23,7 +23,7 @@ allprojects {
             url "https://falcon-302263071233.d.codeartifact.eu-west-1.amazonaws.com/maven/falconmetrics/"
             credentials {
                 username = "aws" // CodeArtifact requires "aws" as username
-                password = System.getenv("CODEARTIFACT_AUTH_TOKEN")
+                password = System.getenv("AWS_CODE_ARTIFACT_TOKEN")
             }
         }
     }
@@ -79,7 +79,7 @@ android {
 
 
     dependencies {
-        implementation("io.falconmetrics:falconmetrics:0.0.5")
+        implementation("io.falconmetrics:falconmetrics:0.1.6")
         implementation 'com.google.protobuf:protobuf-javalite:3.25.3'
         testImplementation("org.jetbrains.kotlin:kotlin-test")
         testImplementation("org.mockito:mockito-core:5.0.0")

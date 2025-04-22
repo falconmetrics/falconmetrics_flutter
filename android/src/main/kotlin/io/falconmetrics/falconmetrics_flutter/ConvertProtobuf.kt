@@ -5,6 +5,7 @@ import io.falconmetrics.sdk.CouponAppliedEvent
 import io.falconmetrics.sdk.PurchaseEvent
 import io.falconmetrics.sdk.TrackingEvent
 import io.falconmetrics.sdk.UserSignedUpOrLoggedInEvent
+import pb.Event
 
 
 fun convertTrackingEvent(event: Event.TrackingEvent): TrackingEvent {
