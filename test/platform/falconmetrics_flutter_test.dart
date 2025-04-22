@@ -13,6 +13,12 @@ class MockFalconmetricsFlutterPlatform
 
   @override
   Future<void> trackEvent({required TrackingEvent event}) => Future.value();
+
+  @override
+  Future<void> setTrackingEnabled({required bool enabled}) => Future.value();
+
+  @override
+  Future<bool> isTrackingEnabled() => Future.value(false);
 }
 
 void main() {
@@ -29,5 +35,22 @@ void main() {
         MockFalconmetricsFlutterPlatform();
     FalconmetricsFlutterPlatform.instance = fakePlatform;
     await falconmetricsFlutterPlugin.init(apiKey: '123');
+  });
+
+  test('setTrackingEnabled', () async {
+    FalconmetricsFlutter falconmetricsFlutterPlugin = FalconmetricsFlutter();
+    MockFalconmetricsFlutterPlatform fakePlatform =
+        MockFalconmetricsFlutterPlatform();
+    FalconmetricsFlutterPlatform.instance = fakePlatform;
+    await falconmetricsFlutterPlugin.setTrackingEnabled(enabled: true);
+  });
+
+  test('isTrackingEnabled', () async {
+    FalconmetricsFlutter falconmetricsFlutterPlugin = FalconmetricsFlutter();
+    MockFalconmetricsFlutterPlatform fakePlatform =
+        MockFalconmetricsFlutterPlatform();
+    FalconmetricsFlutterPlatform.instance = fakePlatform;
+    final result = await falconmetricsFlutterPlugin.isTrackingEnabled();
+    expect(result, false);
   });
 }
