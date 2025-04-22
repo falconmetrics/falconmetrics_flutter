@@ -42,6 +42,7 @@ abstract class FalconmetricsFlutterPlatform extends PlatformInterface {
     throw UnimplementedError('setTrackingEnabled() has not been implemented.');
   }
 
+  /// ANDROID ONLY: Checks if tracking is enabled
   Future<bool> isTrackingEnabled() {
     throw UnimplementedError('isTrackingEnabled() has not been implemented.');
   }

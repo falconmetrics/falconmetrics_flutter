@@ -20,17 +20,22 @@ class FalconmetricsFlutter {
     return FalconmetricsFlutterPlatform.instance.trackEvent(event: event);
   }
 
-  /// ANDROID ONLY: Enables or disables tracking events
+  /// Enables or disables tracking functionality.
   ///
-  /// On iOS we use Skadnetwork that is privacy aware already and cannot be
-  /// disabled by this SDK.
+  /// Note: This is primarily for Android. iOS uses a privacy-aware Skadnetwork
+  /// that cannot be disabled through this SDK.
   Future<void> setTrackingEnabled({required bool enabled}) {
     return FalconmetricsFlutterPlatform.instance.setTrackingEnabled(
       enabled: enabled,
     );
   }
 
-  /// ANDROID ONLY: Checks if tracking is enabled
+  /// Returns whether tracking is currently enabled.
+  ///
+  /// Defaults to `true` if the native platform returns null.
+  ///
+  /// Note: This is primarily for Android. iOS uses a privacy-aware Skadnetwork
+  /// that cannot be disabled through this SDK.
   Future<bool> isTrackingEnabled() {
     return FalconmetricsFlutterPlatform.instance.isTrackingEnabled();
   }
