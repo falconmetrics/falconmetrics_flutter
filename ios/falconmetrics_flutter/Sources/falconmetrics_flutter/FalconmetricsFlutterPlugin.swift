@@ -40,6 +40,12 @@ public class FalconmetricsFlutterPlugin: NSObject, FlutterPlugin {
             } catch {
                 result(FlutterError(code: "PARSE_ERROR", message: "Failed to parse TrackingEvent", details: error.localizedDescription))
             }
+    case "setTrackingEnabled":
+        // This function only works on android and shouldn't do anything on iOS because we depend on skad
+        result(nil)
+    case "isTrackingEnabled":
+        // This function only works on android and shouldn't do anything on iOS because we depend on skad
+        result(true)
     default:
       result(FlutterMethodNotImplemented)
     }
