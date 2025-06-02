@@ -32,11 +32,13 @@ public class FalconmetricsFlutterPlugin: NSObject, FlutterPlugin {
                 // Step 2: Convert to SDK tracking event
                 let builder = try convertTrackingEvent(event: protoEvent)
 
-                // Step 3: Call your SDK's trackEvent asynchronously
-                Task {
+                // Step 3: Start tracking in background
+                Task.detached {
                     await builder.track()
-                    result(nil)
                 }
+                
+                // Return immediately without waiting for tracking to complete
+                result(nil)
             } catch {
                 result(FlutterError(code: "PARSE_ERROR", message: "Failed to parse TrackingEvent", details: error.localizedDescription))
             }
