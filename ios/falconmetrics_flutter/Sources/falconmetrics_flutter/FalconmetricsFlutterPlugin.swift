@@ -12,14 +12,14 @@ public class FalconmetricsFlutterPlugin: NSObject, FlutterPlugin {
 
   public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
       
-    let sdk = FalconMetricsSdk.create(context: UIApplication.shared)
-      
     switch call.method {
     case "init":
-        Task {
-            await sdk.initialize(apiKey: "YOUR_API_KEY")
-            result(nil)
+        let initTask = Task {
+                await FalconMetricsSdk.shared.initialize(apiKey: "YOUR_API_KEY")
         }
+        
+        Task { await initTask.value }
+        result(nil)
     case "trackEvent":
         guard let eventData = call.arguments as? FlutterStandardTypedData else {
                 result(FlutterError(code: "INVALID_ARGUMENTS", message: "Expected byte array", details: nil))
@@ -30,11 +30,11 @@ public class FalconmetricsFlutterPlugin: NSObject, FlutterPlugin {
                 let protoEvent = try Pb_TrackingEvent(serializedData: eventData.data)
 
                 // Step 2: Convert to SDK tracking event
-                let event = try convertTrackingEvent(event: protoEvent)
+                let builder = try convertTrackingEvent(event: protoEvent)
 
                 // Step 3: Call your SDK's trackEvent asynchronously
                 Task {
-                    await sdk.trackEvent(event: event)
+                    await builder.track()
                     result(nil)
                 }
             } catch {
@@ -47,7 +47,7 @@ public class FalconmetricsFlutterPlugin: NSObject, FlutterPlugin {
         // This function only works on android and shouldn't do anything on iOS because we depend on skad
         result(true)
     default:
-      result(FlutterMethodNotImplemented)
+        result(nil)
     }
   }
 }
