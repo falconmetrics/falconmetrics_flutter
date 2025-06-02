@@ -1,6 +1,6 @@
 import Flutter
 import UIKit
-import falconmetrics_ios
+import FalconMetrics
 import SwiftProtobuf
 
 public class FalconmetricsFlutterPlugin: NSObject, FlutterPlugin {

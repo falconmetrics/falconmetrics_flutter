@@ -4,7 +4,7 @@
 //
 //  Created by FalconMetrics on 24/03/2025.
 //
-import falconmetrics_ios
+import FalconMetrics
 import Foundation
 
 
