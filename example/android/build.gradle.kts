@@ -2,15 +2,6 @@ allprojects {
     repositories {
         google()
         mavenCentral()
-        maven {
-            url =
-                uri("https://falcon-302263071233.d.codeartifact.eu-west-1.amazonaws.com/maven/falconmetrics/")
-            credentials {
-                username = "aws" // CodeArtifact requires "aws" as username
-                password = System.getenv("AWS_CODE_ARTIFACT_TOKEN")
-
-            }
-        }
     }
 }
 
