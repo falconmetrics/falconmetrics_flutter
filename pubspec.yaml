@@ -1,7 +1,7 @@
 name: falconmetrics_flutter
-description: "A new Flutter plugin project."
+description: "Flutter plugin for FalconMetrics, a comprehensive mobile app attribution solution."
 version: 0.1.0
-# homepage:
+homepage: https://falconmetrics.io
 
 environment:
   sdk: ^3.7.0
@@ -17,7 +17,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^6.0.0
+  flutter_lints: ^5.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
