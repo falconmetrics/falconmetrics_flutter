@@ -1,6 +1,6 @@
 import Flutter
 import UIKit
-import falconmetrics_ios
+import FalconMetrics
 import SwiftProtobuf
 
 public class FalconmetricsFlutterPlugin: NSObject, FlutterPlugin {
@@ -12,14 +12,22 @@ public class FalconmetricsFlutterPlugin: NSObject, FlutterPlugin {
 
   public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
       
-    let sdk = FalconMetricsSdk.create(context: UIApplication.shared)
-      
     switch call.method {
     case "init":
-        Task {
-            await sdk.initialize(apiKey: "YOUR_API_KEY")
-            result(nil)
-        }
+        guard let args = call.arguments as? [String: Any],
+                      let apiKey = args["apiKey"] as? String else {
+                    result(FlutterError(
+                        code: "INVALID_ARGUMENTS",
+                        message: "API key is required",
+                        details: nil
+                    ))
+                    return
+                }
+                Task {
+                    await FalconMetricsSdk.shared.initialize(apiKey: apiKey)
+                }
+
+        result(nil)
     case "trackEvent":
         guard let eventData = call.arguments as? FlutterStandardTypedData else {
                 result(FlutterError(code: "INVALID_ARGUMENTS", message: "Expected byte array", details: nil))
@@ -30,13 +38,15 @@ public class FalconmetricsFlutterPlugin: NSObject, FlutterPlugin {
                 let protoEvent = try Pb_TrackingEvent(serializedData: eventData.data)
 
                 // Step 2: Convert to SDK tracking event
-                let event = try convertTrackingEvent(event: protoEvent)
+                let builder = try convertTrackingEvent(event: protoEvent)
 
-                // Step 3: Call your SDK's trackEvent asynchronously
-                Task {
-                    await sdk.trackEvent(event: event)
-                    result(nil)
+                // Step 3: Start tracking in background
+                Task.detached {
+                    await builder.track()
                 }
+                
+                // Return immediately without waiting for tracking to complete
+                result(nil)
             } catch {
                 result(FlutterError(code: "PARSE_ERROR", message: "Failed to parse TrackingEvent", details: error.localizedDescription))
             }
@@ -47,7 +57,7 @@ public class FalconmetricsFlutterPlugin: NSObject, FlutterPlugin {
         // This function only works on android and shouldn't do anything on iOS because we depend on skad
         result(true)
     default:
-      result(FlutterMethodNotImplemented)
+        result(nil)
     }
   }
 }

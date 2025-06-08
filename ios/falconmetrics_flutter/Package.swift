@@ -1,4 +1,4 @@
-// swift-tools-version: 5.9.0
+// swift-tools-version:6.1
 import PackageDescription
 
 let package = Package(
@@ -10,16 +10,24 @@ let package = Package(
         .library(name: "falconmetrics-flutter", targets: ["falconmetrics_flutter"])
     ],
     dependencies: [
-        .package(id: "falconmetrics.falconmetrics_ios", from: "0.0.19"),
-        .package(url: "https://github.com/apple/swift-protobuf.git", from: "1.27.0"),
+        // FalconMetrics iOS SDK (hosted via Git)
+        .package(
+            url: "https://github.com/falconmetrics/falconmetrics-ios-spm.git",
+            from: "0.1.4"
+        ),
+        // Swift Protobuf
+        .package(
+            url: "https://github.com/apple/swift-protobuf.git",
+            from: "1.27.0"
+        )
     ],
     targets: [
         .target(
-        name: "falconmetrics_flutter",
-        dependencies: [
-            .product(name: "falconmetrics_ios", package: "falconmetrics.falconmetrics_ios"), 
-            .product(name: "SwiftProtobuf", package: "swift-protobuf"),
-        ]
-    )
+            name: "falconmetrics_flutter",
+            dependencies: [
+                .product(name: "FalconMetrics", package: "falconmetrics-ios-spm"),
+                .product(name: "SwiftProtobuf", package: "swift-protobuf")
+            ]
+        )
     ]
 )
