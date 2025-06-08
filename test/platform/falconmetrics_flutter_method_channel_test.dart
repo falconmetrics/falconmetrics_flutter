@@ -1,13 +1,15 @@
+import 'package:falconmetrics_flutter/platform/falconmetrics_flutter_method_channel.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:falconmetrics_flutter/platform/falconmetrics_flutter_method_channel.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   MethodChannelFalconmetricsFlutter platform =
       MethodChannelFalconmetricsFlutter();
-  const MethodChannel channel = MethodChannel('falconmetrics_flutter');
+  const MethodChannel channel = MethodChannel(
+    'io.falconmetrics.falconmetrics_flutter',
+  );
 
   final List<MethodCall> log = <MethodCall>[];
 

@@ -17,10 +17,10 @@ import 'package:protobuf/protobuf.dart' as $pb;
 export 'package:protobuf/protobuf.dart' show GeneratedMessageGenericExtensions;
 
 enum TrackingEvent_Event {
-  userSignedUpOrLoggedIn, 
-  addedToCart, 
-  couponApplied, 
-  purchase, 
+  userSignedUpOrLoggedIn,
+  addedToCart,
+  couponApplied,
+  purchase,
   notSet
 }
 
@@ -33,7 +33,8 @@ class TrackingEvent extends $pb.GeneratedMessage {
     PurchaseEvent? purchase,
   }) {
     final result = create();
-    if (userSignedUpOrLoggedIn != null) result.userSignedUpOrLoggedIn = userSignedUpOrLoggedIn;
+    if (userSignedUpOrLoggedIn != null)
+      result.userSignedUpOrLoggedIn = userSignedUpOrLoggedIn;
     if (addedToCart != null) result.addedToCart = addedToCart;
     if (couponApplied != null) result.couponApplied = couponApplied;
     if (purchase != null) result.purchase = purchase;
@@ -42,29 +43,43 @@ class TrackingEvent extends $pb.GeneratedMessage {
 
   TrackingEvent._();
 
-  factory TrackingEvent.fromBuffer($core.List<$core.int> data, [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(data, registry);
-  factory TrackingEvent.fromJson($core.String json, [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(json, registry);
+  factory TrackingEvent.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory TrackingEvent.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
-  static const $core.Map<$core.int, TrackingEvent_Event> _TrackingEvent_EventByTag = {
-    1 : TrackingEvent_Event.userSignedUpOrLoggedIn,
-    2 : TrackingEvent_Event.addedToCart,
-    3 : TrackingEvent_Event.couponApplied,
-    4 : TrackingEvent_Event.purchase,
-    0 : TrackingEvent_Event.notSet
+  static const $core.Map<$core.int, TrackingEvent_Event>
+      _TrackingEvent_EventByTag = {
+    1: TrackingEvent_Event.userSignedUpOrLoggedIn,
+    2: TrackingEvent_Event.addedToCart,
+    3: TrackingEvent_Event.couponApplied,
+    4: TrackingEvent_Event.purchase,
+    0: TrackingEvent_Event.notSet
   };
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'TrackingEvent', package: const $pb.PackageName(_omitMessageNames ? '' : 'pb'), createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'TrackingEvent',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'pb'),
+      createEmptyInstance: create)
     ..oo(0, [1, 2, 3, 4])
-    ..aOM<UserSignedUpOrLoggedInEvent>(1, _omitFieldNames ? '' : 'userSignedUpOrLoggedIn', subBuilder: UserSignedUpOrLoggedInEvent.create)
-    ..aOM<AddedToCartEvent>(2, _omitFieldNames ? '' : 'addedToCart', subBuilder: AddedToCartEvent.create)
-    ..aOM<CouponAppliedEvent>(3, _omitFieldNames ? '' : 'couponApplied', subBuilder: CouponAppliedEvent.create)
-    ..aOM<PurchaseEvent>(4, _omitFieldNames ? '' : 'purchase', subBuilder: PurchaseEvent.create)
-    ..hasRequiredFields = false
-  ;
+    ..aOM<UserSignedUpOrLoggedInEvent>(
+        1, _omitFieldNames ? '' : 'userSignedUpOrLoggedIn',
+        subBuilder: UserSignedUpOrLoggedInEvent.create)
+    ..aOM<AddedToCartEvent>(2, _omitFieldNames ? '' : 'addedToCart',
+        subBuilder: AddedToCartEvent.create)
+    ..aOM<CouponAppliedEvent>(3, _omitFieldNames ? '' : 'couponApplied',
+        subBuilder: CouponAppliedEvent.create)
+    ..aOM<PurchaseEvent>(4, _omitFieldNames ? '' : 'purchase',
+        subBuilder: PurchaseEvent.create)
+    ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   TrackingEvent clone() => TrackingEvent()..mergeFromMessage(this);
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  TrackingEvent copyWith(void Function(TrackingEvent) updates) => super.copyWith((message) => updates(message as TrackingEvent)) as TrackingEvent;
+  TrackingEvent copyWith(void Function(TrackingEvent) updates) =>
+      super.copyWith((message) => updates(message as TrackingEvent))
+          as TrackingEvent;
 
   @$core.override
   $pb.BuilderInfo get info_ => _i;
@@ -73,18 +88,22 @@ class TrackingEvent extends $pb.GeneratedMessage {
   static TrackingEvent create() => TrackingEvent._();
   @$core.override
   TrackingEvent createEmptyInstance() => create();
-  static $pb.PbList<TrackingEvent> createRepeated() => $pb.PbList<TrackingEvent>();
+  static $pb.PbList<TrackingEvent> createRepeated() =>
+      $pb.PbList<TrackingEvent>();
   @$core.pragma('dart2js:noInline')
-  static TrackingEvent getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<TrackingEvent>(create);
+  static TrackingEvent getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<TrackingEvent>(create);
   static TrackingEvent? _defaultInstance;
 
-  TrackingEvent_Event whichEvent() => _TrackingEvent_EventByTag[$_whichOneof(0)]!;
+  TrackingEvent_Event whichEvent() =>
+      _TrackingEvent_EventByTag[$_whichOneof(0)]!;
   void clearEvent() => $_clearField($_whichOneof(0));
 
   @$pb.TagNumber(1)
   UserSignedUpOrLoggedInEvent get userSignedUpOrLoggedIn => $_getN(0);
   @$pb.TagNumber(1)
-  set userSignedUpOrLoggedIn(UserSignedUpOrLoggedInEvent value) => $_setField(1, value);
+  set userSignedUpOrLoggedIn(UserSignedUpOrLoggedInEvent value) =>
+      $_setField(1, value);
   @$pb.TagNumber(1)
   $core.bool hasUserSignedUpOrLoggedIn() => $_has(0);
   @$pb.TagNumber(1)
@@ -132,28 +151,42 @@ class UserSignedUpOrLoggedInEvent extends $pb.GeneratedMessage {
 
   UserSignedUpOrLoggedInEvent._();
 
-  factory UserSignedUpOrLoggedInEvent.fromBuffer($core.List<$core.int> data, [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(data, registry);
-  factory UserSignedUpOrLoggedInEvent.fromJson($core.String json, [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(json, registry);
+  factory UserSignedUpOrLoggedInEvent.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory UserSignedUpOrLoggedInEvent.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'UserSignedUpOrLoggedInEvent', package: const $pb.PackageName(_omitMessageNames ? '' : 'pb'), createEmptyInstance: create)
-    ..hasRequiredFields = false
-  ;
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'UserSignedUpOrLoggedInEvent',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'pb'),
+      createEmptyInstance: create)
+    ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  UserSignedUpOrLoggedInEvent clone() => UserSignedUpOrLoggedInEvent()..mergeFromMessage(this);
+  UserSignedUpOrLoggedInEvent clone() =>
+      UserSignedUpOrLoggedInEvent()..mergeFromMessage(this);
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  UserSignedUpOrLoggedInEvent copyWith(void Function(UserSignedUpOrLoggedInEvent) updates) => super.copyWith((message) => updates(message as UserSignedUpOrLoggedInEvent)) as UserSignedUpOrLoggedInEvent;
+  UserSignedUpOrLoggedInEvent copyWith(
+          void Function(UserSignedUpOrLoggedInEvent) updates) =>
+      super.copyWith(
+              (message) => updates(message as UserSignedUpOrLoggedInEvent))
+          as UserSignedUpOrLoggedInEvent;
 
   @$core.override
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
-  static UserSignedUpOrLoggedInEvent create() => UserSignedUpOrLoggedInEvent._();
+  static UserSignedUpOrLoggedInEvent create() =>
+      UserSignedUpOrLoggedInEvent._();
   @$core.override
   UserSignedUpOrLoggedInEvent createEmptyInstance() => create();
-  static $pb.PbList<UserSignedUpOrLoggedInEvent> createRepeated() => $pb.PbList<UserSignedUpOrLoggedInEvent>();
+  static $pb.PbList<UserSignedUpOrLoggedInEvent> createRepeated() =>
+      $pb.PbList<UserSignedUpOrLoggedInEvent>();
   @$core.pragma('dart2js:noInline')
-  static UserSignedUpOrLoggedInEvent getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<UserSignedUpOrLoggedInEvent>(create);
+  static UserSignedUpOrLoggedInEvent getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<UserSignedUpOrLoggedInEvent>(create);
   static UserSignedUpOrLoggedInEvent? _defaultInstance;
 }
 
@@ -170,7 +203,8 @@ class AddedToCartEvent extends $pb.GeneratedMessage {
     final result = create();
     if (itemId != null) result.itemId = itemId;
     if (quantity != null) result.quantity = quantity;
-    if (productPriceInCents != null) result.productPriceInCents = productPriceInCents;
+    if (productPriceInCents != null)
+      result.productPriceInCents = productPriceInCents;
     if (currency != null) result.currency = currency;
     if (productCategory != null) result.productCategory = productCategory;
     if (cartId != null) result.cartId = cartId;
@@ -179,23 +213,32 @@ class AddedToCartEvent extends $pb.GeneratedMessage {
 
   AddedToCartEvent._();
 
-  factory AddedToCartEvent.fromBuffer($core.List<$core.int> data, [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(data, registry);
-  factory AddedToCartEvent.fromJson($core.String json, [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(json, registry);
+  factory AddedToCartEvent.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory AddedToCartEvent.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'AddedToCartEvent', package: const $pb.PackageName(_omitMessageNames ? '' : 'pb'), createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'AddedToCartEvent',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'pb'),
+      createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'itemId')
     ..a<$core.int>(2, _omitFieldNames ? '' : 'quantity', $pb.PbFieldType.O3)
-    ..a<$core.int>(3, _omitFieldNames ? '' : 'productPriceInCents', $pb.PbFieldType.O3)
+    ..a<$core.int>(
+        3, _omitFieldNames ? '' : 'productPriceInCents', $pb.PbFieldType.O3)
     ..aOS(4, _omitFieldNames ? '' : 'currency')
     ..aOS(5, _omitFieldNames ? '' : 'productCategory')
     ..aOS(6, _omitFieldNames ? '' : 'cartId')
-    ..hasRequiredFields = false
-  ;
+    ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   AddedToCartEvent clone() => AddedToCartEvent()..mergeFromMessage(this);
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  AddedToCartEvent copyWith(void Function(AddedToCartEvent) updates) => super.copyWith((message) => updates(message as AddedToCartEvent)) as AddedToCartEvent;
+  AddedToCartEvent copyWith(void Function(AddedToCartEvent) updates) =>
+      super.copyWith((message) => updates(message as AddedToCartEvent))
+          as AddedToCartEvent;
 
   @$core.override
   $pb.BuilderInfo get info_ => _i;
@@ -204,9 +247,11 @@ class AddedToCartEvent extends $pb.GeneratedMessage {
   static AddedToCartEvent create() => AddedToCartEvent._();
   @$core.override
   AddedToCartEvent createEmptyInstance() => create();
-  static $pb.PbList<AddedToCartEvent> createRepeated() => $pb.PbList<AddedToCartEvent>();
+  static $pb.PbList<AddedToCartEvent> createRepeated() =>
+      $pb.PbList<AddedToCartEvent>();
   @$core.pragma('dart2js:noInline')
-  static AddedToCartEvent getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<AddedToCartEvent>(create);
+  static AddedToCartEvent getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<AddedToCartEvent>(create);
   static AddedToCartEvent? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -278,19 +323,27 @@ class CouponAppliedEvent extends $pb.GeneratedMessage {
 
   CouponAppliedEvent._();
 
-  factory CouponAppliedEvent.fromBuffer($core.List<$core.int> data, [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(data, registry);
-  factory CouponAppliedEvent.fromJson($core.String json, [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(json, registry);
+  factory CouponAppliedEvent.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory CouponAppliedEvent.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'CouponAppliedEvent', package: const $pb.PackageName(_omitMessageNames ? '' : 'pb'), createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'CouponAppliedEvent',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'pb'),
+      createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'couponCode')
     ..aOS(2, _omitFieldNames ? '' : 'cartId')
-    ..hasRequiredFields = false
-  ;
+    ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   CouponAppliedEvent clone() => CouponAppliedEvent()..mergeFromMessage(this);
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  CouponAppliedEvent copyWith(void Function(CouponAppliedEvent) updates) => super.copyWith((message) => updates(message as CouponAppliedEvent)) as CouponAppliedEvent;
+  CouponAppliedEvent copyWith(void Function(CouponAppliedEvent) updates) =>
+      super.copyWith((message) => updates(message as CouponAppliedEvent))
+          as CouponAppliedEvent;
 
   @$core.override
   $pb.BuilderInfo get info_ => _i;
@@ -299,9 +352,11 @@ class CouponAppliedEvent extends $pb.GeneratedMessage {
   static CouponAppliedEvent create() => CouponAppliedEvent._();
   @$core.override
   CouponAppliedEvent createEmptyInstance() => create();
-  static $pb.PbList<CouponAppliedEvent> createRepeated() => $pb.PbList<CouponAppliedEvent>();
+  static $pb.PbList<CouponAppliedEvent> createRepeated() =>
+      $pb.PbList<CouponAppliedEvent>();
   @$core.pragma('dart2js:noInline')
-  static CouponAppliedEvent getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<CouponAppliedEvent>(create);
+  static CouponAppliedEvent getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<CouponAppliedEvent>(create);
   static CouponAppliedEvent? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -343,43 +398,57 @@ class PurchaseEvent extends $pb.GeneratedMessage {
     if (itemId != null) result.itemId = itemId;
     if (quantity != null) result.quantity = quantity;
     if (transactionId != null) result.transactionId = transactionId;
-    if (productPriceInCents != null) result.productPriceInCents = productPriceInCents;
+    if (productPriceInCents != null)
+      result.productPriceInCents = productPriceInCents;
     if (currency != null) result.currency = currency;
     if (revenueInCents != null) result.revenueInCents = revenueInCents;
     if (productCategory != null) result.productCategory = productCategory;
     if (cartId != null) result.cartId = cartId;
     if (paymentMethod != null) result.paymentMethod = paymentMethod;
     if (taxInCents != null) result.taxInCents = taxInCents;
-    if (shippingCostInCents != null) result.shippingCostInCents = shippingCostInCents;
+    if (shippingCostInCents != null)
+      result.shippingCostInCents = shippingCostInCents;
     if (discountInCents != null) result.discountInCents = discountInCents;
     return result;
   }
 
   PurchaseEvent._();
 
-  factory PurchaseEvent.fromBuffer($core.List<$core.int> data, [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(data, registry);
-  factory PurchaseEvent.fromJson($core.String json, [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(json, registry);
+  factory PurchaseEvent.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory PurchaseEvent.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'PurchaseEvent', package: const $pb.PackageName(_omitMessageNames ? '' : 'pb'), createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'PurchaseEvent',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'pb'),
+      createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'itemId')
     ..a<$core.int>(2, _omitFieldNames ? '' : 'quantity', $pb.PbFieldType.O3)
     ..aOS(3, _omitFieldNames ? '' : 'transactionId')
-    ..a<$core.int>(4, _omitFieldNames ? '' : 'productPriceInCents', $pb.PbFieldType.O3)
+    ..a<$core.int>(
+        4, _omitFieldNames ? '' : 'productPriceInCents', $pb.PbFieldType.O3)
     ..aOS(5, _omitFieldNames ? '' : 'currency')
-    ..a<$core.int>(6, _omitFieldNames ? '' : 'revenueInCents', $pb.PbFieldType.O3)
+    ..a<$core.int>(
+        6, _omitFieldNames ? '' : 'revenueInCents', $pb.PbFieldType.O3)
     ..aOS(7, _omitFieldNames ? '' : 'productCategory')
     ..aOS(8, _omitFieldNames ? '' : 'cartId')
     ..aOS(9, _omitFieldNames ? '' : 'paymentMethod')
     ..a<$core.int>(10, _omitFieldNames ? '' : 'taxInCents', $pb.PbFieldType.O3)
-    ..a<$core.int>(11, _omitFieldNames ? '' : 'shippingCostInCents', $pb.PbFieldType.O3)
-    ..a<$core.int>(12, _omitFieldNames ? '' : 'discountInCents', $pb.PbFieldType.O3)
-    ..hasRequiredFields = false
-  ;
+    ..a<$core.int>(
+        11, _omitFieldNames ? '' : 'shippingCostInCents', $pb.PbFieldType.O3)
+    ..a<$core.int>(
+        12, _omitFieldNames ? '' : 'discountInCents', $pb.PbFieldType.O3)
+    ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   PurchaseEvent clone() => PurchaseEvent()..mergeFromMessage(this);
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  PurchaseEvent copyWith(void Function(PurchaseEvent) updates) => super.copyWith((message) => updates(message as PurchaseEvent)) as PurchaseEvent;
+  PurchaseEvent copyWith(void Function(PurchaseEvent) updates) =>
+      super.copyWith((message) => updates(message as PurchaseEvent))
+          as PurchaseEvent;
 
   @$core.override
   $pb.BuilderInfo get info_ => _i;
@@ -388,9 +457,11 @@ class PurchaseEvent extends $pb.GeneratedMessage {
   static PurchaseEvent create() => PurchaseEvent._();
   @$core.override
   PurchaseEvent createEmptyInstance() => create();
-  static $pb.PbList<PurchaseEvent> createRepeated() => $pb.PbList<PurchaseEvent>();
+  static $pb.PbList<PurchaseEvent> createRepeated() =>
+      $pb.PbList<PurchaseEvent>();
   @$core.pragma('dart2js:noInline')
-  static PurchaseEvent getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<PurchaseEvent>(create);
+  static PurchaseEvent getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<PurchaseEvent>(create);
   static PurchaseEvent? _defaultInstance;
 
   @$pb.TagNumber(1)
@@ -502,6 +573,7 @@ class PurchaseEvent extends $pb.GeneratedMessage {
   void clearDiscountInCents() => $_clearField(12);
 }
 
-
-const $core.bool _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');
-const $core.bool _omitMessageNames = $core.bool.fromEnvironment('protobuf.omit_message_names');
+const $core.bool _omitFieldNames =
+    $core.bool.fromEnvironment('protobuf.omit_field_names');
+const $core.bool _omitMessageNames =
+    $core.bool.fromEnvironment('protobuf.omit_message_names');
