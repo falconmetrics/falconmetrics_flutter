@@ -1,11 +1,11 @@
 name: falconmetrics_flutter
-description: "A new Flutter plugin project."
+description: "Flutter plugin for FalconMetrics, a comprehensive mobile app attribution solution."
 version: 0.1.0
-# homepage:
+homepage: https://falconmetrics.io
 
 environment:
   sdk: ^3.7.0
-  flutter: '>=3.3.0'
+  flutter: '>=3.6.0'
 
 dependencies:
   equatable: ^2.0.7

@@ -19,7 +19,7 @@ class FalconmetricsFlutterPlugin : FlutterPlugin, MethodCallHandler {
     private lateinit var context: Context
 
     override fun onAttachedToEngine(flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
-        channel = MethodChannel(flutterPluginBinding.binaryMessenger, "falconmetrics_flutter")
+        channel = MethodChannel(flutterPluginBinding.binaryMessenger, "io.falconmetrics.falconmetrics_flutter")
         falconMetrics = FalconMetricsSdk.create(flutterPluginBinding.applicationContext)
         context = flutterPluginBinding.applicationContext
         channel.setMethodCallHandler(this)

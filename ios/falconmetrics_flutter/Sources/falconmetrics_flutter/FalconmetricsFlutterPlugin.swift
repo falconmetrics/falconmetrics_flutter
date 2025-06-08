@@ -5,7 +5,7 @@ import SwiftProtobuf
 
 public class FalconmetricsFlutterPlugin: NSObject, FlutterPlugin {
   public static func register(with registrar: FlutterPluginRegistrar) {
-    let channel = FlutterMethodChannel(name: "falconmetrics_flutter", binaryMessenger: registrar.messenger())
+    let channel = FlutterMethodChannel(name: "io.falconmetrics.falconmetrics_flutter", binaryMessenger: registrar.messenger())
     let instance = FalconmetricsFlutterPlugin()
     registrar.addMethodCallDelegate(instance, channel: channel)
   }

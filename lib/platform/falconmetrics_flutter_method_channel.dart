@@ -9,7 +9,9 @@ import 'falconmetrics_flutter_platform_interface.dart';
 class MethodChannelFalconmetricsFlutter extends FalconmetricsFlutterPlatform {
   /// The method channel used to interact with the native platform.
   @visibleForTesting
-  final methodChannel = const MethodChannel('falconmetrics_flutter');
+  final methodChannel = const MethodChannel(
+    'io.falconmetrics.falconmetrics_flutter',
+  );
 
   @override
   Future<void> init({required String apiKey}) async {

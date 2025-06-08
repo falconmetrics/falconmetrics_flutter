@@ -2,12 +2,13 @@
 //  Generated code. Do not modify.
 //  source: event.proto
 //
-// @dart = 2.12
+// @dart = 3.3
 
 // ignore_for_file: annotate_overrides, camel_case_types, comment_references
-// ignore_for_file: constant_identifier_names, library_prefixes
-// ignore_for_file: non_constant_identifier_names, prefer_final_fields
-// ignore_for_file: unnecessary_import, unnecessary_this, unused_import
+// ignore_for_file: constant_identifier_names
+// ignore_for_file: curly_braces_in_flow_control_structures
+// ignore_for_file: deprecated_member_use_from_same_package, library_prefixes
+// ignore_for_file: non_constant_identifier_names
 
 import 'dart:convert' as $convert;
 import 'dart:core' as $core;
@@ -22,7 +23,7 @@ const TrackingEvent$json = {
       '3': 1,
       '4': 1,
       '5': 11,
-      '6': '.UserSignedUpOrLoggedInEvent',
+      '6': '.pb.UserSignedUpOrLoggedInEvent',
       '9': 0,
       '10': 'userSignedUpOrLoggedIn'
     },
@@ -31,7 +32,7 @@ const TrackingEvent$json = {
       '3': 2,
       '4': 1,
       '5': 11,
-      '6': '.AddedToCartEvent',
+      '6': '.pb.AddedToCartEvent',
       '9': 0,
       '10': 'addedToCart'
     },
@@ -40,7 +41,7 @@ const TrackingEvent$json = {
       '3': 3,
       '4': 1,
       '5': 11,
-      '6': '.CouponAppliedEvent',
+      '6': '.pb.CouponAppliedEvent',
       '9': 0,
       '10': 'couponApplied'
     },
@@ -49,7 +50,7 @@ const TrackingEvent$json = {
       '3': 4,
       '4': 1,
       '5': 11,
-      '6': '.PurchaseEvent',
+      '6': '.pb.PurchaseEvent',
       '9': 0,
       '10': 'purchase'
     },
@@ -61,12 +62,12 @@ const TrackingEvent$json = {
 
 /// Descriptor for `TrackingEvent`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List trackingEventDescriptor = $convert.base64Decode(
-    'Cg1UcmFja2luZ0V2ZW50ElsKG3VzZXJfc2lnbmVkX3VwX29yX2xvZ2dlZF9pbhgBIAEoCzIcLl'
-    'VzZXJTaWduZWRVcE9yTG9nZ2VkSW5FdmVudEgAUhZ1c2VyU2lnbmVkVXBPckxvZ2dlZEluEjcK'
-    'DWFkZGVkX3RvX2NhcnQYAiABKAsyES5BZGRlZFRvQ2FydEV2ZW50SABSC2FkZGVkVG9DYXJ0Ej'
-    'wKDmNvdXBvbl9hcHBsaWVkGAMgASgLMhMuQ291cG9uQXBwbGllZEV2ZW50SABSDWNvdXBvbkFw'
-    'cGxpZWQSLAoIcHVyY2hhc2UYBCABKAsyDi5QdXJjaGFzZUV2ZW50SABSCHB1cmNoYXNlQgcKBW'
-    'V2ZW50');
+    'Cg1UcmFja2luZ0V2ZW50El4KG3VzZXJfc2lnbmVkX3VwX29yX2xvZ2dlZF9pbhgBIAEoCzIfLn'
+    'BiLlVzZXJTaWduZWRVcE9yTG9nZ2VkSW5FdmVudEgAUhZ1c2VyU2lnbmVkVXBPckxvZ2dlZElu'
+    'EjoKDWFkZGVkX3RvX2NhcnQYAiABKAsyFC5wYi5BZGRlZFRvQ2FydEV2ZW50SABSC2FkZGVkVG'
+    '9DYXJ0Ej8KDmNvdXBvbl9hcHBsaWVkGAMgASgLMhYucGIuQ291cG9uQXBwbGllZEV2ZW50SABS'
+    'DWNvdXBvbkFwcGxpZWQSLwoIcHVyY2hhc2UYBCABKAsyES5wYi5QdXJjaGFzZUV2ZW50SABSCH'
+    'B1cmNoYXNlQgcKBWV2ZW50');
 
 @$core.Deprecated('Use userSignedUpOrLoggedInEventDescriptor instead')
 const UserSignedUpOrLoggedInEvent$json = {
