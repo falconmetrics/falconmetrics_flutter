@@ -14,11 +14,19 @@ public class FalconmetricsFlutterPlugin: NSObject, FlutterPlugin {
       
     switch call.method {
     case "init":
-        let initTask = Task {
-                await FalconMetricsSdk.shared.initialize(apiKey: "YOUR_API_KEY")
-        }
-        
-        Task { await initTask.value }
+        guard let args = call.arguments as? [String: Any],
+                      let apiKey = args["apiKey"] as? String else {
+                    result(FlutterError(
+                        code: "INVALID_ARGUMENTS",
+                        message: "API key is required",
+                        details: nil
+                    ))
+                    return
+                }
+                Task {
+                    await FalconMetricsSdk.shared.initialize(apiKey: apiKey)
+                }
+
         result(nil)
     case "trackEvent":
         guard let eventData = call.arguments as? FlutterStandardTypedData else {
