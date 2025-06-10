@@ -28,6 +28,19 @@ public class FalconmetricsFlutterPlugin: NSObject, FlutterPlugin {
                 }
 
         result(nil)
+    case "setDebugLoggingEnabled":
+        guard let args = call.arguments as? [String: Any],
+              let enabled = args["enabled"] as? Bool else {
+            result(FlutterError(
+                code: "INVALID_ARGUMENTS",
+                message: "Enabled argument is required",
+                details: nil
+            ))
+            return
+        }
+        
+        FalconMetricsSdk.shared.setDebugLogging(enabled: enabled)
+        result(nil)
     case "trackEvent":
         guard let eventData = call.arguments as? FlutterStandardTypedData else {
                 result(FlutterError(code: "INVALID_ARGUMENTS", message: "Expected byte array", details: nil))

@@ -19,6 +19,13 @@ class MethodChannelFalconmetricsFlutter extends FalconmetricsFlutterPlatform {
   }
 
   @override
+  Future<void> setDebugLoggingEnabled({required bool enabled}) async {
+    await methodChannel.invokeMethod<void>('setDebugLoggingEnabled', {
+      'enabled': enabled,
+    });
+  }
+
+  @override
   Future<void> trackEvent({required TrackingEvent event}) async {
     final protoEvent = EventProtoConverter().convert(event);
     await methodChannel.invokeMethod<void>(

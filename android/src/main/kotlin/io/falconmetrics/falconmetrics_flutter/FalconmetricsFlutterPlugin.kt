@@ -19,7 +19,10 @@ class FalconmetricsFlutterPlugin : FlutterPlugin, MethodCallHandler {
     private lateinit var context: Context
 
     override fun onAttachedToEngine(flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
-        channel = MethodChannel(flutterPluginBinding.binaryMessenger, "io.falconmetrics.falconmetrics_flutter")
+        channel = MethodChannel(
+            flutterPluginBinding.binaryMessenger,
+            "io.falconmetrics.falconmetrics_flutter"
+        )
         falconMetrics = FalconMetricsSdk.create(flutterPluginBinding.applicationContext)
         context = flutterPluginBinding.applicationContext
         channel.setMethodCallHandler(this)
@@ -27,8 +30,20 @@ class FalconmetricsFlutterPlugin : FlutterPlugin, MethodCallHandler {
 
     override fun onMethodCall(call: MethodCall, result: Result) {
         if (call.method == "init") {
-            val apiKey = call.argument<String>("apiKey") ?: ""
+            val apiKey = call.argument<String>("apiKey")
+            if (apiKey == null) {
+                result.error("INVALID_ARGUMENTS", "ApiKey argument is required", null)
+                return
+            }
             falconMetrics.init(apiKey)
+            result.success(null)
+        } else if (call.method == "setDebugLoggingEnabled") {
+           val enabled = call.argument<Boolean>("enabled")
+            if (enabled == null) {
+                result.error("INVALID_ARGUMENTS", "Enabled argument is required", null)
+                return
+            }
+            falconMetrics.setDebugLogging(enabled)
             result.success(null)
         } else if (call.method == "trackEvent") {
             val event = call.arguments as ByteArray
@@ -39,7 +54,7 @@ class FalconmetricsFlutterPlugin : FlutterPlugin, MethodCallHandler {
             val enabled = call.arguments as Boolean
             falconMetrics.setTracking(context, enabled)
             result.success(null)
-        }else if (call.method == "isTrackingEnabled") {
+        } else if (call.method == "isTrackingEnabled") {
             result.success(falconMetrics.isTrackingEnabled(context))
         } else {
             result.notImplemented()

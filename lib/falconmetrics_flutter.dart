@@ -15,7 +15,18 @@ class FalconmetricsFlutter {
     return FalconmetricsFlutterPlatform.instance.init(apiKey: apiKey);
   }
 
+  /// Enable or disable debug logging
+  ///
+  /// Use [enabled] to enable or disable debug logging.
+  Future<void> setDebugLoggingEnabled({required bool enabled}) {
+    return FalconmetricsFlutterPlatform.instance.setDebugLoggingEnabled(
+      enabled: enabled,
+    );
+  }
+
   /// Tracks a conversion event
+  ///
+  /// Use [event] to track a conversion event.
   Future<void> trackEvent({required TrackingEvent event}) {
     return FalconmetricsFlutterPlatform.instance.trackEvent(event: event);
   }

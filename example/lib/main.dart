@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final falconmetricsFlutterPlugin = FalconmetricsFlutter();
+  await falconmetricsFlutterPlugin.setDebugLoggingEnabled(enabled: true);
+
   await falconmetricsFlutterPlugin.init(apiKey: 'myApiKey');
 
   runApp(const MyApp());

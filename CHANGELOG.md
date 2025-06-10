@@ -2,7 +2,9 @@
 ## 0.2.0
 
 * Support Flutter 3.32.0
-* iOS: Upgrade to Falconmetrics Sdk 0.1.4
+* Add debug logging
+* iOS: Upgrade to Falconmetrics Sdk 0.2.0
+* Android: Upgrade to Falconmetrics Sdk 0.2.0
 
 
 ## 0.1.0
