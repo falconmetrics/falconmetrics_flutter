@@ -30,11 +30,19 @@ class FalconmetricsFlutterPlugin : FlutterPlugin, MethodCallHandler {
 
     override fun onMethodCall(call: MethodCall, result: Result) {
         if (call.method == "init") {
-            val apiKey = call.argument<String>("apiKey") ?: ""
+            val apiKey = call.argument<String>("apiKey")
+            if (apiKey == null) {
+                result.error("INVALID_ARGUMENTS", "ApiKey argument is required", null)
+                return
+            }
             falconMetrics.init(apiKey)
             result.success(null)
         } else if (call.method == "setDebugLoggingEnabled") {
-            val enabled = call.argument<Boolean>("enabled") == true
+           val enabled = call.argument<Boolean>("enabled")
+            if (enabled == null) {
+                result.error("INVALID_ARGUMENTS", "Enabled argument is required", null)
+                return
+            }
             falconMetrics.setDebugLogging(enabled)
             result.success(null)
         } else if (call.method == "trackEvent") {
