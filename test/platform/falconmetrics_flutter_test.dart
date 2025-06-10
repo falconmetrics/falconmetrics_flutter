@@ -15,6 +15,10 @@ class MockFalconmetricsFlutterPlatform
   Future<void> trackEvent({required TrackingEvent event}) => Future.value();
 
   @override
+  Future<void> setDebugLoggingEnabled({required bool enabled}) =>
+      Future.value();
+
+  @override
   Future<void> setTrackingEnabled({required bool enabled}) => Future.value();
 
   @override
@@ -52,5 +56,13 @@ void main() {
     FalconmetricsFlutterPlatform.instance = fakePlatform;
     final result = await falconmetricsFlutterPlugin.isTrackingEnabled();
     expect(result, false);
+  });
+
+  test('setDebugLoggingEnabled', () async {
+    FalconmetricsFlutter falconmetricsFlutterPlugin = FalconmetricsFlutter();
+    MockFalconmetricsFlutterPlatform fakePlatform =
+        MockFalconmetricsFlutterPlatform();
+    FalconmetricsFlutterPlatform.instance = fakePlatform;
+    await falconmetricsFlutterPlugin.setDebugLoggingEnabled(enabled: true);
   });
 }

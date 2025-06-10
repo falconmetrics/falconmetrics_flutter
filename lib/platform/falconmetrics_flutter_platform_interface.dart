@@ -32,6 +32,12 @@ abstract class FalconmetricsFlutterPlatform extends PlatformInterface {
     throw UnimplementedError('init() has not been implemented.');
   }
 
+  Future<void> setDebugLoggingEnabled({required bool enabled}) {
+    throw UnimplementedError(
+      'setDebugLoggingEnabled() has not been implemented.',
+    );
+  }
+
   /// Tracks a conversion event
   Future<void> trackEvent({required TrackingEvent event}) {
     throw UnimplementedError('trackEvent() has not been implemented.');
