@@ -1,3 +1,5 @@
+## 0.2.1
+* Bump iOS and Android sdks
 
 ## 0.2.0
 
