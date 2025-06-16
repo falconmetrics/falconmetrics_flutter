@@ -13,7 +13,7 @@ let package = Package(
         // FalconMetrics iOS SDK (hosted via Git)
         .package(
             url: "https://github.com/falconmetrics/falconmetrics-ios-spm.git",
-            from: "0.2.1"
+            from: "0.2.2"
         ),
         // Swift Protobuf
         .package(
