@@ -1,3 +1,6 @@
+## 0.2.3
+* Fix an issue on Android with Proguard
+
 ## 0.2.2
 * Several fixes
 
