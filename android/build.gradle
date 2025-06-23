@@ -52,6 +52,9 @@ android {
 
     defaultConfig {
         minSdk = 21
+        
+        // Apply ProGuard rules
+        consumerProguardFiles 'proguard-rules.pro'
     }
 
     protobuf {
