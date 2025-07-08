@@ -157,6 +157,16 @@ Check the [example](example/) directory for a complete sample application demons
 - `CouponAppliedEvent()` - Track when a coupon is applied
 - `PurchaseEvent()` - Track a purchase transaction
 
+### Google advertising ID
+
+For a more accurate attribution it is recommended to enable Google advertising ID tracking. To do this, add the following permission to your AndroidManifest.xml file: 
+
+```xml
+  <uses-permission android:name="com.google.android.gms.permission.AD_ID"/>
+```
+
+The FalconMetrics sdk automatically tracks the Google advertising ID for you and takes into account the users consent to use the ID.
+
 ## License
 
 This project is licensed under the terms found in the [LICENSE](LICENSE) file.
