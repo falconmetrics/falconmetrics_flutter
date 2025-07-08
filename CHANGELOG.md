@@ -1,3 +1,6 @@
+## 0.3.0
+* Bump iOS and Android sdks
+
 ## 0.2.3
 * Fix an issue on Android with Proguard
 
