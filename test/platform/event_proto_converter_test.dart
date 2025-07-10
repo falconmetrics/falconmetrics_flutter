@@ -1,4 +1,4 @@
-import 'package:falconmetrics_flutter/events.dart';
+import 'package:falconmetrics_flutter/src/events.dart';
 import 'package:falconmetrics_flutter/src/event_proto_converter.dart';
 import 'package:falconmetrics_flutter/src/generated/event.pb.dart' as pb;
 import 'package:flutter_test/flutter_test.dart';

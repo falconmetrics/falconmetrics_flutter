@@ -1,4 +1,4 @@
-import 'package:falconmetrics_flutter/events.dart';
+import 'package:falconmetrics_flutter/src/events.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
