@@ -1,6 +1,6 @@
 import 'package:falconmetrics_flutter/src/events.dart';
 import 'package:falconmetrics_flutter/src/falconmetrics_flutter.dart';
-import 'package:falconmetrics_flutter/src/falconmetrics_flutter_platform_interface.dart';
+import 'package:falconmetrics_flutter/src/platform/falconmetrics_flutter_platform_interface.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
@@ -10,6 +10,8 @@ class MockFalconmetricsFlutterPlatform extends Mock
     implements FalconmetricsFlutterPlatform {}
 
 void main() {
+  // Initialize the Flutter test binding
+  TestWidgetsFlutterBinding.ensureInitialized();
   final FalconmetricsFlutterPlatform initialPlatform =
       FalconmetricsFlutterPlatform.instance;
 
