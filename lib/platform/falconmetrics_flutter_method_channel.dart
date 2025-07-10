@@ -14,8 +14,11 @@ class MethodChannelFalconmetricsFlutter extends FalconmetricsFlutterPlatform {
   );
 
   @override
-  Future<void> init({required String apiKey}) async {
-    await methodChannel.invokeMethod<void>('init', {'apiKey': apiKey});
+  Future<void> init({required String apiKey, String? fbAppId}) async {
+    await methodChannel.invokeMethod<void>('init', {
+      'apiKey': apiKey,
+      'fbAppId': fbAppId,
+    });
   }
 
   @override

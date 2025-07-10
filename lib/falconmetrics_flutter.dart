@@ -11,8 +11,12 @@ class FalconmetricsFlutter {
   /// you call this method, the better.
   ///
   /// Supply your unique [apiKey] to initialise the plugin for your app.
-  Future<void> init({required String apiKey}) {
-    return FalconmetricsFlutterPlatform.instance.init(apiKey: apiKey);
+  /// Optionally supply your [fbAppId] to enable meta referrer support.
+  Future<void> init({required String apiKey, String? fbAppId}) {
+    return FalconmetricsFlutterPlatform.instance.init(
+      apiKey: apiKey,
+      fbAppId: fbAppId,
+    );
   }
 
   /// Enable or disable debug logging

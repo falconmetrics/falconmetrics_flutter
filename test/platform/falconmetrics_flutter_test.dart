@@ -3,13 +3,15 @@ import 'package:falconmetrics_flutter/falconmetrics_flutter.dart';
 import 'package:falconmetrics_flutter/platform/falconmetrics_flutter_method_channel.dart';
 import 'package:falconmetrics_flutter/platform/falconmetrics_flutter_platform_interface.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mocktail/mocktail.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 class MockFalconmetricsFlutterPlatform
     with MockPlatformInterfaceMixin
     implements FalconmetricsFlutterPlatform {
   @override
-  Future<void> init({required String apiKey}) => Future.value();
+  Future<void> init({required String apiKey, String? fbAppId}) =>
+      Future.value();
 
   @override
   Future<void> trackEvent({required TrackingEvent event}) => Future.value();
@@ -39,6 +41,8 @@ void main() {
         MockFalconmetricsFlutterPlatform();
     FalconmetricsFlutterPlatform.instance = fakePlatform;
     await falconmetricsFlutterPlugin.init(apiKey: '123');
+
+    verify(() => fakePlatform.init(apiKey: '123')).called(1);
   });
 
   test('setTrackingEnabled', () async {
@@ -64,5 +68,20 @@ void main() {
         MockFalconmetricsFlutterPlatform();
     FalconmetricsFlutterPlatform.instance = fakePlatform;
     await falconmetricsFlutterPlugin.setDebugLoggingEnabled(enabled: true);
+  });
+
+  test('Track event', () async {
+    FalconmetricsFlutter falconmetricsFlutterPlugin = FalconmetricsFlutter();
+    MockFalconmetricsFlutterPlatform fakePlatform =
+        MockFalconmetricsFlutterPlatform();
+    FalconmetricsFlutterPlatform.instance = fakePlatform;
+    await falconmetricsFlutterPlugin.trackEvent(
+      event: AddedToCartEvent(
+        itemId: '123',
+        quantity: 1,
+        productPriceInCents: 100,
+        currency: 'USD',
+      ),
+    );
   });
 }
