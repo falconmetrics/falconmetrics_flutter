@@ -1,81 +1,88 @@
 import 'package:falconmetrics_flutter/events.dart';
 import 'package:falconmetrics_flutter/falconmetrics_flutter.dart';
-import 'package:falconmetrics_flutter/platform/falconmetrics_flutter_method_channel.dart';
 import 'package:falconmetrics_flutter/platform/falconmetrics_flutter_platform_interface.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
-class MockFalconmetricsFlutterPlatform
+class MockFalconmetricsFlutterPlatform extends Mock
     with MockPlatformInterfaceMixin
-    implements FalconmetricsFlutterPlatform {
-  @override
-  Future<void> init({required String apiKey, String? fbAppId}) =>
-      Future.value();
-
-  @override
-  Future<void> trackEvent({required TrackingEvent event}) => Future.value();
-
-  @override
-  Future<void> setDebugLoggingEnabled({required bool enabled}) =>
-      Future.value();
-
-  @override
-  Future<void> setTrackingEnabled({required bool enabled}) => Future.value();
-
-  @override
-  Future<bool> isTrackingEnabled() => Future.value(false);
-}
+    implements FalconmetricsFlutterPlatform {}
 
 void main() {
   final FalconmetricsFlutterPlatform initialPlatform =
       FalconmetricsFlutterPlatform.instance;
 
-  test('$MethodChannelFalconmetricsFlutter is the default instance', () {
-    expect(initialPlatform, isInstanceOf<MethodChannelFalconmetricsFlutter>());
+  late FalconmetricsFlutter sut;
+
+  setUpAll(() {
+    registerFallbackValue(UserSignedUpOrLoggedInEvent());
+  });
+
+  setUp(() {
+    FalconmetricsFlutterPlatform.instance = MockFalconmetricsFlutterPlatform();
+
+    when(
+      () => FalconmetricsFlutterPlatform.instance.init(
+        apiKey: any(named: 'apiKey'),
+        fbAppId: any(named: 'fbAppId'),
+      ),
+    ).thenAnswer((_) => Future.value());
+
+    when(
+      () => FalconmetricsFlutterPlatform.instance.setTrackingEnabled(
+        enabled: any(named: 'enabled'),
+      ),
+    ).thenAnswer((_) => Future.value());
+
+    when(
+      () => FalconmetricsFlutterPlatform.instance.trackEvent(
+        event: any(named: 'event'),
+      ),
+    ).thenAnswer((_) => Future.value());
+
+    when(
+      () => FalconmetricsFlutterPlatform.instance.isTrackingEnabled(),
+    ).thenAnswer((_) => Future.value(false));
+
+    when(
+      () => FalconmetricsFlutterPlatform.instance.setDebugLoggingEnabled(
+        enabled: any(named: 'enabled'),
+      ),
+    ).thenAnswer((_) => Future.value());
+
+    sut = FalconmetricsFlutter();
+  });
+
+  tearDown(() {
+    FalconmetricsFlutterPlatform.instance = initialPlatform;
   });
 
   test('getPlatformVersion', () async {
-    FalconmetricsFlutter falconmetricsFlutterPlugin = FalconmetricsFlutter();
-    MockFalconmetricsFlutterPlatform fakePlatform =
-        MockFalconmetricsFlutterPlatform();
-    FalconmetricsFlutterPlatform.instance = fakePlatform;
-    await falconmetricsFlutterPlugin.init(apiKey: '123');
+    await sut.init(apiKey: '123', fbAppId: '456');
 
-    verify(() => fakePlatform.init(apiKey: '123')).called(1);
+    verify(() => sut.init(apiKey: '123', fbAppId: '456')).called(1);
   });
 
   test('setTrackingEnabled', () async {
-    FalconmetricsFlutter falconmetricsFlutterPlugin = FalconmetricsFlutter();
-    MockFalconmetricsFlutterPlatform fakePlatform =
-        MockFalconmetricsFlutterPlatform();
-    FalconmetricsFlutterPlatform.instance = fakePlatform;
-    await falconmetricsFlutterPlugin.setTrackingEnabled(enabled: true);
+    await sut.setTrackingEnabled(enabled: true);
+
+    verify(() => sut.setTrackingEnabled(enabled: true)).called(1);
   });
 
   test('isTrackingEnabled', () async {
-    FalconmetricsFlutter falconmetricsFlutterPlugin = FalconmetricsFlutter();
-    MockFalconmetricsFlutterPlatform fakePlatform =
-        MockFalconmetricsFlutterPlatform();
-    FalconmetricsFlutterPlatform.instance = fakePlatform;
-    final result = await falconmetricsFlutterPlugin.isTrackingEnabled();
+    final result = await sut.isTrackingEnabled();
     expect(result, false);
   });
 
   test('setDebugLoggingEnabled', () async {
-    FalconmetricsFlutter falconmetricsFlutterPlugin = FalconmetricsFlutter();
-    MockFalconmetricsFlutterPlatform fakePlatform =
-        MockFalconmetricsFlutterPlatform();
-    FalconmetricsFlutterPlatform.instance = fakePlatform;
-    await falconmetricsFlutterPlugin.setDebugLoggingEnabled(enabled: true);
+    await sut.setDebugLoggingEnabled(enabled: true);
+
+    verify(() => sut.setDebugLoggingEnabled(enabled: true)).called(1);
   });
 
   test('Track event', () async {
-    FalconmetricsFlutter falconmetricsFlutterPlugin = FalconmetricsFlutter();
-    MockFalconmetricsFlutterPlatform fakePlatform =
-        MockFalconmetricsFlutterPlatform();
-    FalconmetricsFlutterPlatform.instance = fakePlatform;
-    await falconmetricsFlutterPlugin.trackEvent(
+    await sut.trackEvent(
       event: AddedToCartEvent(
         itemId: '123',
         quantity: 1,
@@ -83,5 +90,16 @@ void main() {
         currency: 'USD',
       ),
     );
+
+    verify(
+      () => sut.trackEvent(
+        event: AddedToCartEvent(
+          itemId: '123',
+          quantity: 1,
+          productPriceInCents: 100,
+          currency: 'USD',
+        ),
+      ),
+    ).called(1);
   });
 }
