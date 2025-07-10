@@ -1,5 +1,6 @@
 import 'package:falconmetrics_flutter/events.dart';
-import 'package:falconmetrics_flutter/platform/generated/event.pb.dart' as pb;
+
+import 'generated/event.pb.dart' as pb;
 
 class EventProtoConverter {
   pb.TrackingEvent convert(TrackingEvent event) {

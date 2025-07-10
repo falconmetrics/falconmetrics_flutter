@@ -1,5 +1,5 @@
 import 'package:falconmetrics_flutter/events.dart';
-import 'package:falconmetrics_flutter/platform/event_proto_converter.dart';
+import 'event_proto_converter.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 

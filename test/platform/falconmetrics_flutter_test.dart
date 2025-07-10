@@ -1,6 +1,6 @@
 import 'package:falconmetrics_flutter/events.dart';
 import 'package:falconmetrics_flutter/falconmetrics_flutter.dart';
-import 'package:falconmetrics_flutter/platform/falconmetrics_flutter_platform_interface.dart';
+import 'package:falconmetrics_flutter/src/falconmetrics_flutter_platform_interface.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';

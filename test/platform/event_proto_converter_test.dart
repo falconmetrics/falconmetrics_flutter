@@ -1,6 +1,6 @@
 import 'package:falconmetrics_flutter/events.dart';
-import 'package:falconmetrics_flutter/platform/event_proto_converter.dart';
-import 'package:falconmetrics_flutter/platform/generated/event.pb.dart' as pb;
+import 'package:falconmetrics_flutter/src/event_proto_converter.dart';
+import 'package:falconmetrics_flutter/src/generated/event.pb.dart' as pb;
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
