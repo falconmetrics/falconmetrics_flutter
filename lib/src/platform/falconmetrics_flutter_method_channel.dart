@@ -1,8 +1,8 @@
-import 'package:falconmetrics_flutter/events.dart';
-import 'package:falconmetrics_flutter/platform/event_proto_converter.dart';
+import 'package:falconmetrics_flutter/src/events.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
+import 'event_proto_converter.dart';
 import 'falconmetrics_flutter_platform_interface.dart';
 
 /// An implementation of [FalconmetricsFlutterPlatform] that uses method channels.
@@ -14,8 +14,11 @@ class MethodChannelFalconmetricsFlutter extends FalconmetricsFlutterPlatform {
   );
 
   @override
-  Future<void> init({required String apiKey}) async {
-    await methodChannel.invokeMethod<void>('init', {'apiKey': apiKey});
+  Future<void> init({required String apiKey, String? fbAppId}) async {
+    await methodChannel.invokeMethod<void>('init', {
+      'apiKey': apiKey,
+      'fbAppId': fbAppId,
+    });
   }
 
   @override

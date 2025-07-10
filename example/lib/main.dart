@@ -8,18 +8,36 @@ void main() async {
 
   await falconmetricsFlutterPlugin.init(apiKey: 'myApiKey');
 
-  runApp(const MyApp());
+  runApp(MyApp(falconmetricsFlutter: falconmetricsFlutterPlugin));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({super.key, required this.falconmetricsFlutter});
+
+  final FalconmetricsFlutter falconmetricsFlutter;
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(title: const Text('Plugin example app')),
-        body: Center(child: Text('FalconMetrics')),
+        body: Column(
+          children: [
+            Text(
+              'FalconMetrics',
+              style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 20),
+            TextButton(
+              onPressed: () {
+                falconmetricsFlutter.trackEvent(
+                  event: const UserSignedUpOrLoggedInEvent(),
+                );
+              },
+              child: const Text('Track event'),
+            ),
+          ],
+        ),
       ),
     );
   }

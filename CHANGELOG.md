@@ -1,3 +1,6 @@
+## 0.4.0
+* Add support for Meta install referrer
+
 ## 0.3.0
 * Bump iOS and Android sdks
 

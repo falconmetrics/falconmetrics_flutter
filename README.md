@@ -167,6 +167,26 @@ For a more accurate attribution it is recommended to enable Google advertising I
 
 The FalconMetrics sdk automatically tracks the Google advertising ID for you and takes into account the users consent to use the ID.
 
+### Meta Install referrer
+
+The meta referrer is more elaborate than the Google Play Install referrer. Google Play Install referrer only provides info for same session click through installs, while the Meta Referrer provides info for view through installs, click through installs and multiple session click through installs. The FalconMetrics sdk automatically retrieves and processes the meta referrer in order to provide the most accurate attribution possible.
+
+Add the following `<queries>` element inside the root `<manifest>` tag to enable Meta Referrer support:
+
+```xml
+<queries>
+  <package android:name="com.facebook.katana" />
+</queries>
+
+<queries>
+  <package android:name="com.instagram.android" />
+</queries>
+
+<queries>
+  <package android:name="com.facebook.lite" />
+</queries>
+```
+
 ## License
 
 This project is licensed under the terms found in the [LICENSE](LICENSE) file.

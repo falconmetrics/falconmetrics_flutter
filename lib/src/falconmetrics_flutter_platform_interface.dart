@@ -1,4 +1,4 @@
-import 'package:falconmetrics_flutter/events.dart';
+import 'package:falconmetrics_flutter/src/events.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 import 'falconmetrics_flutter_method_channel.dart';
@@ -28,7 +28,8 @@ abstract class FalconmetricsFlutterPlatform extends PlatformInterface {
   /// Initialise the falconmetrics plugin
   ///
   /// Supply your unique [apiKey] to initialise the plugin for your app.
-  Future<void> init({required String apiKey}) {
+  /// Optionally supply your [fbAppId] to enable meta referrer support.
+  Future<void> init({required String apiKey, String? fbAppId}) {
     throw UnimplementedError('init() has not been implemented.');
   }
 
