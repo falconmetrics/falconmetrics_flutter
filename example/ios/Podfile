@@ -9,6 +9,7 @@ project 'Runner', {
   'Profile' => :release,
   'Release' => :release,
 }
+pod 'FalconMetrics', :podspec => 'https://raw.githubusercontent.com/falconmetrics/falconmetrics-ios-spm/refs/tags/0.3.0/FalconMetrics.podspec'
 
 def flutter_root
   generated_xcode_build_settings_path = File.expand_path(File.join('..', 'Flutter', 'Generated.xcconfig'), __FILE__)
@@ -29,18 +30,15 @@ flutter_ios_podfile_setup
 
 target 'Runner' do
   use_frameworks!
-  use_modular_headers!
 
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
+  target 'RunnerTests' do
+    inherit! :search_paths
+  end
 end
 
 post_install do |installer|
   installer.pods_project.targets.each do |target|
     flutter_additional_ios_build_settings(target)
-    
-    # Add the following block to ensure proper build settings for iOS 13.0+
-    target.build_configurations.each do |config|
-      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '13.0'
-    end
   end
 end
