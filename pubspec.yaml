@@ -28,4 +28,3 @@ flutter:
         pluginClass: FalconmetricsFlutterPlugin
       ios:
         pluginClass: FalconmetricsFlutterPlugin
-        podspec: ios/FalconMetricsFlutter.podspec
