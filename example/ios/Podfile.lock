@@ -14,7 +14,6 @@ DEPENDENCIES:
   - falconmetrics_flutter (from `.symlinks/plugins/falconmetrics_flutter/ios`)
   - Flutter (from `Flutter`)
   - integration_test (from `.symlinks/plugins/integration_test/ios`)
-  - SwiftProtobuf (~> 1.27.0)
 
 SPEC REPOS:
   trunk:
@@ -37,6 +36,6 @@ SPEC CHECKSUMS:
   integration_test: 252f60fa39af5e17c3aa9899d35d908a0721b573
   SwiftProtobuf: b109bd17979d7993a84da14b1e1fdd8b0ded934a
 
-PODFILE CHECKSUM: c3a3993ef8f4fb305ac5fd839b34cbb245999b0d
+PODFILE CHECKSUM: 7d0942589657dd560d10a139f170e65b45e1db92
 
 COCOAPODS: 1.16.2
