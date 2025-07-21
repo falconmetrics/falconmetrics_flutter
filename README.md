@@ -18,7 +18,7 @@ Add `falconmetrics_flutter` to your `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  falconmetrics_flutter: ^0.1.0
+  falconmetrics_flutter: ^0.4.2
 ```
 
 Then run:
