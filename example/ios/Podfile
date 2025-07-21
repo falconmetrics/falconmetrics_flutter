@@ -9,7 +9,7 @@ project 'Runner', {
   'Profile' => :release,
   'Release' => :release,
 }
-pod 'FalconMetrics', :podspec => 'https://raw.githubusercontent.com/falconmetrics/falconmetrics-ios-spm/refs/tags/0.3.0/FalconMetrics.podspec'
+source 'https://github.com/falconmetrics/falconmetrics-ios-pods.git' 
 
 def flutter_root
   generated_xcode_build_settings_path = File.expand_path(File.join('..', 'Flutter', 'Generated.xcconfig'), __FILE__)

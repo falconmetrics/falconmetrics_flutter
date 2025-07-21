@@ -39,10 +39,10 @@ FalconMetrics uses SKAdNetwork for iOS. No additional setup is required as the S
 
 #### CocoaPods
 
-Add the following to your `Podfile`:
+Add the following to your App's `Podfile`:
 
 ```ruby
-pod 'FalconMetrics', :podspec => 'https://raw.githubusercontent.com/falconmetrics/falconmetrics-ios-spm/refs/tags/0.3.0/FalconMetrics.podspec'
+source 'https://github.com/falconmetrics/falconmetrics-ios-pods.git' 
 ```
 
 ## Usage
