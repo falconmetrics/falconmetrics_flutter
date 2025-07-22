@@ -28,12 +28,12 @@ struct Pb_TrackingEvent: Sendable {
 
   var event: Pb_TrackingEvent.OneOf_Event? = nil
 
-  var userSignedUpOrLoggedIn: Pb_UserSignedUpOrLoggedInEvent {
+  var completeRegistration: Pb_CompleteRegistrationEvent {
     get {
-      if case .userSignedUpOrLoggedIn(let v)? = event {return v}
-      return Pb_UserSignedUpOrLoggedInEvent()
+      if case .completeRegistration(let v)? = event {return v}
+      return Pb_CompleteRegistrationEvent()
     }
-    set {event = .userSignedUpOrLoggedIn(newValue)}
+    set {event = .completeRegistration(newValue)}
   }
 
   var addedToCart: Pb_AddedToCartEvent {
@@ -44,10 +44,10 @@ struct Pb_TrackingEvent: Sendable {
     set {event = .addedToCart(newValue)}
   }
 
-  var subscribe: Pb_SubscribeEvent {
+  var subscribe: Pb_SubscriptionEvent {
     get {
       if case .subscribe(let v)? = event {return v}
-      return Pb_SubscribeEvent()
+      return Pb_SubscriptionEvent()
     }
     set {event = .subscribe(newValue)}
   }
@@ -71,9 +71,9 @@ struct Pb_TrackingEvent: Sendable {
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   enum OneOf_Event: Equatable, Sendable {
-    case userSignedUpOrLoggedIn(Pb_UserSignedUpOrLoggedInEvent)
+    case completeRegistration(Pb_CompleteRegistrationEvent)
     case addedToCart(Pb_AddedToCartEvent)
-    case subscribe(Pb_SubscribeEvent)
+    case subscribe(Pb_SubscriptionEvent)
     case purchase(Pb_PurchaseEvent)
     case customEvent(Pb_CustomEvent)
 
@@ -82,8 +82,8 @@ struct Pb_TrackingEvent: Sendable {
   init() {}
 }
 
-/// Event to track a user signing up or logging in
-struct Pb_UserSignedUpOrLoggedInEvent: Sendable {
+/// Event to track when a user completes their registration
+struct Pb_CompleteRegistrationEvent: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -140,7 +140,7 @@ struct Pb_AddedToCartEvent: Sendable {
 }
 
 /// Event to track a subscription
-struct Pb_SubscribeEvent: Sendable {
+struct Pb_SubscriptionEvent: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -347,7 +347,7 @@ fileprivate let _protobuf_package = "pb"
 extension Pb_TrackingEvent: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".TrackingEvent"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "user_signed_up_or_logged_in"),
+    1: .standard(proto: "complete_registration"),
     2: .standard(proto: "added_to_cart"),
     3: .same(proto: "subscribe"),
     4: .same(proto: "purchase"),
@@ -361,16 +361,16 @@ extension Pb_TrackingEvent: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try {
-        var v: Pb_UserSignedUpOrLoggedInEvent?
+        var v: Pb_CompleteRegistrationEvent?
         var hadOneofValue = false
         if let current = self.event {
           hadOneofValue = true
-          if case .userSignedUpOrLoggedIn(let m) = current {v = m}
+          if case .completeRegistration(let m) = current {v = m}
         }
         try decoder.decodeSingularMessageField(value: &v)
         if let v = v {
           if hadOneofValue {try decoder.handleConflictingOneOf()}
-          self.event = .userSignedUpOrLoggedIn(v)
+          self.event = .completeRegistration(v)
         }
       }()
       case 2: try {
@@ -387,7 +387,7 @@ extension Pb_TrackingEvent: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
         }
       }()
       case 3: try {
-        var v: Pb_SubscribeEvent?
+        var v: Pb_SubscriptionEvent?
         var hadOneofValue = false
         if let current = self.event {
           hadOneofValue = true
@@ -436,8 +436,8 @@ extension Pb_TrackingEvent: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
     // https://github.com/apple/swift-protobuf/issues/1182
     switch self.event {
-    case .userSignedUpOrLoggedIn?: try {
-      guard case .userSignedUpOrLoggedIn(let v)? = self.event else { preconditionFailure() }
+    case .completeRegistration?: try {
+      guard case .completeRegistration(let v)? = self.event else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
     }()
     case .addedToCart?: try {
@@ -468,8 +468,8 @@ extension Pb_TrackingEvent: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
   }
 }
 
-extension Pb_UserSignedUpOrLoggedInEvent: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = _protobuf_package + ".UserSignedUpOrLoggedInEvent"
+extension Pb_CompleteRegistrationEvent: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = _protobuf_package + ".CompleteRegistrationEvent"
   static let _protobuf_nameMap = SwiftProtobuf._NameMap()
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -481,7 +481,7 @@ extension Pb_UserSignedUpOrLoggedInEvent: SwiftProtobuf.Message, SwiftProtobuf._
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: Pb_UserSignedUpOrLoggedInEvent, rhs: Pb_UserSignedUpOrLoggedInEvent) -> Bool {
+  static func ==(lhs: Pb_CompleteRegistrationEvent, rhs: Pb_CompleteRegistrationEvent) -> Bool {
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -553,8 +553,8 @@ extension Pb_AddedToCartEvent: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
   }
 }
 
-extension Pb_SubscribeEvent: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = _protobuf_package + ".SubscribeEvent"
+extension Pb_SubscriptionEvent: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = _protobuf_package + ".SubscriptionEvent"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "currency"),
     2: .same(proto: "predictedLtvValueInCents"),
@@ -587,7 +587,7 @@ extension Pb_SubscribeEvent: SwiftProtobuf.Message, SwiftProtobuf._MessageImplem
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: Pb_SubscribeEvent, rhs: Pb_SubscribeEvent) -> Bool {
+  static func ==(lhs: Pb_SubscriptionEvent, rhs: Pb_SubscriptionEvent) -> Bool {
     if lhs._currency != rhs._currency {return false}
     if lhs._predictedLtvValueInCents != rhs._predictedLtvValueInCents {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}

@@ -10,8 +10,8 @@ import Foundation
 
 func convertTrackingEvent(event: Pb_TrackingEvent) throws -> FalconMetrics.BaseEventBuilder {
     switch event.event {
-    case .userSignedUpOrLoggedIn:
-        return FalconMetricsSdk.shared.createSignupBuilder()
+    case .completeRegistration:
+        return FalconMetricsSdk.shared.createCompleteRegistrationBuilder()
 
     case .addedToCart:
         return FalconMetricsSdk.shared.createAddToCartBuilder()
@@ -23,15 +23,15 @@ func convertTrackingEvent(event: Pb_TrackingEvent) throws -> FalconMetrics.BaseE
             .withCartId( event.addedToCart.cartID)
         
 
-    case .couponApplied:
-        return FalconMetricsSdk.shared.createCouponBuilder()
-            .withCouponCode( event.couponApplied.couponCode)
-            .withCartId( event.couponApplied.cartID)
+    case .subscribe:
+        return FalconMetricsSdk.shared.createSubscriptionBuilder()
+            .withCurrency( event.subscribe.currency)
+            .withPredictedValueInCents(Int(event.subscribe.predictedLtvValueInCents))
         
 
     case .purchase:
         return FalconMetricsSdk.shared.createPurchaseBuilder()
-            .withItemId(event.purchase.itemID)
+            .withItemIds(event.purchase.itemIds)
             .withQuantity(Int(event.purchase.quantity))
             .withTransactionId( event.purchase.transactionID)
             .withProductPrice(Int(event.purchase.productPriceInCents))
@@ -43,6 +43,11 @@ func convertTrackingEvent(event: Pb_TrackingEvent) throws -> FalconMetrics.BaseE
             .withTax(Int( event.purchase.taxInCents))
             .withShipping(Int(event.purchase.shippingCostInCents))
             .withDiscount(Int(event.purchase.discountInCents))
+        
+    case .customEvent:
+        return FalconMetricsSdk.shared.createCustomEventBuilder()
+            .withAttributes(event.customEvent.attributes)
+            .withEventName(event.customEvent.eventName)
 
     @unknown default:
         throw NSError(domain: "TrackingError", code: 2, userInfo: [NSLocalizedDescriptionKey: "Unknown event case"])
