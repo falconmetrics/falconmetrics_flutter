@@ -18,7 +18,7 @@ void main() {
   late FalconmetricsFlutter sut;
 
   setUpAll(() {
-    registerFallbackValue(UserSignedUpOrLoggedInEvent());
+    registerFallbackValue(CompleteRegistrationEvent());
   });
 
   setUp(() {

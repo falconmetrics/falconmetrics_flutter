@@ -6,8 +6,8 @@ sealed class TrackingEvent extends Equatable {
 }
 
 /// Event to track a user signing up or logging in
-class UserSignedUpOrLoggedInEvent extends TrackingEvent {
-  const UserSignedUpOrLoggedInEvent();
+class CompleteRegistrationEvent extends TrackingEvent {
+  const CompleteRegistrationEvent();
 
   @override
   List<Object?> get props => [];
@@ -60,22 +60,45 @@ class AddedToCartEvent extends TrackingEvent {
 }
 
 /// Event to track a coupon being applied to a cart
-class CouponAppliedEvent extends TrackingEvent {
-  const CouponAppliedEvent({required this.couponCode, this.cartId});
+class SubscriptionEvent extends TrackingEvent {
+  const SubscriptionEvent({this.currencyCode, this.predictedLtvValueInCents});
 
-  /// The unique code of the coupon
-  final String couponCode;
+  /// The currency of the product in ISO 4217 format
+  ///
+  /// For example, USD, JPY, EUR, etc.
+  final String? currencyCode;
 
-  /// The id (session id) of the cart
-  final String? cartId;
+  /// The predicted LTV value in the lowest currency unit.
+  ///
+  /// For example, if the currency is USD, in case the price is $10.99, the
+  /// price in cents would be 1099. In case of single digit currencies, such as
+  /// the currency is Yen (JPY), the price would be 109 if the price is 109 Yen.
+  final int? predictedLtvValueInCents;
 
   @override
-  List<Object?> get props => [couponCode, cartId];
+  List<Object?> get props => [currencyCode, predictedLtvValueInCents];
+}
+
+/// Custom event to track a custom event
+class CustomEvent extends TrackingEvent {
+  const CustomEvent({required this.eventName, this.attributes});
+
+  /// The name of the event make sure it matches the event in your ad network.
+  final String eventName;
+
+  /// Attributes associated with the event
+  ///
+  /// make sure to only use primitive types as values
+  /// for example: String, Int, Double, Boolean, etc.
+  final Map<String, Object>? attributes;
+
+  @override
+  List<Object?> get props => [eventName, attributes];
 }
 
 class PurchaseEvent extends TrackingEvent {
   const PurchaseEvent({
-    required this.itemId,
+    required this.itemIds,
     required this.quantity,
     required this.transactionId,
     required this.productPriceInCents,
@@ -89,8 +112,8 @@ class PurchaseEvent extends TrackingEvent {
     this.discountInCents,
   });
 
-  /// The unique id of the item or product
-  final String itemId;
+  /// The unique ids of the items or products
+  final List<String> itemIds;
 
   /// The quantity of the item or product
   final int quantity;
@@ -151,7 +174,7 @@ class PurchaseEvent extends TrackingEvent {
 
   @override
   List<Object?> get props => [
-    itemId,
+    itemIds,
     quantity,
     productPriceInCents,
     currency,
