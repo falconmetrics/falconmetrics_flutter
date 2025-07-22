@@ -557,7 +557,7 @@ extension Pb_SubscriptionEvent: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
   static let protoMessageName: String = _protobuf_package + ".SubscriptionEvent"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "currency"),
-    2: .same(proto: "predictedLtvValueInCents"),
+    2: .standard(proto: "predicted_ltv_value_in_cents"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {

@@ -5,7 +5,7 @@ sealed class TrackingEvent extends Equatable {
   const TrackingEvent();
 }
 
-/// Event to track a user signing up or logging in
+///Event to track when a user completes their registration
 class CompleteRegistrationEvent extends TrackingEvent {
   const CompleteRegistrationEvent();
 
@@ -59,7 +59,7 @@ class AddedToCartEvent extends TrackingEvent {
   ];
 }
 
-/// Event to track a coupon being applied to a cart
+/// Event to track a subscription
 class SubscriptionEvent extends TrackingEvent {
   const SubscriptionEvent({this.currencyCode, this.predictedLtvValueInCents});
 

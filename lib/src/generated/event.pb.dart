@@ -352,8 +352,7 @@ class SubscriptionEvent extends $pb.GeneratedMessage {
       createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'currency')
     ..a<$core.int>(2, _omitFieldNames ? '' : 'predictedLtvValueInCents',
-        $pb.PbFieldType.O3,
-        protoName: 'predictedLtvValueInCents')
+        $pb.PbFieldType.O3)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')

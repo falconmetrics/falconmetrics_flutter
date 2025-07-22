@@ -29,7 +29,7 @@ message AddedToCartEvent {
 // Event to track a subscription
 message SubscriptionEvent {
   optional string currency = 1;       // The currency in ISO 4217 format (e.g., USD, JPY)
-  optional int32 predictedLtvValueInCents = 2;  // The predicted LTV value in cents (optional)
+  optional int32 predicted_ltv_value_in_cents = 2;  // The predicted LTV value in cents (optional)
 }
 
 // Event to track a purchase

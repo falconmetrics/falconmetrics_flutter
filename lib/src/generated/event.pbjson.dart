@@ -148,7 +148,7 @@ const SubscriptionEvent$json = {
       '17': true
     },
     {
-      '1': 'predictedLtvValueInCents',
+      '1': 'predicted_ltv_value_in_cents',
       '3': 2,
       '4': 1,
       '5': 5,
@@ -159,15 +159,16 @@ const SubscriptionEvent$json = {
   ],
   '8': [
     {'1': '_currency'},
-    {'1': '_predictedLtvValueInCents'},
+    {'1': '_predicted_ltv_value_in_cents'},
   ],
 };
 
 /// Descriptor for `SubscriptionEvent`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List subscriptionEventDescriptor = $convert.base64Decode(
-    'ChFTdWJzY3JpcHRpb25FdmVudBIfCghjdXJyZW5jeRgBIAEoCUgAUghjdXJyZW5jeYgBARI/Ch'
-    'hwcmVkaWN0ZWRMdHZWYWx1ZUluQ2VudHMYAiABKAVIAVIYcHJlZGljdGVkTHR2VmFsdWVJbkNl'
-    'bnRziAEBQgsKCV9jdXJyZW5jeUIbChlfcHJlZGljdGVkTHR2VmFsdWVJbkNlbnRz');
+    'ChFTdWJzY3JpcHRpb25FdmVudBIfCghjdXJyZW5jeRgBIAEoCUgAUghjdXJyZW5jeYgBARJDCh'
+    'xwcmVkaWN0ZWRfbHR2X3ZhbHVlX2luX2NlbnRzGAIgASgFSAFSGHByZWRpY3RlZEx0dlZhbHVl'
+    'SW5DZW50c4gBAUILCglfY3VycmVuY3lCHwodX3ByZWRpY3RlZF9sdHZfdmFsdWVfaW5fY2VudH'
+    'M=');
 
 @$core.Deprecated('Use purchaseEventDescriptor instead')
 const PurchaseEvent$json = {
