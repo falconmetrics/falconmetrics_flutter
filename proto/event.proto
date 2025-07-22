@@ -5,15 +5,16 @@ package pb;
 // Base message for all tracking events
 message TrackingEvent {
   oneof event {
-    UserSignedUpOrLoggedInEvent user_signed_up_or_logged_in = 1;
+    CompleteRegistrationEvent complete_registration = 1;
     AddedToCartEvent added_to_cart = 2;
-    CouponAppliedEvent coupon_applied = 3;
+    SubscriptionEvent subscribe = 3;
     PurchaseEvent purchase = 4;
+    CustomEvent custom_event = 5;
   }
 }
 
-// Event to track a user signing up or logging in
-message UserSignedUpOrLoggedInEvent {}
+// Event to track when a user completes their registration
+message CompleteRegistrationEvent {}
 
 // Event to track a product being added to the cart
 message AddedToCartEvent {
@@ -25,15 +26,15 @@ message AddedToCartEvent {
   optional string cart_id = 6;  // The id (session id) of the cart (optional)
 }
 
-// Event to track a coupon being applied to a cart
-message CouponAppliedEvent {
-  string coupon_code = 1;       // The unique code of the coupon
-  optional string cart_id = 2;  // The id (session id) of the cart (optional)
+// Event to track a subscription
+message SubscriptionEvent {
+  optional string currency = 1;       // The currency in ISO 4217 format (e.g., USD, JPY)
+  optional int32 predicted_ltv_value_in_cents = 2;  // The predicted LTV value in cents (optional)
 }
 
 // Event to track a purchase
 message PurchaseEvent {
-  string item_id = 1;           // The unique id of the item or product
+  repeated string item_ids = 1;           // The unique ids of the item or product
   int32 quantity = 2;           // The quantity of the item or product
   string transaction_id = 3;    // The unique id of the transaction
   int32 product_price_in_cents = 4; // The price in cents or lowest currency unit
@@ -45,4 +46,24 @@ message PurchaseEvent {
   optional int32 tax_in_cents = 10;   // The tax amount in cents (optional)
   optional int32 shipping_cost_in_cents = 11; // The shipping cost in cents (optional)
   optional int32 discount_in_cents = 12; // The discount amount in cents (optional)
+}
+
+// Event to track a custom event
+message CustomEvent {
+  // The name of the event
+  string event_name = 1;
+
+  // Attributes associated with the event
+  // Values are restricted to primitive types (String, Int, Double, Boolean, etc.)
+  map<string, AttributeValue> attributes = 2;
+}
+
+// Union type to represent primitive values for attributes
+message AttributeValue {
+  oneof value {
+    string string_value = 1;
+    int32 int_value = 2;
+    double double_value = 3;
+    bool bool_value = 4;
+  }
 }

@@ -66,14 +66,14 @@ void main() async {
 
 ### Tracking Events
 
-#### User Sign-Up or Login
+#### Complete registration event
 
 ```dart
 import 'package:falconmetrics_flutter/events.dart';
 
 final falconMetrics = FalconmetricsFlutter();
 await falconMetrics.trackEvent(
-  event: UserSignedUpOrLoggedInEvent(),
+  event: CompleteRegistrationEvent(),
 );
 ```
 
@@ -92,13 +92,13 @@ await falconMetrics.trackEvent(
 );
 ```
 
-#### Apply Coupon
+#### Subscription event
 
 ```dart
 await falconMetrics.trackEvent(
-  event: CouponAppliedEvent(
-    couponCode: 'SUMMER20',
-    cartId: 'cart-456',
+  event: SubscriptionEvent(
+    currencyCode: 'USD',
+    predictedLtvValueInCents: 1099,
   ),
 );
 ```
@@ -108,7 +108,7 @@ await falconMetrics.trackEvent(
 ```dart
 await falconMetrics.trackEvent(
   event: PurchaseEvent(
-    itemId: 'product-123',
+    itemIds: ['product-123'],
     quantity: 2,
     transactionId: 'transaction-789',
     productPriceInCents: 1099, // $10.99
@@ -120,6 +120,21 @@ await falconMetrics.trackEvent(
     taxInCents: 220, // $2.20
     shippingCostInCents: 499, // $4.99
     discountInCents: 200, // $2.00
+  ),
+);
+```
+
+#### Custom event
+
+You can also create a custom event but make sure to use the same event name as the one you use in your ad network.
+
+```dart
+await falconMetrics.trackEvent(
+  event: CustomEvent(
+    eventName: 'custom_event_name',
+    attributes: {
+      'attribute_name': 'attribute_value',
+    },
   ),
 );
 ```

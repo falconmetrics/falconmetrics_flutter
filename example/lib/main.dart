@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
             TextButton(
               onPressed: () {
                 falconmetricsFlutter.trackEvent(
-                  event: const UserSignedUpOrLoggedInEvent(),
+                  event: const CompleteRegistrationEvent(),
                 );
               },
               child: const Text('Track event'),

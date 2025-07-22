@@ -1,7 +1,7 @@
 PODS:
-  - FalconMetrics (0.3.0)
-  - falconmetrics_flutter (0.4.1):
-    - FalconMetrics (= 0.3.0)
+  - FalconMetrics (0.4.0)
+  - falconmetrics_flutter (0.5.0):
+    - FalconMetrics (= 0.4.0)
     - Flutter
     - SwiftProtobuf (~> 1.27.0)
   - Flutter (1.0.0)
@@ -29,8 +29,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/integration_test/ios"
 
 SPEC CHECKSUMS:
-  FalconMetrics: 4976c3c7fb447bce2f816aafceaeb05ac9688918
-  falconmetrics_flutter: a76dd3c45b204b1a0c33eee606e21bfc1debb188
+  FalconMetrics: 67661bbd3733106ecae0fe41f7ed66a05195b83c
+  falconmetrics_flutter: 29077edb765d54d7131df8850bdd1ffc3cee0496
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   integration_test: 252f60fa39af5e17c3aa9899d35d908a0721b573
   SwiftProtobuf: b109bd17979d7993a84da14b1e1fdd8b0ded934a

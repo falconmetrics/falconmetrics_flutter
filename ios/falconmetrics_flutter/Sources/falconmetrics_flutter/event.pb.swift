@@ -28,12 +28,12 @@ struct Pb_TrackingEvent: Sendable {
 
   var event: Pb_TrackingEvent.OneOf_Event? = nil
 
-  var userSignedUpOrLoggedIn: Pb_UserSignedUpOrLoggedInEvent {
+  var completeRegistration: Pb_CompleteRegistrationEvent {
     get {
-      if case .userSignedUpOrLoggedIn(let v)? = event {return v}
-      return Pb_UserSignedUpOrLoggedInEvent()
+      if case .completeRegistration(let v)? = event {return v}
+      return Pb_CompleteRegistrationEvent()
     }
-    set {event = .userSignedUpOrLoggedIn(newValue)}
+    set {event = .completeRegistration(newValue)}
   }
 
   var addedToCart: Pb_AddedToCartEvent {
@@ -44,12 +44,12 @@ struct Pb_TrackingEvent: Sendable {
     set {event = .addedToCart(newValue)}
   }
 
-  var couponApplied: Pb_CouponAppliedEvent {
+  var subscribe: Pb_SubscriptionEvent {
     get {
-      if case .couponApplied(let v)? = event {return v}
-      return Pb_CouponAppliedEvent()
+      if case .subscribe(let v)? = event {return v}
+      return Pb_SubscriptionEvent()
     }
-    set {event = .couponApplied(newValue)}
+    set {event = .subscribe(newValue)}
   }
 
   var purchase: Pb_PurchaseEvent {
@@ -60,21 +60,30 @@ struct Pb_TrackingEvent: Sendable {
     set {event = .purchase(newValue)}
   }
 
+  var customEvent: Pb_CustomEvent {
+    get {
+      if case .customEvent(let v)? = event {return v}
+      return Pb_CustomEvent()
+    }
+    set {event = .customEvent(newValue)}
+  }
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   enum OneOf_Event: Equatable, Sendable {
-    case userSignedUpOrLoggedIn(Pb_UserSignedUpOrLoggedInEvent)
+    case completeRegistration(Pb_CompleteRegistrationEvent)
     case addedToCart(Pb_AddedToCartEvent)
-    case couponApplied(Pb_CouponAppliedEvent)
+    case subscribe(Pb_SubscriptionEvent)
     case purchase(Pb_PurchaseEvent)
+    case customEvent(Pb_CustomEvent)
 
   }
 
   init() {}
 }
 
-/// Event to track a user signing up or logging in
-struct Pb_UserSignedUpOrLoggedInEvent: Sendable {
+/// Event to track when a user completes their registration
+struct Pb_CompleteRegistrationEvent: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -130,30 +139,38 @@ struct Pb_AddedToCartEvent: Sendable {
   fileprivate var _cartID: String? = nil
 }
 
-/// Event to track a coupon being applied to a cart
-struct Pb_CouponAppliedEvent: Sendable {
+/// Event to track a subscription
+struct Pb_SubscriptionEvent: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  /// The unique code of the coupon
-  var couponCode: String = String()
-
-  /// The id (session id) of the cart (optional)
-  var cartID: String {
-    get {return _cartID ?? String()}
-    set {_cartID = newValue}
+  /// The currency in ISO 4217 format (e.g., USD, JPY)
+  var currency: String {
+    get {return _currency ?? String()}
+    set {_currency = newValue}
   }
-  /// Returns true if `cartID` has been explicitly set.
-  var hasCartID: Bool {return self._cartID != nil}
-  /// Clears the value of `cartID`. Subsequent reads from it will return its default value.
-  mutating func clearCartID() {self._cartID = nil}
+  /// Returns true if `currency` has been explicitly set.
+  var hasCurrency: Bool {return self._currency != nil}
+  /// Clears the value of `currency`. Subsequent reads from it will return its default value.
+  mutating func clearCurrency() {self._currency = nil}
+
+  /// The predicted LTV value in cents (optional)
+  var predictedLtvValueInCents: Int32 {
+    get {return _predictedLtvValueInCents ?? 0}
+    set {_predictedLtvValueInCents = newValue}
+  }
+  /// Returns true if `predictedLtvValueInCents` has been explicitly set.
+  var hasPredictedLtvValueInCents: Bool {return self._predictedLtvValueInCents != nil}
+  /// Clears the value of `predictedLtvValueInCents`. Subsequent reads from it will return its default value.
+  mutating func clearPredictedLtvValueInCents() {self._predictedLtvValueInCents = nil}
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
 
-  fileprivate var _cartID: String? = nil
+  fileprivate var _currency: String? = nil
+  fileprivate var _predictedLtvValueInCents: Int32? = nil
 }
 
 /// Event to track a purchase
@@ -162,8 +179,8 @@ struct Pb_PurchaseEvent: Sendable {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  /// The unique id of the item or product
-  var itemID: String = String()
+  /// The unique ids of the item or product
+  var itemIds: [String] = []
 
   /// The quantity of the item or product
   var quantity: Int32 = 0
@@ -252,6 +269,77 @@ struct Pb_PurchaseEvent: Sendable {
   fileprivate var _discountInCents: Int32? = nil
 }
 
+/// Event to track a custom event
+struct Pb_CustomEvent: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  /// The name of the event
+  var eventName: String = String()
+
+  /// Attributes associated with the event
+  /// Values are restricted to primitive types (String, Int, Double, Boolean, etc.)
+  var attributes: Dictionary<String,Pb_AttributeValue> = [:]
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+/// Union type to represent primitive values for attributes
+struct Pb_AttributeValue: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var value: Pb_AttributeValue.OneOf_Value? = nil
+
+  var stringValue: String {
+    get {
+      if case .stringValue(let v)? = value {return v}
+      return String()
+    }
+    set {value = .stringValue(newValue)}
+  }
+
+  var intValue: Int32 {
+    get {
+      if case .intValue(let v)? = value {return v}
+      return 0
+    }
+    set {value = .intValue(newValue)}
+  }
+
+  var doubleValue: Double {
+    get {
+      if case .doubleValue(let v)? = value {return v}
+      return 0
+    }
+    set {value = .doubleValue(newValue)}
+  }
+
+  var boolValue: Bool {
+    get {
+      if case .boolValue(let v)? = value {return v}
+      return false
+    }
+    set {value = .boolValue(newValue)}
+  }
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  enum OneOf_Value: Equatable, Sendable {
+    case stringValue(String)
+    case intValue(Int32)
+    case doubleValue(Double)
+    case boolValue(Bool)
+
+  }
+
+  init() {}
+}
+
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 fileprivate let _protobuf_package = "pb"
@@ -259,10 +347,11 @@ fileprivate let _protobuf_package = "pb"
 extension Pb_TrackingEvent: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".TrackingEvent"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "user_signed_up_or_logged_in"),
+    1: .standard(proto: "complete_registration"),
     2: .standard(proto: "added_to_cart"),
-    3: .standard(proto: "coupon_applied"),
+    3: .same(proto: "subscribe"),
     4: .same(proto: "purchase"),
+    5: .standard(proto: "custom_event"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -272,16 +361,16 @@ extension Pb_TrackingEvent: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try {
-        var v: Pb_UserSignedUpOrLoggedInEvent?
+        var v: Pb_CompleteRegistrationEvent?
         var hadOneofValue = false
         if let current = self.event {
           hadOneofValue = true
-          if case .userSignedUpOrLoggedIn(let m) = current {v = m}
+          if case .completeRegistration(let m) = current {v = m}
         }
         try decoder.decodeSingularMessageField(value: &v)
         if let v = v {
           if hadOneofValue {try decoder.handleConflictingOneOf()}
-          self.event = .userSignedUpOrLoggedIn(v)
+          self.event = .completeRegistration(v)
         }
       }()
       case 2: try {
@@ -298,16 +387,16 @@ extension Pb_TrackingEvent: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
         }
       }()
       case 3: try {
-        var v: Pb_CouponAppliedEvent?
+        var v: Pb_SubscriptionEvent?
         var hadOneofValue = false
         if let current = self.event {
           hadOneofValue = true
-          if case .couponApplied(let m) = current {v = m}
+          if case .subscribe(let m) = current {v = m}
         }
         try decoder.decodeSingularMessageField(value: &v)
         if let v = v {
           if hadOneofValue {try decoder.handleConflictingOneOf()}
-          self.event = .couponApplied(v)
+          self.event = .subscribe(v)
         }
       }()
       case 4: try {
@@ -323,6 +412,19 @@ extension Pb_TrackingEvent: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
           self.event = .purchase(v)
         }
       }()
+      case 5: try {
+        var v: Pb_CustomEvent?
+        var hadOneofValue = false
+        if let current = self.event {
+          hadOneofValue = true
+          if case .customEvent(let m) = current {v = m}
+        }
+        try decoder.decodeSingularMessageField(value: &v)
+        if let v = v {
+          if hadOneofValue {try decoder.handleConflictingOneOf()}
+          self.event = .customEvent(v)
+        }
+      }()
       default: break
       }
     }
@@ -334,21 +436,25 @@ extension Pb_TrackingEvent: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
     // https://github.com/apple/swift-protobuf/issues/1182
     switch self.event {
-    case .userSignedUpOrLoggedIn?: try {
-      guard case .userSignedUpOrLoggedIn(let v)? = self.event else { preconditionFailure() }
+    case .completeRegistration?: try {
+      guard case .completeRegistration(let v)? = self.event else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
     }()
     case .addedToCart?: try {
       guard case .addedToCart(let v)? = self.event else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
     }()
-    case .couponApplied?: try {
-      guard case .couponApplied(let v)? = self.event else { preconditionFailure() }
+    case .subscribe?: try {
+      guard case .subscribe(let v)? = self.event else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
     }()
     case .purchase?: try {
       guard case .purchase(let v)? = self.event else { preconditionFailure() }
       try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
+    }()
+    case .customEvent?: try {
+      guard case .customEvent(let v)? = self.event else { preconditionFailure() }
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
     }()
     case nil: break
     }
@@ -362,8 +468,8 @@ extension Pb_TrackingEvent: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
   }
 }
 
-extension Pb_UserSignedUpOrLoggedInEvent: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = _protobuf_package + ".UserSignedUpOrLoggedInEvent"
+extension Pb_CompleteRegistrationEvent: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = _protobuf_package + ".CompleteRegistrationEvent"
   static let _protobuf_nameMap = SwiftProtobuf._NameMap()
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -375,7 +481,7 @@ extension Pb_UserSignedUpOrLoggedInEvent: SwiftProtobuf.Message, SwiftProtobuf._
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: Pb_UserSignedUpOrLoggedInEvent, rhs: Pb_UserSignedUpOrLoggedInEvent) -> Bool {
+  static func ==(lhs: Pb_CompleteRegistrationEvent, rhs: Pb_CompleteRegistrationEvent) -> Bool {
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -447,11 +553,11 @@ extension Pb_AddedToCartEvent: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
   }
 }
 
-extension Pb_CouponAppliedEvent: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = _protobuf_package + ".CouponAppliedEvent"
+extension Pb_SubscriptionEvent: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = _protobuf_package + ".SubscriptionEvent"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "coupon_code"),
-    2: .standard(proto: "cart_id"),
+    1: .same(proto: "currency"),
+    2: .standard(proto: "predicted_ltv_value_in_cents"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -460,8 +566,8 @@ extension Pb_CouponAppliedEvent: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.couponCode) }()
-      case 2: try { try decoder.decodeSingularStringField(value: &self._cartID) }()
+      case 1: try { try decoder.decodeSingularStringField(value: &self._currency) }()
+      case 2: try { try decoder.decodeSingularInt32Field(value: &self._predictedLtvValueInCents) }()
       default: break
       }
     }
@@ -472,18 +578,18 @@ extension Pb_CouponAppliedEvent: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
     // https://github.com/apple/swift-protobuf/issues/1182
-    if !self.couponCode.isEmpty {
-      try visitor.visitSingularStringField(value: self.couponCode, fieldNumber: 1)
-    }
-    try { if let v = self._cartID {
-      try visitor.visitSingularStringField(value: v, fieldNumber: 2)
+    try { if let v = self._currency {
+      try visitor.visitSingularStringField(value: v, fieldNumber: 1)
+    } }()
+    try { if let v = self._predictedLtvValueInCents {
+      try visitor.visitSingularInt32Field(value: v, fieldNumber: 2)
     } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: Pb_CouponAppliedEvent, rhs: Pb_CouponAppliedEvent) -> Bool {
-    if lhs.couponCode != rhs.couponCode {return false}
-    if lhs._cartID != rhs._cartID {return false}
+  static func ==(lhs: Pb_SubscriptionEvent, rhs: Pb_SubscriptionEvent) -> Bool {
+    if lhs._currency != rhs._currency {return false}
+    if lhs._predictedLtvValueInCents != rhs._predictedLtvValueInCents {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -492,7 +598,7 @@ extension Pb_CouponAppliedEvent: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
 extension Pb_PurchaseEvent: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".PurchaseEvent"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "item_id"),
+    1: .standard(proto: "item_ids"),
     2: .same(proto: "quantity"),
     3: .standard(proto: "transaction_id"),
     4: .standard(proto: "product_price_in_cents"),
@@ -512,7 +618,7 @@ extension Pb_PurchaseEvent: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.itemID) }()
+      case 1: try { try decoder.decodeRepeatedStringField(value: &self.itemIds) }()
       case 2: try { try decoder.decodeSingularInt32Field(value: &self.quantity) }()
       case 3: try { try decoder.decodeSingularStringField(value: &self.transactionID) }()
       case 4: try { try decoder.decodeSingularInt32Field(value: &self.productPriceInCents) }()
@@ -534,8 +640,8 @@ extension Pb_PurchaseEvent: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
     // https://github.com/apple/swift-protobuf/issues/1182
-    if !self.itemID.isEmpty {
-      try visitor.visitSingularStringField(value: self.itemID, fieldNumber: 1)
+    if !self.itemIds.isEmpty {
+      try visitor.visitRepeatedStringField(value: self.itemIds, fieldNumber: 1)
     }
     if self.quantity != 0 {
       try visitor.visitSingularInt32Field(value: self.quantity, fieldNumber: 2)
@@ -574,7 +680,7 @@ extension Pb_PurchaseEvent: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
   }
 
   static func ==(lhs: Pb_PurchaseEvent, rhs: Pb_PurchaseEvent) -> Bool {
-    if lhs.itemID != rhs.itemID {return false}
+    if lhs.itemIds != rhs.itemIds {return false}
     if lhs.quantity != rhs.quantity {return false}
     if lhs.transactionID != rhs.transactionID {return false}
     if lhs.productPriceInCents != rhs.productPriceInCents {return false}
@@ -586,6 +692,130 @@ extension Pb_PurchaseEvent: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
     if lhs._taxInCents != rhs._taxInCents {return false}
     if lhs._shippingCostInCents != rhs._shippingCostInCents {return false}
     if lhs._discountInCents != rhs._discountInCents {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Pb_CustomEvent: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = _protobuf_package + ".CustomEvent"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "event_name"),
+    2: .same(proto: "attributes"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.eventName) }()
+      case 2: try { try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,Pb_AttributeValue>.self, value: &self.attributes) }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.eventName.isEmpty {
+      try visitor.visitSingularStringField(value: self.eventName, fieldNumber: 1)
+    }
+    if !self.attributes.isEmpty {
+      try visitor.visitMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,Pb_AttributeValue>.self, value: self.attributes, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: Pb_CustomEvent, rhs: Pb_CustomEvent) -> Bool {
+    if lhs.eventName != rhs.eventName {return false}
+    if lhs.attributes != rhs.attributes {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Pb_AttributeValue: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = _protobuf_package + ".AttributeValue"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "string_value"),
+    2: .standard(proto: "int_value"),
+    3: .standard(proto: "double_value"),
+    4: .standard(proto: "bool_value"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try {
+        var v: String?
+        try decoder.decodeSingularStringField(value: &v)
+        if let v = v {
+          if self.value != nil {try decoder.handleConflictingOneOf()}
+          self.value = .stringValue(v)
+        }
+      }()
+      case 2: try {
+        var v: Int32?
+        try decoder.decodeSingularInt32Field(value: &v)
+        if let v = v {
+          if self.value != nil {try decoder.handleConflictingOneOf()}
+          self.value = .intValue(v)
+        }
+      }()
+      case 3: try {
+        var v: Double?
+        try decoder.decodeSingularDoubleField(value: &v)
+        if let v = v {
+          if self.value != nil {try decoder.handleConflictingOneOf()}
+          self.value = .doubleValue(v)
+        }
+      }()
+      case 4: try {
+        var v: Bool?
+        try decoder.decodeSingularBoolField(value: &v)
+        if let v = v {
+          if self.value != nil {try decoder.handleConflictingOneOf()}
+          self.value = .boolValue(v)
+        }
+      }()
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    switch self.value {
+    case .stringValue?: try {
+      guard case .stringValue(let v)? = self.value else { preconditionFailure() }
+      try visitor.visitSingularStringField(value: v, fieldNumber: 1)
+    }()
+    case .intValue?: try {
+      guard case .intValue(let v)? = self.value else { preconditionFailure() }
+      try visitor.visitSingularInt32Field(value: v, fieldNumber: 2)
+    }()
+    case .doubleValue?: try {
+      guard case .doubleValue(let v)? = self.value else { preconditionFailure() }
+      try visitor.visitSingularDoubleField(value: v, fieldNumber: 3)
+    }()
+    case .boolValue?: try {
+      guard case .boolValue(let v)? = self.value else { preconditionFailure() }
+      try visitor.visitSingularBoolField(value: v, fieldNumber: 4)
+    }()
+    case nil: break
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: Pb_AttributeValue, rhs: Pb_AttributeValue) -> Bool {
+    if lhs.value != rhs.value {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

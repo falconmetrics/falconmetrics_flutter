@@ -1,3 +1,8 @@
+## 0.5.0
+* Breaking: Renamed signinsignupevent
+* Breaking: In purchase event changed itemid to itemIds to support multiple items
+* Feat: add custom events and subscriptionevent
+
 ## 0.4.2
 * Add support for cocoa pods
 

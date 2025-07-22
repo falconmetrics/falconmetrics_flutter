@@ -3,4 +3,4 @@
 
 export 'falconmetrics_flutter_platform_interface.dart';
 export 'falconmetrics_flutter_method_channel.dart';
-export 'event_proto_converter.dart';
+export 'platform/event_proto_converter.dart';

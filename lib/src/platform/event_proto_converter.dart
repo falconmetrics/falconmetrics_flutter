@@ -1,28 +1,32 @@
 import 'package:falconmetrics_flutter/src/events.dart';
+
 import '../generated/event.pb.dart' as pb;
 
 class EventProtoConverter {
   pb.TrackingEvent convert(TrackingEvent event) {
     return switch (event) {
-      UserSignedUpOrLoggedInEvent() => pb.TrackingEvent(
-        userSignedUpOrLoggedIn: _convertSignInEvent(event),
+      CompleteRegistrationEvent() => pb.TrackingEvent(
+        completeRegistration: _convertCompleteRegistrationEvent(event),
       ),
       AddedToCartEvent() => pb.TrackingEvent(
         addedToCart: _convertAddedToCartEvent(event),
       ),
-      CouponAppliedEvent() => pb.TrackingEvent(
-        couponApplied: _convertCouponAppliedEvent(event),
+      SubscriptionEvent() => pb.TrackingEvent(
+        subscribe: _convertSubscriptionEvent(event),
       ),
       PurchaseEvent() => pb.TrackingEvent(
         purchase: _convertPurchaseEvent(event),
       ),
+      CustomEvent() => pb.TrackingEvent(
+        customEvent: _convertCustomEvent(event),
+      ),
     };
   }
 
-  pb.UserSignedUpOrLoggedInEvent _convertSignInEvent(
-    UserSignedUpOrLoggedInEvent event,
+  pb.CompleteRegistrationEvent _convertCompleteRegistrationEvent(
+    CompleteRegistrationEvent event,
   ) {
-    return pb.UserSignedUpOrLoggedInEvent.create();
+    return pb.CompleteRegistrationEvent.create();
   }
 
   pb.AddedToCartEvent _convertAddedToCartEvent(AddedToCartEvent event) {
@@ -36,16 +40,16 @@ class EventProtoConverter {
     );
   }
 
-  pb.CouponAppliedEvent _convertCouponAppliedEvent(CouponAppliedEvent event) {
-    return pb.CouponAppliedEvent(
-      couponCode: event.couponCode,
-      cartId: event.cartId,
+  pb.SubscriptionEvent _convertSubscriptionEvent(SubscriptionEvent event) {
+    return pb.SubscriptionEvent(
+      currency: event.currencyCode,
+      predictedLtvValueInCents: event.predictedLtvValueInCents,
     );
   }
 
   pb.PurchaseEvent _convertPurchaseEvent(PurchaseEvent event) {
     return pb.PurchaseEvent(
-      itemId: event.itemId,
+      itemIds: event.itemIds,
       quantity: event.quantity,
       transactionId: event.transactionId,
       productPriceInCents: event.productPriceInCents,
@@ -58,5 +62,34 @@ class EventProtoConverter {
       shippingCostInCents: event.shippingCostInCents,
       discountInCents: event.discountInCents,
     );
+  }
+
+  pb.CustomEvent _convertCustomEvent(CustomEvent event) {
+    final attributes = <String, pb.AttributeValue>{};
+
+    event.attributes?.forEach((key, value) {
+      attributes[key] = _convertAttributeValue(value);
+    });
+
+    return pb.CustomEvent(
+      eventName: event.eventName,
+      attributes: attributes.entries,
+    );
+  }
+
+  pb.AttributeValue _convertAttributeValue(Object value) {
+    if (value is String) {
+      return pb.AttributeValue(stringValue: value);
+    } else if (value is int) {
+      return pb.AttributeValue(intValue: value);
+    } else if (value is double) {
+      return pb.AttributeValue(doubleValue: value);
+    } else if (value is bool) {
+      return pb.AttributeValue(boolValue: value);
+    } else {
+      throw UnsupportedError(
+        'Unsupported attribute value type: ${value.runtimeType}',
+      );
+    }
   }
 }

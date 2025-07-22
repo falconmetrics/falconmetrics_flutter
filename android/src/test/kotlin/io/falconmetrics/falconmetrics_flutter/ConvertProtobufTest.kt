@@ -1,9 +1,11 @@
 import io.falconmetrics.falconmetrics_flutter.convertTrackingEvent
 import io.falconmetrics.sdk.AddedToCartEvent
-import io.falconmetrics.sdk.CouponAppliedEvent
+import io.falconmetrics.sdk.SubscribeEvent
 import io.falconmetrics.sdk.PurchaseEvent
-import io.falconmetrics.sdk.UserSignedUpOrLoggedInEvent
+import io.falconmetrics.sdk.CompleteRegistrationEvent
+import io.falconmetrics.sdk.CustomEvent
 import org.junit.jupiter.api.Assertions.assertTrue
+import pb.Event
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -13,12 +15,12 @@ class ConvertProtobufEventTest {
     fun `It should return UserSignedUpOrLoggedInEvent when event is USER_SIGNED_UP_OR_LOGGED_IN`() {
         // Arrange
         val trackingEvent = Event.TrackingEvent.newBuilder()
-            .setUserSignedUpOrLoggedIn(Event.UserSignedUpOrLoggedInEvent.getDefaultInstance())
+            .setCompleteRegistration(Event.CompleteRegistrationEvent.getDefaultInstance())
             .build()
 
         val result = convertTrackingEvent(trackingEvent)
 
-        assertTrue(result is UserSignedUpOrLoggedInEvent)
+        assertTrue(result is CompleteRegistrationEvent)
     }
 
     @Test
@@ -51,28 +53,73 @@ class ConvertProtobufEventTest {
 
     @Test
     fun `It should return CouponAppliedEvent when event is COUPON_APPLIED`() {
-        val couponAppliedEvent = Event.CouponAppliedEvent.newBuilder()
-            .setCouponCode("SAVE20")
-            .setCartId("cart789")
+        val event = Event.SubscriptionEvent.newBuilder()
+            .setCurrency("USD")
+            .setPredictedLtvValueInCents(10000)
             .build()
 
         val trackingEvent = Event.TrackingEvent.newBuilder()
-            .setCouponApplied(couponAppliedEvent)
+            .setSubscribe(event)
             .build()
 
         val result = convertTrackingEvent(trackingEvent)
 
-        assertTrue(result is CouponAppliedEvent)
-        result as CouponAppliedEvent
-        assertEquals("SAVE20", result.couponCode)
-        assertEquals("cart789", result.cartId)
+        assertTrue(result is SubscribeEvent)
+        result as SubscribeEvent
+        assertEquals("USD", result.currency)
+        assertEquals(10000, result.predictedLtvValueInCents)
+    }
+
+    @Test
+    fun `It should return Custom event when event is CustomEvent`() {
+        val attributeValue1 = Event.AttributeValue.newBuilder()
+            .setStringValue("my_value")
+            .build()
+
+        val attributeValue2 = Event.AttributeValue.newBuilder()
+            .setIntValue(1000)
+            .build()
+
+        val attributeValue3 = Event.AttributeValue.newBuilder()
+            .setBoolValue(false)
+            .build()
+
+        val attributeValue4 = Event.AttributeValue.newBuilder()
+            .setDoubleValue(3.14)
+            .build()
+
+        val event = Event.CustomEvent.newBuilder()
+            .setEventName("my_custom_event")
+            .putAllAttributes(
+                mapOf(
+                    "key1" to attributeValue1,
+                    "key2" to attributeValue2,
+                    "key3" to attributeValue3,
+                    "key4" to attributeValue4
+                )
+            )
+            .build()
+
+        val trackingEvent = Event.TrackingEvent.newBuilder()
+            .setCustomEvent(event)
+            .build()
+
+        val result = convertTrackingEvent(trackingEvent)
+
+        assertTrue(result is CustomEvent)
+        result as CustomEvent
+        assertEquals("my_custom_event", result.eventName)
+        assertEquals(
+            mapOf("key1" to "my_value", "key2" to 1000, "key3" to false, "key4" to 3.14),
+            result.attributes
+        )
     }
 
     @Test
     fun `convertTrackingEvent should return PurchaseEvent when event is PURCHASE`() {
         // Arrange
         val purchaseEvent = Event.PurchaseEvent.newBuilder()
-            .setItemId("item456")
+            .addItemIds("item456")
             .setQuantity(1)
             .setTransactionId("txn123")
             .setProductPriceInCents(5000)
@@ -96,7 +143,7 @@ class ConvertProtobufEventTest {
         // Assert
         assertTrue(result is PurchaseEvent)
         result as PurchaseEvent
-        assertEquals("item456", result.itemId)
+        assertEquals(listOf("item456"), result.itemIds)
         assertEquals(1, result.quantity)
         assertEquals("txn123", result.transactionId)
         assertEquals(5000, result.productPriceInCents)
