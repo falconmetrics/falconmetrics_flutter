@@ -81,7 +81,12 @@ class SubscriptionEvent extends TrackingEvent {
 
 /// Custom event to track a custom event
 class CustomEvent extends TrackingEvent {
-  const CustomEvent({required this.eventName, this.attributes});
+  const CustomEvent({
+    required this.eventName,
+    this.attributes,
+    this.currency,
+    this.revenueInCents,
+  });
 
   /// The name of the event make sure it matches the event in your ad network.
   final String eventName;
@@ -92,8 +97,20 @@ class CustomEvent extends TrackingEvent {
   /// for example: String, Int, Double, Boolean, etc.
   final Map<String, Object>? attributes;
 
+  /// The revenue in cents or in the lowest currency unit.
+  ///
+  /// For example, if the currency is USD, in case the revenue is $10.99, the
+  /// revenue in cents would be 1099. In case of single digit currencies, such as
+  /// the currency is Yen (JPY), the revenue would be 109 if the revenue is 109 Yen.
+  final int? revenueInCents;
+
+  /// The currency of the revenue in ISO 4217 format
+  ///
+  /// For example, USD, JPY, EUR, etc.
+  final String? currency;
+
   @override
-  List<Object?> get props => [eventName, attributes];
+  List<Object?> get props => [eventName, attributes, revenueInCents, currency];
 }
 
 class PurchaseEvent extends TrackingEvent {

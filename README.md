@@ -42,7 +42,10 @@ FalconMetrics uses SKAdNetwork for iOS. No additional setup is required as the S
 Add the following to your App's `Podfile`:
 
 ```ruby
-source 'https://github.com/falconmetrics/falconmetrics-ios-pods.git' 
+# Pointing to the official CocoaPods master repository
+source 'https://cdn.cocoapods.org/'
+# Pointing to the FalconMetrics private repository
+source 'https://github.com/falconmetrics/falconmetrics-ios-pods.git'
 ```
 
 ## Usage
@@ -128,6 +131,8 @@ await falconMetrics.trackEvent(
 
 You can also create a custom event but make sure to use the same event name as the one you use in your ad network.
 
+Optionally you can add a currency and revenue in cents to the custom event. The revenue will be recorded as revenue to the ad network.
+
 ```dart
 await falconMetrics.trackEvent(
   event: CustomEvent(
@@ -135,6 +140,8 @@ await falconMetrics.trackEvent(
     attributes: {
       'attribute_name': 'attribute_value',
     },
+    currency: 'USD',
+    revenueInCents: 1099,
   ),
 );
 ```

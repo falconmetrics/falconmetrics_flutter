@@ -48,6 +48,8 @@ func convertTrackingEvent(event: Pb_TrackingEvent) throws -> FalconMetrics.BaseE
         return FalconMetricsSdk.shared.createCustomEventBuilder()
             .withAttributes(event.customEvent.attributes)
             .withEventName(event.customEvent.eventName)
+            .withCurrency(event.customEvent.currency)
+            .withRevenueInCents(Int(event.customEvent.revenueInCents))
 
     @unknown default:
         throw NSError(domain: "TrackingError", code: 2, userInfo: [NSLocalizedDescriptionKey: "Unknown event case"])

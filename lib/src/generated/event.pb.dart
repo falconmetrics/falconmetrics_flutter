@@ -589,10 +589,14 @@ class CustomEvent extends $pb.GeneratedMessage {
   factory CustomEvent({
     $core.String? eventName,
     $core.Iterable<$core.MapEntry<$core.String, AttributeValue>>? attributes,
+    $core.String? currency,
+    $core.int? revenueInCents,
   }) {
     final result = create();
     if (eventName != null) result.eventName = eventName;
     if (attributes != null) result.attributes.addEntries(attributes);
+    if (currency != null) result.currency = currency;
+    if (revenueInCents != null) result.revenueInCents = revenueInCents;
     return result;
   }
 
@@ -617,6 +621,9 @@ class CustomEvent extends $pb.GeneratedMessage {
         valueCreator: AttributeValue.create,
         valueDefaultOrMaker: AttributeValue.getDefault,
         packageName: const $pb.PackageName('pb'))
+    ..aOS(3, _omitFieldNames ? '' : 'currency')
+    ..a<$core.int>(
+        4, _omitFieldNames ? '' : 'revenueInCents', $pb.PbFieldType.O3)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -653,6 +660,24 @@ class CustomEvent extends $pb.GeneratedMessage {
   /// Values are restricted to primitive types (String, Int, Double, Boolean, etc.)
   @$pb.TagNumber(2)
   $pb.PbMap<$core.String, AttributeValue> get attributes => $_getMap(1);
+
+  @$pb.TagNumber(3)
+  $core.String get currency => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set currency($core.String value) => $_setString(2, value);
+  @$pb.TagNumber(3)
+  $core.bool hasCurrency() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearCurrency() => $_clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.int get revenueInCents => $_getIZ(3);
+  @$pb.TagNumber(4)
+  set revenueInCents($core.int value) => $_setSignedInt32(3, value);
+  @$pb.TagNumber(4)
+  $core.bool hasRevenueInCents() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearRevenueInCents() => $_clearField(4);
 }
 
 enum AttributeValue_Value {

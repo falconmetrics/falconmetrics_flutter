@@ -74,6 +74,8 @@ class EventProtoConverter {
     return pb.CustomEvent(
       eventName: event.eventName,
       attributes: attributes.entries,
+      currency: event.currency,
+      revenueInCents: event.revenueInCents,
     );
   }
 

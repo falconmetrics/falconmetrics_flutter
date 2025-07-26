@@ -282,9 +282,30 @@ struct Pb_CustomEvent: Sendable {
   /// Values are restricted to primitive types (String, Int, Double, Boolean, etc.)
   var attributes: Dictionary<String,Pb_AttributeValue> = [:]
 
+  var currency: String {
+    get {return _currency ?? String()}
+    set {_currency = newValue}
+  }
+  /// Returns true if `currency` has been explicitly set.
+  var hasCurrency: Bool {return self._currency != nil}
+  /// Clears the value of `currency`. Subsequent reads from it will return its default value.
+  mutating func clearCurrency() {self._currency = nil}
+
+  var revenueInCents: Int32 {
+    get {return _revenueInCents ?? 0}
+    set {_revenueInCents = newValue}
+  }
+  /// Returns true if `revenueInCents` has been explicitly set.
+  var hasRevenueInCents: Bool {return self._revenueInCents != nil}
+  /// Clears the value of `revenueInCents`. Subsequent reads from it will return its default value.
+  mutating func clearRevenueInCents() {self._revenueInCents = nil}
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
+
+  fileprivate var _currency: String? = nil
+  fileprivate var _revenueInCents: Int32? = nil
 }
 
 /// Union type to represent primitive values for attributes
@@ -702,6 +723,8 @@ extension Pb_CustomEvent: SwiftProtobuf.Message, SwiftProtobuf._MessageImplement
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "event_name"),
     2: .same(proto: "attributes"),
+    3: .same(proto: "currency"),
+    4: .standard(proto: "revenue_in_cents"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -712,24 +735,38 @@ extension Pb_CustomEvent: SwiftProtobuf.Message, SwiftProtobuf._MessageImplement
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.eventName) }()
       case 2: try { try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,Pb_AttributeValue>.self, value: &self.attributes) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self._currency) }()
+      case 4: try { try decoder.decodeSingularInt32Field(value: &self._revenueInCents) }()
       default: break
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
     if !self.eventName.isEmpty {
       try visitor.visitSingularStringField(value: self.eventName, fieldNumber: 1)
     }
     if !self.attributes.isEmpty {
       try visitor.visitMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufString,Pb_AttributeValue>.self, value: self.attributes, fieldNumber: 2)
     }
+    try { if let v = self._currency {
+      try visitor.visitSingularStringField(value: v, fieldNumber: 3)
+    } }()
+    try { if let v = self._revenueInCents {
+      try visitor.visitSingularInt32Field(value: v, fieldNumber: 4)
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: Pb_CustomEvent, rhs: Pb_CustomEvent) -> Bool {
     if lhs.eventName != rhs.eventName {return false}
     if lhs.attributes != rhs.attributes {return false}
+    if lhs._currency != rhs._currency {return false}
+    if lhs._revenueInCents != rhs._revenueInCents {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
