@@ -279,8 +279,30 @@ const CustomEvent$json = {
       '6': '.pb.CustomEvent.AttributesEntry',
       '10': 'attributes'
     },
+    {
+      '1': 'currency',
+      '3': 3,
+      '4': 1,
+      '5': 9,
+      '9': 0,
+      '10': 'currency',
+      '17': true
+    },
+    {
+      '1': 'revenue_in_cents',
+      '3': 4,
+      '4': 1,
+      '5': 5,
+      '9': 1,
+      '10': 'revenueInCents',
+      '17': true
+    },
   ],
   '3': [CustomEvent_AttributesEntry$json],
+  '8': [
+    {'1': '_currency'},
+    {'1': '_revenue_in_cents'},
+  ],
 };
 
 @$core.Deprecated('Use customEventDescriptor instead')
@@ -303,9 +325,11 @@ const CustomEvent_AttributesEntry$json = {
 /// Descriptor for `CustomEvent`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List customEventDescriptor = $convert.base64Decode(
     'CgtDdXN0b21FdmVudBIdCgpldmVudF9uYW1lGAEgASgJUglldmVudE5hbWUSPwoKYXR0cmlidX'
-    'RlcxgCIAMoCzIfLnBiLkN1c3RvbUV2ZW50LkF0dHJpYnV0ZXNFbnRyeVIKYXR0cmlidXRlcxpR'
-    'Cg9BdHRyaWJ1dGVzRW50cnkSEAoDa2V5GAEgASgJUgNrZXkSKAoFdmFsdWUYAiABKAsyEi5wYi'
-    '5BdHRyaWJ1dGVWYWx1ZVIFdmFsdWU6AjgB');
+    'RlcxgCIAMoCzIfLnBiLkN1c3RvbUV2ZW50LkF0dHJpYnV0ZXNFbnRyeVIKYXR0cmlidXRlcxIf'
+    'CghjdXJyZW5jeRgDIAEoCUgAUghjdXJyZW5jeYgBARItChByZXZlbnVlX2luX2NlbnRzGAQgAS'
+    'gFSAFSDnJldmVudWVJbkNlbnRziAEBGlEKD0F0dHJpYnV0ZXNFbnRyeRIQCgNrZXkYASABKAlS'
+    'A2tleRIoCgV2YWx1ZRgCIAEoCzISLnBiLkF0dHJpYnV0ZVZhbHVlUgV2YWx1ZToCOAFCCwoJX2'
+    'N1cnJlbmN5QhMKEV9yZXZlbnVlX2luX2NlbnRz');
 
 @$core.Deprecated('Use attributeValueDescriptor instead')
 const AttributeValue$json = {

@@ -56,6 +56,9 @@ message CustomEvent {
   // Attributes associated with the event
   // Values are restricted to primitive types (String, Int, Double, Boolean, etc.)
   map<string, AttributeValue> attributes = 2;
+
+  optional string currency = 3;
+  optional int32 revenue_in_cents = 4;
 }
 
 // Union type to represent primitive values for attributes

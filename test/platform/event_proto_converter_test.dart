@@ -145,6 +145,41 @@ void main() {
       expect(customEvent.attributes['attribute2']?.intValue, equals(123));
       expect(customEvent.attributes['attribute3']?.boolValue, equals(true));
     });
+    test('converts CustomEvent correctly with revenue', () {
+      // Arrange
+      final event = CustomEvent(
+        eventName: 'custom_event',
+        attributes: {
+          'attribute1': 'value1',
+          'attribute2': 123,
+          'attribute3': true,
+        },
+        currency: 'USD',
+        revenueInCents: 1099,
+      );
+
+      // Act
+      final protoEvent = converter.convert(event);
+
+      // Assert
+      expect(protoEvent.hasCustomEvent(), isTrue);
+      expect(
+        protoEvent.whichEvent(),
+        equals(pb.TrackingEvent_Event.customEvent),
+      );
+
+      final customEvent = protoEvent.customEvent;
+      expect(customEvent.eventName, equals('custom_event'));
+      expect(customEvent.attributes.length, equals(3));
+      expect(
+        customEvent.attributes['attribute1']?.stringValue,
+        equals('value1'),
+      );
+      expect(customEvent.attributes['attribute2']?.intValue, equals(123));
+      expect(customEvent.attributes['attribute3']?.boolValue, equals(true));
+      expect(customEvent.currency, equals('USD'));
+      expect(customEvent.revenueInCents, equals(1099));
+    });
 
     test('Is throws error when customevent has incorrect attribute type', () {
       // Arrange

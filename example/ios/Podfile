@@ -9,7 +9,10 @@ project 'Runner', {
   'Profile' => :release,
   'Release' => :release,
 }
-source 'https://github.com/falconmetrics/falconmetrics-ios-pods.git' 
+# Pointing to the official CocoaPods master repository
+source 'https://cdn.cocoapods.org/'
+# Pointing to the FalconMetrics private repository
+source 'https://github.com/falconmetrics/falconmetrics-ios-pods.git'
 
 def flutter_root
   generated_xcode_build_settings_path = File.expand_path(File.join('..', 'Flutter', 'Generated.xcconfig'), __FILE__)

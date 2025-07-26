@@ -116,6 +116,56 @@ class ConvertProtobufEventTest {
     }
 
     @Test
+    fun `It should return Custom event with revenue`() {
+        val attributeValue1 = Event.AttributeValue.newBuilder()
+            .setStringValue("my_value")
+            .build()
+
+        val attributeValue2 = Event.AttributeValue.newBuilder()
+            .setIntValue(1000)
+            .build()
+
+        val attributeValue3 = Event.AttributeValue.newBuilder()
+            .setBoolValue(false)
+            .build()
+
+        val attributeValue4 = Event.AttributeValue.newBuilder()
+            .setDoubleValue(3.14)
+            .build()
+
+        val event = Event.CustomEvent.newBuilder()
+            .setEventName("my_custom_event")
+            .setCurrency("USD")
+            .setRevenueInCents(1000)
+            .putAllAttributes(
+                mapOf(
+                    "key1" to attributeValue1,
+                    "key2" to attributeValue2,
+                    "key3" to attributeValue3,
+                    "key4" to attributeValue4
+                )
+            )
+            .build()
+
+        val trackingEvent = Event.TrackingEvent.newBuilder()
+            .setCustomEvent(event)
+            .build()
+
+        val result = convertTrackingEvent(trackingEvent)
+
+        assertTrue(result is CustomEvent)
+        result as CustomEvent
+        assertEquals("my_custom_event", result.eventName)
+        assertEquals("USD", result.currency)
+        assertEquals(1000, result.revenueInCents)
+        assertEquals(
+            mapOf("key1" to "my_value", "key2" to 1000, "key3" to false, "key4" to 3.14),
+            result.attributes
+        )
+    }
+
+
+    @Test
     fun `convertTrackingEvent should return PurchaseEvent when event is PURCHASE`() {
         // Arrange
         val purchaseEvent = Event.PurchaseEvent.newBuilder()

@@ -79,7 +79,9 @@ fun convertTrackingEvent(event: Event.TrackingEvent): TrackingEvent {
 
             CustomEvent(
                 eventName = event.customEvent.eventName,
-                attributes = attributes
+                attributes = attributes,
+                currency = event.customEvent.currency,
+                revenueInCents = event.customEvent.revenueInCents
             )
         }
 
