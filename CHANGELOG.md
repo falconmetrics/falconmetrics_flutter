@@ -1,3 +1,6 @@
+## 0.5.1
+* Bump iOS SDK
+
 ## 0.5.0
 * Breaking: Renamed signinsignupevent
 * Breaking: In purchase event changed itemid to itemIds to support multiple items
