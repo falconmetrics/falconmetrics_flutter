@@ -37,17 +37,6 @@ No additional setup required for Android.
 
 FalconMetrics uses SKAdNetwork for iOS. No additional setup is required as the SDK handles this automatically.
 
-#### CocoaPods
-
-Add the following to your App's `Podfile`:
-
-```ruby
-# Pointing to the official CocoaPods master repository
-source 'https://cdn.cocoapods.org/'
-# Pointing to the FalconMetrics private repository
-source 'https://github.com/falconmetrics/falconmetrics-ios-pods.git'
-```
-
 ## Usage
 
 ### Initialize the SDK

@@ -1,7 +1,7 @@
 PODS:
-  - FalconMetrics (0.4.1)
+  - FalconMetrics (0.4.2)
   - falconmetrics_flutter (0.5.0):
-    - FalconMetrics (= 0.4.1)
+    - FalconMetrics (= 0.4.2)
     - Flutter
     - SwiftProtobuf (~> 1.27.0)
   - Flutter (1.0.0)
@@ -15,9 +15,8 @@ DEPENDENCIES:
   - integration_test (from `.symlinks/plugins/integration_test/ios`)
 
 SPEC REPOS:
-  https://github.com/falconmetrics/falconmetrics-ios-pods.git:
-    - FalconMetrics
   trunk:
+    - FalconMetrics
     - SwiftProtobuf
 
 EXTERNAL SOURCES:
@@ -29,12 +28,12 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/integration_test/ios"
 
 SPEC CHECKSUMS:
-  FalconMetrics: 83b1a0541ab8635f931e06fc8718fab12e22ae21
-  falconmetrics_flutter: d8d356f824145b6699f449f3f809c7f52a79a8bb
+  FalconMetrics: 084aa7c3946756862a200770349435d199a797cd
+  falconmetrics_flutter: a6a37931e26e577cc517b9d62c68c2a1e10e4c80
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   integration_test: 252f60fa39af5e17c3aa9899d35d908a0721b573
   SwiftProtobuf: b109bd17979d7993a84da14b1e1fdd8b0ded934a
 
-PODFILE CHECKSUM: e1f02846647ac9304fa2c361ba815f6581cb85d4
+PODFILE CHECKSUM: 251cb053df7158f337c0712f2ab29f4e0fa474ce
 
 COCOAPODS: 1.16.2
