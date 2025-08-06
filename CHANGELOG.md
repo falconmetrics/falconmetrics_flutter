@@ -1,3 +1,6 @@
+## 0.5.2
+* Resolve an issue with Android resources
+
 ## 0.5.1
 * Bump iOS SDK
 
