@@ -1,7 +1,8 @@
 import 'package:falconmetrics_flutter/src/events.dart';
+import 'package:falconmetrics_flutter/src/model/tracking_authorization_status.dart'
+    show TrackingAuthorizationStatus;
+import 'package:falconmetrics_flutter/src/platform/falconmetrics_flutter_method_channel.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
-
-import 'falconmetrics_flutter_method_channel.dart';
 
 abstract class FalconmetricsFlutterPlatform extends PlatformInterface {
   /// Constructs a FalconmetricsFlutterPlatform.
@@ -44,13 +45,30 @@ abstract class FalconmetricsFlutterPlatform extends PlatformInterface {
     throw UnimplementedError('trackEvent() has not been implemented.');
   }
 
-  /// ANDROID ONLY: Enables or disables tracking events
+  /// Enables or disables tracking events
   Future<void> setTrackingEnabled({required bool enabled}) {
     throw UnimplementedError('setTrackingEnabled() has not been implemented.');
   }
 
-  /// ANDROID ONLY: Checks if tracking is enabled
+  /// Checks if tracking is enabled
   Future<bool> isTrackingEnabled() {
     throw UnimplementedError('isTrackingEnabled() has not been implemented.');
+  }
+
+  /// Gets the IDFA
+  Future<String?> getIDFA() {
+    throw UnimplementedError('getIDFA() has not been implemented.');
+  }
+
+  /// Requests the IDFA
+  Future<TrackingAuthorizationStatus> requestIDFA() {
+    throw UnimplementedError('requestIDFA() has not been implemented.');
+  }
+
+  /// Gets the tracking authorization status
+  Future<TrackingAuthorizationStatus> getTrackingAuthorizationStatus() {
+    throw UnimplementedError(
+      'getTrackingAuthorizationStatus() has not been implemented.',
+    );
   }
 }

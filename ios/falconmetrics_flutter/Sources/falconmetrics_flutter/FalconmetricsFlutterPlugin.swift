@@ -64,11 +64,47 @@ public class FalconmetricsFlutterPlugin: NSObject, FlutterPlugin {
                 result(FlutterError(code: "PARSE_ERROR", message: "Failed to parse TrackingEvent", details: error.localizedDescription))
             }
     case "setTrackingEnabled":
-        // This function only works on android and shouldn't do anything on iOS because we depend on skad
+        guard let args = call.arguments as? [String: Any],
+              let enabled = args["trackingEnabled"] as? Bool else {
+            result(FlutterError(
+                code: "INVALID_ARGUMENTS",
+                message: "Enabled argument is required",
+                details: nil
+            ))
+            return
+        }
+        Task{
+            await FalconMetricsSdk.shared.setTracking(enabled: enabled)
+        }
         result(nil)
     case "isTrackingEnabled":
-        // This function only works on android and shouldn't do anything on iOS because we depend on skad
-        result(true)
+        Task {
+            let enabled = await FalconMetricsSdk.shared.isTrackingEnabled()
+            result(enabled)
+        }
+    case "getIDFA":
+        if #available(iOS 14.0, *){
+            let idfa =  FalconMetricsSdk.shared.getIDFA()
+            result(idfa)
+        }else {
+            result(FlutterError(code: "INVALID_VERSION", message: "This method is only available on iOS 14.0 and above", details: nil))
+        }
+    case "getTrackingAuthorizationStatus":
+        if #available(iOS 14.0, *){
+            let status =  FalconMetricsSdk.shared.getTrackingAuthorizationStatus()
+            result(status.rawValue)
+        }else {
+            result(FlutterError(code: "INVALID_VERSION", message: "This method is only available on iOS 14.0 and above", details: nil))
+        }
+    case "requestIDFA":
+        if #available(iOS 14.0, *){
+            Task{
+                let status = await FalconMetricsSdk.shared.requestIDFAPermission()
+                result(status.rawValue)
+            }
+        } else {
+            result(FlutterError(code: "INVALID_VERSION", message: "This method is only available on iOS 14.0 and above", details: nil))
+        }
     default:
         result(nil)
     }

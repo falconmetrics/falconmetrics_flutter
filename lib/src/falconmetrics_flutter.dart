@@ -1,4 +1,5 @@
 import 'package:falconmetrics_flutter/src/events.dart';
+import 'package:falconmetrics_flutter/src/model/tracking_authorization_status.dart';
 
 import 'platform/falconmetrics_flutter_platform_interface.dart';
 
@@ -53,5 +54,21 @@ class FalconmetricsFlutter {
   /// that cannot be disabled through this SDK.
   Future<bool> isTrackingEnabled() {
     return FalconmetricsFlutterPlatform.instance.isTrackingEnabled();
+  }
+
+  /// iOS only: Returns the IDFA (Identifier for advertisers) of the device.
+  Future<String?> getIDFA() {
+    return FalconmetricsFlutterPlatform.instance.getIDFA();
+  }
+
+  /// iOS only: Requests the IDFA (Identifier for advertisers) of the device.
+  Future<TrackingAuthorizationStatus> requestIDFA() {
+    return FalconmetricsFlutterPlatform.instance.requestIDFA();
+  }
+
+  /// iOS only: Returns the tracking authorization status of the device.
+  Future<TrackingAuthorizationStatus> getTrackingAuthorizationStatus() {
+    return FalconmetricsFlutterPlatform.instance
+        .getTrackingAuthorizationStatus();
   }
 }

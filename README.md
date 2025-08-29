@@ -18,7 +18,7 @@ Add `falconmetrics_flutter` to your `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  falconmetrics_flutter: ^0.4.2
+  falconmetrics_flutter: ^1.0.0
 ```
 
 Then run:
@@ -154,7 +154,6 @@ final isEnabled = await falconMetrics.isTrackingEnabled();
 print('Tracking enabled: $isEnabled');
 ```
 
-> **Note:** Tracking preferences primarily affect Android. iOS uses a privacy-aware SKAdNetwork implementation that cannot be disabled through this SDK.
 
 ## Example
 
@@ -168,6 +167,9 @@ Check the [example](example/) directory for a complete sample application demons
 - `trackEvent({required TrackingEvent event})` - Track an event
 - `setTrackingEnabled({required bool enabled})` - Enable or disable tracking
 - `isTrackingEnabled()` - Check if tracking is enabled
+- `getIDFA()` - iOS only: Get the IDFA (Identifier for Advertisers)
+- `requestIDFA()` - iOS only: Request the IDFA permission from the user
+- `getTrackingAuthorizationStatus()` - iOS only: Get the current tracking authorization status
 
 ### TrackingEvent Types
 
@@ -175,6 +177,58 @@ Check the [example](example/) directory for a complete sample application demons
 - `AddedToCartEvent()` - Track when a product is added to cart
 - `CouponAppliedEvent()` - Track when a coupon is applied
 - `PurchaseEvent()` - Track a purchase transaction
+
+### iOS IDFA (Identifier for Advertisers)
+
+For iOS apps, you can use the IDFA methods to request and retrieve the user's Identifier for Advertisers. This helps with more accurate attribution on iOS devices.
+
+#### iOS Configuration
+Add NSUserTrackingUsageDescription to your Info.plist with a clear purpose string.
+
+```xml
+<key>NSUserTrackingUsageDescription</key>
+<string>We use IDFA to track user behavior and improve our services.</string>
+```
+
+#### Request IDFA Permission
+
+Before accessing the IDFA, you need to request permission from the user:
+
+```dart
+final falconMetrics = FalconmetricsFlutter();
+final status = await falconMetrics.requestIDFA();
+
+switch (status) {
+  case TrackingAuthorizationStatus.authorized:
+    print('User granted permission');
+    break;
+  case TrackingAuthorizationStatus.denied:
+    print('User denied permission');
+    break;
+  case TrackingAuthorizationStatus.restricted:
+    print('Tracking is restricted');
+    break;
+  case TrackingAuthorizationStatus.notDetermined:
+    print('User has not yet been asked');
+    break;
+}
+```
+
+#### Get Current Authorization Status
+
+```dart
+final status = await falconMetrics.getTrackingAuthorizationStatus();
+print('Current tracking status: $status');
+```
+
+#### Get IDFA
+
+After receiving permission, you can retrieve the IDFA:
+
+```dart
+final idfa = await falconMetrics.getIDFA();
+print('IDFA: $idfa');
+```
 
 ### Google advertising ID
 
