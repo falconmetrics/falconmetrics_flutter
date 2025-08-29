@@ -64,11 +64,24 @@ public class FalconmetricsFlutterPlugin: NSObject, FlutterPlugin {
                 result(FlutterError(code: "PARSE_ERROR", message: "Failed to parse TrackingEvent", details: error.localizedDescription))
             }
     case "setTrackingEnabled":
-        // This function only works on android and shouldn't do anything on iOS because we depend on skad
+        guard let args = call.arguments as? [String: Any],
+              let enabled = args["trackingEnabled"] as? Bool else {
+            result(FlutterError(
+                code: "INVALID_ARGUMENTS",
+                message: "Enabled argument is required",
+                details: nil
+            ))
+            return
+        }
+        Task{
+            await FalconMetricsSdk.shared.setTracking(enabled: enabled)
+        }
         result(nil)
     case "isTrackingEnabled":
-        // This function only works on android and shouldn't do anything on iOS because we depend on skad
-        result(true)
+        Task {
+            let enabled = await FalconMetricsSdk.shared.isTrackingEnabled()
+            result(enabled)
+        }
     default:
         result(nil)
     }
