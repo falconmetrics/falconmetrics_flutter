@@ -39,7 +39,9 @@ class MethodChannelFalconmetricsFlutter extends FalconmetricsFlutterPlatform {
 
   @override
   Future<void> setTrackingEnabled({required bool enabled}) async {
-    await methodChannel.invokeMethod<void>('setTrackingEnabled', enabled);
+    await methodChannel.invokeMethod<void>('setTrackingEnabled', {
+      'trackingEnabled': enabled,
+    });
   }
 
   @override

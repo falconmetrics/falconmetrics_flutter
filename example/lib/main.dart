@@ -6,7 +6,7 @@ void main() async {
   final falconmetricsFlutterPlugin = FalconmetricsFlutter();
   await falconmetricsFlutterPlugin.setDebugLoggingEnabled(enabled: true);
 
-  await falconmetricsFlutterPlugin.init(apiKey: 'myApiKey');
+  // await falconmetricsFlutterPlugin.init(apiKey: 'myApiKey');
 
   runApp(MyApp(falconmetricsFlutter: falconmetricsFlutterPlugin));
 }
