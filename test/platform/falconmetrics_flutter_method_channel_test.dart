@@ -1,6 +1,6 @@
 import 'package:falconmetrics_flutter/src/events.dart';
 import 'package:falconmetrics_flutter/src/platform/event_proto_converter.dart';
-import 'package:falconmetrics_flutter/src/falconmetrics_flutter_method_channel.dart';
+import 'package:falconmetrics_flutter/src/platform/falconmetrics_flutter_method_channel.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 

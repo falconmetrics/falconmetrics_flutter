@@ -23,6 +23,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   String _result = '';
   bool _isTrackingEnabled = true;
+  TrackingAuthorizationStatus? _trackingAuthorizationStatus;
 
   void _trackEvent() {
     widget.falconmetricsFlutter.trackEvent(
@@ -30,6 +31,14 @@ class _MyAppState extends State<MyApp> {
     );
     setState(() {
       _result = 'Event tracked!';
+    });
+  }
+
+  Future<void> _getTrackingAuthorizationStatus() async {
+    final status =
+        await widget.falconmetricsFlutter.getTrackingAuthorizationStatus();
+    setState(() {
+      _trackingAuthorizationStatus = status;
     });
   }
 
@@ -71,6 +80,14 @@ class _MyAppState extends State<MyApp> {
                 ),
               ),
               const SizedBox(height: 20),
+              FilledButton(
+                onPressed: () {
+                  _getTrackingAuthorizationStatus();
+                },
+                child: const Text(
+                  'iOS only: Get tracking authorization status',
+                ),
+              ),
               const Spacer(),
               Container(
                 height: 200,

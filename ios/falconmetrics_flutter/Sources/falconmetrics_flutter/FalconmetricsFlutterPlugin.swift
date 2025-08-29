@@ -82,6 +82,29 @@ public class FalconmetricsFlutterPlugin: NSObject, FlutterPlugin {
             let enabled = await FalconMetricsSdk.shared.isTrackingEnabled()
             result(enabled)
         }
+    case "getIDFA":
+        if #available(iOS 14.0, *){
+            let idfa =  FalconMetricsSdk.shared.getIDFA()
+            result(idfa)
+        }else {
+            result(FlutterError(code: "INVALID_VERSION", message: "This method is only available on iOS 14.0 and above", details: nil))
+        }
+    case "getTrackingAuthorizationStatus":
+        if #available(iOS 14.0, *){
+            let status =  FalconMetricsSdk.shared.getTrackingAuthorizationStatus()
+            result(status)
+        }else {
+            result(FlutterError(code: "INVALID_VERSION", message: "This method is only available on iOS 14.0 and above", details: nil))
+        }
+    case "requestIDFA":
+        if #available(iOS 14.0, *){
+            Task{
+                let status = await FalconMetricsSdk.shared.requestIDFAPermission()
+                result(status)
+            }
+        } else {
+            result(FlutterError(code: "INVALID_VERSION", message: "This method is only available on iOS 14.0 and above", details: nil))
+        }
     default:
         result(nil)
     }
