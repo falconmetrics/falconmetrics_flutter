@@ -1,4 +1,5 @@
-import 'package:falconmetrics_flutter/falconmetrics_flutter.dart';
+import 'package:falconmetrics_flutter/src/events.dart';
+import 'package:falconmetrics_flutter/src/model/tracking_authorization_status.dart';
 
 import 'platform/falconmetrics_flutter_platform_interface.dart';
 
