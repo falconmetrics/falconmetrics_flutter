@@ -1,3 +1,7 @@
+## 1.0.0
+* Add support for iOS AppTrackingTransparency
+* Added method where tracking can be disabled programitcally. E.g. when user denies it in privacy settings
+
 ## 0.5.2
 * Resolve an issue with Android resources
 
