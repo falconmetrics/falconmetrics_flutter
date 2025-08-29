@@ -61,12 +61,12 @@ class FalconmetricsFlutter {
   }
 
   /// iOS only: Requests the IDFA (Identifier for advertisers) of the device.
-  Future<void> requestIDFA() {
+  Future<TrackingAuthorizationStatus> requestIDFA() {
     return FalconmetricsFlutterPlatform.instance.requestIDFA();
   }
 
   /// iOS only: Returns the tracking authorization status of the device.
-  Future<TrackingAuthorizationStatus?> getTrackingAuthorizationStatus() {
+  Future<TrackingAuthorizationStatus> getTrackingAuthorizationStatus() {
     return FalconmetricsFlutterPlatform.instance
         .getTrackingAuthorizationStatus();
   }

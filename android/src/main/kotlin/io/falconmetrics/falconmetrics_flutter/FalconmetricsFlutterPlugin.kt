@@ -52,7 +52,11 @@ class FalconmetricsFlutterPlugin : FlutterPlugin, MethodCallHandler {
             falconMetrics.trackEvent(tmp)
             result.success(null)
         } else if (call.method == "setTrackingEnabled") {
-            val enabled = call.arguments as Boolean
+            val enabled = call.argument<Boolean>("trackingEnabled")
+            if (enabled == null) {
+                result.error("INVALID_ARGUMENTS", "trackingEnabled argument is required", null)
+                return
+            }
             falconMetrics.setTracking(context, enabled)
             result.success(null)
         } else if (call.method == "isTrackingEnabled") {

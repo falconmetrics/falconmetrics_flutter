@@ -62,12 +62,12 @@ abstract class FalconmetricsFlutterPlatform extends PlatformInterface {
   }
 
   /// Requests the IDFA
-  Future<void> requestIDFA() {
+  Future<TrackingAuthorizationStatus> requestIDFA() {
     throw UnimplementedError('requestIDFA() has not been implemented.');
   }
 
   /// Gets the tracking authorization status
-  Future<TrackingAuthorizationStatus?> getTrackingAuthorizationStatus() {
+  Future<TrackingAuthorizationStatus> getTrackingAuthorizationStatus() {
     throw UnimplementedError(
       'getTrackingAuthorizationStatus() has not been implemented.',
     );

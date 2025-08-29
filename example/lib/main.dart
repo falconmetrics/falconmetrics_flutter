@@ -1,5 +1,7 @@
 import 'package:falconmetrics_flutter/falconmetrics_flutter.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,7 +25,21 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   String _result = '';
   bool _isTrackingEnabled = true;
-  TrackingAuthorizationStatus? _trackingAuthorizationStatus;
+  String _idfa = '';
+  TrackingAuthorizationStatus _trackingAuthorizationStatus =
+      TrackingAuthorizationStatus.notDetermined;
+
+  @override
+  void initState() {
+    super.initState();
+
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      if (defaultTargetPlatform == TargetPlatform.iOS) {
+        _getTrackingAuthorizationStatus();
+        _getIdfa();
+      }
+    });
+  }
 
   void _trackEvent() {
     widget.falconmetricsFlutter.trackEvent(
@@ -50,6 +66,20 @@ class _MyAppState extends State<MyApp> {
     final result = await widget.falconmetricsFlutter.isTrackingEnabled();
     setState(() {
       _isTrackingEnabled = result;
+    });
+  }
+
+  Future<void> _requestIDFA() async {
+    final status = await widget.falconmetricsFlutter.requestIDFA();
+    setState(() {
+      _trackingAuthorizationStatus = status;
+    });
+  }
+
+  Future<void> _getIdfa() async {
+    final idfa = await widget.falconmetricsFlutter.getIDFA();
+    setState(() {
+      _idfa = idfa ?? 'IDFA not available';
     });
   }
 
@@ -80,17 +110,31 @@ class _MyAppState extends State<MyApp> {
                 ),
               ),
               const SizedBox(height: 20),
-              FilledButton(
-                onPressed: () {
-                  _getTrackingAuthorizationStatus();
-                },
-                child: const Text(
-                  'iOS only: Get tracking authorization status',
+              if (defaultTargetPlatform == TargetPlatform.iOS) ...[
+                FilledButton(
+                  onPressed: () {
+                    _getTrackingAuthorizationStatus();
+                  },
+                  child: const Text('Get ATT authorization status'),
                 ),
-              ),
+                const SizedBox(height: 20),
+                FilledButton(
+                  onPressed: () {
+                    _requestIDFA();
+                  },
+                  child: const Text('Request ATT'),
+                ),
+                const SizedBox(height: 20),
+                FilledButton(
+                  onPressed: () {
+                    _getIdfa();
+                  },
+                  child: const Text('Get IDFA'),
+                ),
+              ],
               const Spacer(),
               Container(
-                height: 200,
+                height: 300,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8),
                   border: Border.all(
@@ -106,8 +150,16 @@ class _MyAppState extends State<MyApp> {
                       Center(child: Text('Execute an action:')),
                       const SizedBox(height: 24),
                       Text(_result),
-                      const SizedBox(height: 24),
+                      const SizedBox(height: 8),
                       Text('Tracking is enabled: $_isTrackingEnabled'),
+                      if (defaultTargetPlatform == TargetPlatform.iOS) ...[
+                        const SizedBox(height: 8),
+                        Text(
+                          'ATT status: ${_trackingAuthorizationStatus.name}',
+                        ),
+                        const SizedBox(height: 8),
+                        Text('IDFA: $_idfa'),
+                      ],
                     ],
                   ),
                 ),

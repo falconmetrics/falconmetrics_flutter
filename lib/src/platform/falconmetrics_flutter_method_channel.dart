@@ -38,7 +38,9 @@ class MethodChannelFalconmetricsFlutter extends FalconmetricsFlutterPlatform {
 
   @override
   Future<void> setTrackingEnabled({required bool enabled}) async {
-    await methodChannel.invokeMethod<void>('setTrackingEnabled', enabled);
+    await methodChannel.invokeMethod<void>('setTrackingEnabled', {
+      'trackingEnabled': enabled,
+    });
   }
 
   @override
@@ -49,30 +51,29 @@ class MethodChannelFalconmetricsFlutter extends FalconmetricsFlutterPlatform {
   @override
   Future<String?> getIDFA() async {
     if (defaultTargetPlatform == TargetPlatform.iOS) {
-      return await methodChannel.invokeMethod<String?>(
-        'getTrackingAuthorizationStatus',
-      );
+      return await methodChannel.invokeMethod<String?>('getIDFA');
     } else {
       throw UnsupportedError('getIDFA is only supported on iOS');
     }
   }
 
   @override
-  Future<void> requestIDFA() async {
+  Future<TrackingAuthorizationStatus> requestIDFA() async {
     if (defaultTargetPlatform == TargetPlatform.iOS) {
-      await methodChannel.invokeMethod<void>('requestIDFA');
+      final status = await methodChannel.invokeMethod<int>('requestIDFA');
+      return status.toTrackingAuthorizationStatus();
     } else {
       throw UnsupportedError('requestIDFA is only supported on iOS');
     }
   }
 
   @override
-  Future<TrackingAuthorizationStatus?> getTrackingAuthorizationStatus() async {
+  Future<TrackingAuthorizationStatus> getTrackingAuthorizationStatus() async {
     if (defaultTargetPlatform == TargetPlatform.iOS) {
-      final status = await methodChannel.invokeMethod<String?>(
+      final status = await methodChannel.invokeMethod<int>(
         'getTrackingAuthorizationStatus',
       );
-      return status?.toTrackingAuthorizationStatus();
+      return status.toTrackingAuthorizationStatus();
     } else {
       throw UnsupportedError(
         'getTrackingAuthorizationStatus is only supported on iOS',
@@ -81,19 +82,19 @@ class MethodChannelFalconmetricsFlutter extends FalconmetricsFlutterPlatform {
   }
 }
 
-extension _TrackingAuthorizationStatusX on String? {
-  TrackingAuthorizationStatus? toTrackingAuthorizationStatus() {
+extension _TrackingAuthorizationStatusX on int? {
+  TrackingAuthorizationStatus toTrackingAuthorizationStatus() {
     if (this == null) {
-      return null;
+      return TrackingAuthorizationStatus.notDetermined;
     }
     switch (this) {
-      case 'notDetermined':
+      case 0:
         return TrackingAuthorizationStatus.notDetermined;
-      case 'restricted':
+      case 1:
         return TrackingAuthorizationStatus.restricted;
-      case 'denied':
+      case 2:
         return TrackingAuthorizationStatus.denied;
-      case 'authorized':
+      case 3:
         return TrackingAuthorizationStatus.authorized;
       default:
         throw ArgumentError('Invalid tracking authorization status: $this');
