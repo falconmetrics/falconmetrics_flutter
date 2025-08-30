@@ -1,6 +1,6 @@
 PODS:
   - FalconMetrics (1.0.0)
-  - falconmetrics_flutter (0.5.0):
+  - falconmetrics_flutter (1.0.0):
     - FalconMetrics (= 1.0.0)
     - Flutter
     - SwiftProtobuf (~> 1.27.0)
@@ -29,7 +29,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   FalconMetrics: 7b827a2cfaf88c9719fe89d00e8deb4c1d17c768
-  falconmetrics_flutter: 98e0a744a165ba2057f603ab97e75d98b4831b97
+  falconmetrics_flutter: fc6887b815277ea118d63fd6dd4890d0f138d42a
   Flutter: cabc95a1d2626b1b06e7179b784ebcf0c0cde467
   integration_test: 252f60fa39af5e17c3aa9899d35d908a0721b573
   SwiftProtobuf: b109bd17979d7993a84da14b1e1fdd8b0ded934a
