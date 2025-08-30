@@ -214,6 +214,8 @@ switch (status) {
 }
 ```
 
+If NSUserTrackingUsageDescription is not set on iOS we will return TrackingAuthorizationStatus.denied.
+
 #### Get Current Authorization Status
 
 ```dart
