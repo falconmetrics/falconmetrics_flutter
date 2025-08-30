@@ -15,7 +15,7 @@ Flutter plugin for FalconMetrics, a comprehensive mobile app attribution solutio
   s.source           = { :path => '.' }
   s.dependency 'Flutter'
   s.dependency 'SwiftProtobuf', '~> 1.27.0'
-  s.dependency 'FalconMetrics', '1.0.0'
+  s.dependency 'FalconMetrics', '1.0.1'
   s.source_files = 'falconmetrics_flutter/Sources/**/*.{swift}'
   
   s.platform = :ios, '13.0'

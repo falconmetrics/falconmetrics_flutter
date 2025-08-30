@@ -1,7 +1,13 @@
-import Flutter
+@preconcurrency import Flutter
 import UIKit
 import FalconMetrics
 import SwiftProtobuf
+
+// Box the FlutterResult to avoid capturing a non-Sendable closure directly in concurrent contexts.
+final class ResultBox: @unchecked Sendable {
+  let call: FlutterResult
+  init(_ result: @escaping FlutterResult) { self.call = result }
+}
 
 public class FalconmetricsFlutterPlugin: NSObject, FlutterPlugin {
   public static func register(with registrar: FlutterPluginRegistrar) {
@@ -10,7 +16,7 @@ public class FalconmetricsFlutterPlugin: NSObject, FlutterPlugin {
     registrar.addMethodCallDelegate(instance, channel: channel)
   }
 
-  public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+  public func handle(_ call: FlutterMethodCall, result: @escaping @Sendable FlutterResult) {
       
     switch call.method {
     case "init":
@@ -78,11 +84,10 @@ public class FalconmetricsFlutterPlugin: NSObject, FlutterPlugin {
         }
         result(nil)
     case "isTrackingEnabled":
+        let box = ResultBox(result)
         Task {
             let enabled = await FalconMetricsSdk.shared.isTrackingEnabled()
-            await MainActor.run {
-                result(enabled)
-            }
+            await MainActor.run { box.call(enabled) }
         }
     case "getIDFA":
         if #available(iOS 14.0, *){
@@ -100,11 +105,10 @@ public class FalconmetricsFlutterPlugin: NSObject, FlutterPlugin {
         }
     case "requestIDFA":
         if #available(iOS 14.0, *){
-            Task{
+            let box = ResultBox(result)
+            Task {
                 let status = await FalconMetricsSdk.shared.requestIDFAPermission()
-                await MainActor.run {
-                    result(status.rawValue)
-                }
+                await MainActor.run { box.call(status.rawValue) }
             }
         } else {
             result(FlutterError(code: "INVALID_VERSION", message: "This method is only available on iOS 14.0 and above", details: nil))
