@@ -4,7 +4,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'falconmetrics_flutter'
-  s.version          = '0.5.0'
+  s.version          = '1.0.0'
   s.summary          = 'Flutter plugin for FalconMetrics, a comprehensive mobile app attribution solution.'
   s.description      = <<-DESC
 Flutter plugin for FalconMetrics, a comprehensive mobile app attribution solution.
@@ -15,7 +15,7 @@ Flutter plugin for FalconMetrics, a comprehensive mobile app attribution solutio
   s.source           = { :path => '.' }
   s.dependency 'Flutter'
   s.dependency 'SwiftProtobuf', '~> 1.27.0'
-  s.dependency 'FalconMetrics', '1.0.0'
+  s.dependency 'FalconMetrics', '1.0.1'
   s.source_files = 'falconmetrics_flutter/Sources/**/*.{swift}'
   
   s.platform = :ios, '13.0'

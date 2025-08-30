@@ -1,3 +1,6 @@
+## 1.0.1
+* Fix issue that make app crash on iOS when NSUserTrackingUsageDescription is not set
+
 ## 1.0.0
 * Add support for iOS AppTrackingTransparency
 * Added method where tracking can be disabled programitcally. E.g. when user denies it in privacy settings
