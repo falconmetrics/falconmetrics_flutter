@@ -1,6 +1,9 @@
 import 'package:falconmetrics_flutter/src/events.dart';
+import 'package:falconmetrics_flutter/src/generated/userdata.pb.dart'
+    as pb_userdata;
 import 'package:falconmetrics_flutter/src/platform/event_proto_converter.dart';
 import 'package:falconmetrics_flutter/src/platform/falconmetrics_flutter_method_channel.dart';
+import 'package:falconmetrics_flutter/src/user_data.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -54,12 +57,20 @@ void main() {
       currency: 'USD',
     );
 
+    final userData = pb_userdata.UserData(email: 'foo@bar.com');
+
     final eventProto = EventProtoConverter().convert(event);
-    await platform.trackEvent(event: event);
+    await platform.trackEvent(
+      event: event,
+      userData: UserData(email: 'foo@bar.com'),
+    );
 
     expect(log, hasLength(1));
     expect(log.first.method, 'trackEvent');
-    expect(log.first.arguments, eventProto.writeToBuffer());
+    expect(log.first.arguments, {
+      'event': eventProto.writeToBuffer(),
+      'userData': userData.writeToBuffer(),
+    });
   });
 
   test('It calls setTrackingEnabled with the correct arguments', () async {
@@ -67,7 +78,7 @@ void main() {
 
     expect(log, hasLength(1));
     expect(log.first.method, 'setTrackingEnabled');
-    expect(log.first.arguments, true);
+    expect(log.first.arguments, {'trackingEnabled': true});
   });
 
   test('It calls isTrackingEnabled with the correct arguments', () async {

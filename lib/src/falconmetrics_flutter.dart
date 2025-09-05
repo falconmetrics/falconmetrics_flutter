@@ -1,5 +1,6 @@
 import 'package:falconmetrics_flutter/src/events.dart';
 import 'package:falconmetrics_flutter/src/model/tracking_authorization_status.dart';
+import 'package:falconmetrics_flutter/src/user_data.dart';
 
 import 'platform/falconmetrics_flutter_platform_interface.dart';
 
@@ -32,8 +33,8 @@ class FalconmetricsFlutter {
   /// Tracks a conversion event
   ///
   /// Use [event] to track a conversion event.
-  Future<void> trackEvent({required TrackingEvent event}) {
-    return FalconmetricsFlutterPlatform.instance.trackEvent(event: event);
+  Future<void> trackEvent({required TrackingEvent event, UserData? userData}) {
+    return FalconmetricsFlutterPlatform.instance.trackEvent(event: event, userData: userData);
   }
 
   /// Enables or disables tracking functionality.

@@ -1,0 +1,14 @@
+syntax = "proto3";
+package pb;
+
+message UserData {
+  optional string email = 1;           
+  optional string phone_number = 2;    
+  optional string first_name = 3; 
+  optional string last_name = 4;          
+  optional string date_of_birth = 5; 
+  optional string city = 6;  
+  optional string state = 7; 
+  optional string postal_code = 8; 
+  optional string country = 9; 
+}

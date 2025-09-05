@@ -1,7 +1,10 @@
 import 'package:falconmetrics_flutter/src/events.dart';
+import 'package:falconmetrics_flutter/src/generated/userdata.pb.dart'
+    as pb_userdata;
 import 'package:falconmetrics_flutter/src/model/tracking_authorization_status.dart';
 import 'package:falconmetrics_flutter/src/platform/event_proto_converter.dart';
 import 'package:falconmetrics_flutter/src/platform/falconmetrics_flutter_platform_interface.dart';
+import 'package:falconmetrics_flutter/src/user_data.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
@@ -29,12 +32,27 @@ class MethodChannelFalconmetricsFlutter extends FalconmetricsFlutterPlatform {
   }
 
   @override
-  Future<void> trackEvent({required TrackingEvent event}) async {
+  Future<void> trackEvent({
+    required TrackingEvent event,
+    UserData? userData,
+  }) async {
     final protoEvent = EventProtoConverter().convert(event);
-    await methodChannel.invokeMethod<void>(
-      'trackEvent',
-      protoEvent.writeToBuffer(),
+    final userDataProto = pb_userdata.UserData(
+      email: userData?.email,
+      phoneNumber: userData?.phoneNumber,
+      firstName: userData?.firstName,
+      lastName: userData?.lastName,
+      dateOfBirth: userData?.dateOfBirth,
+      city: userData?.city,
+      state: userData?.state,
+      postalCode: userData?.postalCode,
+      country: userData?.country,
     );
+
+    await methodChannel.invokeMethod<void>('trackEvent', {
+      'event': protoEvent.writeToBuffer(),
+      'userData': userDataProto.writeToBuffer(),
+    });
   }
 
   @override
