@@ -55,10 +55,9 @@ public class FalconmetricsFlutterPlugin: NSObject, FlutterPlugin {
             do {
                 // Step 1: Deserialize from protobuf
                 let protoEvent = try Pb_TrackingEvent(serializedData: eventData.data)
-
                 // Step 2: Convert to SDK tracking event
                 let builder = try convertTrackingEvent(event: protoEvent)
-
+                
                 // Step 3: Start tracking in background
                 Task.detached {
                     await builder.track()

@@ -36,7 +36,6 @@ func convertTrackingEvent(event: Pb_TrackingEvent) throws -> FalconMetrics.BaseE
             .withTransactionId( event.purchase.transactionID)
             .withProductPrice(Int(event.purchase.productPriceInCents))
             .withCurrency(event.purchase.currency)
-//            .withRevenue(Int(event.purchase.revenueInCents))
             .withProductCategory(event.purchase.productCategory)
             .withCartId(event.purchase.cartID)
             .withPaymentMethod(event.purchase.paymentMethod)
