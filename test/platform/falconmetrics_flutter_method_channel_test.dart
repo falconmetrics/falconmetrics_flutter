@@ -2,9 +2,9 @@ import 'package:falconmetrics_flutter/src/events.dart';
 import 'package:falconmetrics_flutter/src/generated/userdata.pb.dart'
     as pb_userdata;
 import 'package:falconmetrics_flutter/src/model/tracking_options.dart';
+import 'package:falconmetrics_flutter/src/model/user_data.dart';
 import 'package:falconmetrics_flutter/src/platform/event_proto_converter.dart';
 import 'package:falconmetrics_flutter/src/platform/falconmetrics_flutter_method_channel.dart';
-import 'package:falconmetrics_flutter/src/model/user_data.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -58,6 +58,17 @@ void main() {
     expect(log, hasLength(1));
     expect(log.first.method, 'setDebugLoggingEnabled');
     expect(log.first.arguments, {'enabled': true});
+  });
+  test('It calls updateTrackingOptions with the correct arguments', () async {
+    await platform.updateTrackingOptions(
+      trackingOptions: TrackingOptions(
+        ipAddressTracking: IpAddressTracking.anonymised,
+      ),
+    );
+
+    expect(log, hasLength(1));
+    expect(log.first.method, 'updateTrackingOptions');
+    expect(log.first.arguments, {'ipAddressTracking': 'anonymised'});
   });
 
   test('It calls trackEvent with the correct arguments', () async {

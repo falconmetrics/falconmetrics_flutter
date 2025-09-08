@@ -197,6 +197,15 @@ final isEnabled = await falconMetrics.isTrackingEnabled();
 print('Tracking enabled: $isEnabled');
 ```
 
+#### Update tracking options
+
+```dart
+await falconMetrics.updateTrackingOptions(
+  trackingOptions: TrackingOptions(
+    ipAddressTracking: IpAddressTracking.anonymised,
+  ),
+);
+```
 
 ## Example
 

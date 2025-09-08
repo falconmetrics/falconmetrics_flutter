@@ -3,9 +3,9 @@ import 'package:falconmetrics_flutter/src/generated/userdata.pb.dart'
     as pb_userdata;
 import 'package:falconmetrics_flutter/src/model/tracking_authorization_status.dart';
 import 'package:falconmetrics_flutter/src/model/tracking_options.dart';
+import 'package:falconmetrics_flutter/src/model/user_data.dart';
 import 'package:falconmetrics_flutter/src/platform/event_proto_converter.dart';
 import 'package:falconmetrics_flutter/src/platform/falconmetrics_flutter_platform_interface.dart';
-import 'package:falconmetrics_flutter/src/model/user_data.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
@@ -104,6 +104,15 @@ class MethodChannelFalconmetricsFlutter extends FalconmetricsFlutterPlatform {
         'getTrackingAuthorizationStatus is only supported on iOS',
       );
     }
+  }
+
+  @override
+  Future<void> updateTrackingOptions({
+    required TrackingOptions trackingOptions,
+  }) async {
+    await methodChannel.invokeMethod<void>('updateTrackingOptions', {
+      'ipAddressTracking': trackingOptions.ipAddressTracking?.name,
+    });
   }
 }
 

@@ -1,6 +1,5 @@
 import 'package:equatable/equatable.dart';
 
-
 /// Tracking options that can be set when initialising the FalconMetrics sdk
 class TrackingOptions extends Equatable {
   const TrackingOptions({this.ipAddressTracking = IpAddressTracking.full});

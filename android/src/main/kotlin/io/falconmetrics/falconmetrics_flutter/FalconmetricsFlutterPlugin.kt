@@ -74,6 +74,9 @@ class FalconmetricsFlutterPlugin : FlutterPlugin, MethodCallHandler {
             result.success(null)
         } else if (call.method == "isTrackingEnabled") {
             result.success(falconMetrics.isTrackingEnabled(context))
+        } else if (call.method == "updateTrackingOptions") {
+            val ipAddressTracking = call.argument<String>("ipAddressTracking")
+            falconMetrics.updateTrackingOptions(FalconMetricsConfig(ipAddressTracking.toIpAddressTracking()))
         } else {
             result.notImplemented()
         }

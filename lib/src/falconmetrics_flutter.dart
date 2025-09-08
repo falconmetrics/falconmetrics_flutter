@@ -76,6 +76,17 @@ class FalconmetricsFlutter {
     return FalconmetricsFlutterPlatform.instance.requestIDFA();
   }
 
+  /// Updates the tracking options
+  /// This allows you to update the tracking options based on user consent.
+  /// Use [trackingOptions] to update the tracking options.
+  Future<void> updateTrackingOptions({
+    required TrackingOptions trackingOptions,
+  }) {
+    return FalconmetricsFlutterPlatform.instance.updateTrackingOptions(
+      trackingOptions: trackingOptions,
+    );
+  }
+
   /// iOS only: Returns the tracking authorization status of the device.
   Future<TrackingAuthorizationStatus> getTrackingAuthorizationStatus() {
     return FalconmetricsFlutterPlatform.instance
