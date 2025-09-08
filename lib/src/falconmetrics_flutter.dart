@@ -1,7 +1,7 @@
 import 'package:falconmetrics_flutter/src/events.dart';
 import 'package:falconmetrics_flutter/src/model/tracking_authorization_status.dart';
 import 'package:falconmetrics_flutter/src/model/tracking_options.dart';
-import 'package:falconmetrics_flutter/src/user_data.dart';
+import 'package:falconmetrics_flutter/src/model/user_data.dart';
 
 import 'platform/falconmetrics_flutter_platform_interface.dart';
 

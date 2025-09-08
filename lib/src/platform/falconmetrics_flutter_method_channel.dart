@@ -5,7 +5,7 @@ import 'package:falconmetrics_flutter/src/model/tracking_authorization_status.da
 import 'package:falconmetrics_flutter/src/model/tracking_options.dart';
 import 'package:falconmetrics_flutter/src/platform/event_proto_converter.dart';
 import 'package:falconmetrics_flutter/src/platform/falconmetrics_flutter_platform_interface.dart';
-import 'package:falconmetrics_flutter/src/user_data.dart';
+import 'package:falconmetrics_flutter/src/model/user_data.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 

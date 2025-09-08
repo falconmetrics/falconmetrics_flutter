@@ -4,7 +4,7 @@ import 'package:falconmetrics_flutter/src/generated/userdata.pb.dart'
 import 'package:falconmetrics_flutter/src/model/tracking_options.dart';
 import 'package:falconmetrics_flutter/src/platform/event_proto_converter.dart';
 import 'package:falconmetrics_flutter/src/platform/falconmetrics_flutter_method_channel.dart';
-import 'package:falconmetrics_flutter/src/user_data.dart';
+import 'package:falconmetrics_flutter/src/model/user_data.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 

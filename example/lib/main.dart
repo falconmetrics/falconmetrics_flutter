@@ -51,6 +51,7 @@ class _MyAppState extends State<MyApp> {
         currency: 'USD',
         revenueInCents: 2000,
       ),
+      userData: UserData(email: 'foo@bar.com'),
     );
     setState(() {
       _result = 'Event tracked!';

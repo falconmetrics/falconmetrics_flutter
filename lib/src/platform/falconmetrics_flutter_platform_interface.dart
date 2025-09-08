@@ -3,7 +3,7 @@ import 'package:falconmetrics_flutter/src/model/tracking_authorization_status.da
     show TrackingAuthorizationStatus;
 import 'package:falconmetrics_flutter/src/model/tracking_options.dart';
 import 'package:falconmetrics_flutter/src/platform/falconmetrics_flutter_method_channel.dart';
-import 'package:falconmetrics_flutter/src/user_data.dart';
+import 'package:falconmetrics_flutter/src/model/user_data.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 abstract class FalconmetricsFlutterPlatform extends PlatformInterface {

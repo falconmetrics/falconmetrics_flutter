@@ -18,7 +18,7 @@ Add `falconmetrics_flutter` to your `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  falconmetrics_flutter: ^1.0.1
+  falconmetrics_flutter: ^1.1.0
 ```
 
 Then run:
@@ -54,6 +54,23 @@ void main() async {
   
   runApp(MyApp());
 }
+```
+
+#### Configure IP address tracking (optional)
+
+You can control how IP addresses are collected during initialization using `TrackingOptions`.
+
+```dart
+import 'package:falconmetrics_flutter/falconmetrics_flutter.dart';
+
+await FalconmetricsFlutter().init(
+  apiKey: 'YOUR_API_KEY',
+  trackingOptions: TrackingOptions(
+    // Choose how to collect the user's IP address
+    // full | anonymised | disabled
+    ipAddressTracking: IpAddressTracking.anonymised,
+  ),
+);
 ```
 
 ### Tracking Events
@@ -116,6 +133,32 @@ await falconMetrics.trackEvent(
 );
 ```
 
+#### Attach optional user data to any event
+
+For better attribution and matching, you can provide optional user data alongside any tracking event. Provide whatever fields you have; all fields are optional.
+
+```dart
+import 'package:falconmetrics_flutter/falconmetrics_flutter.dart';
+
+await falconMetrics.trackEvent(
+  event: CustomEvent(
+    eventName: 'newsletter_signup',
+    attributes: {'source': 'homepage'},
+  ),
+  userData: UserData(
+    email: 'user@example.com',
+    phoneNumber: '+12025550123',
+    firstName: 'Ada',
+    lastName: 'Lovelace',
+    city: 'London',
+    postalCode: 'W1A 1AA',
+    state: 'London',
+    country: 'GB',
+    dateOfBirth: '1815-12-10', // YYYY-MM-DD
+  ),
+);
+```
+
 #### Custom event
 
 You can also create a custom event but make sure to use the same event name as the one you use in your ad network.
@@ -163,13 +206,20 @@ Check the [example](example/) directory for a complete sample application demons
 
 ### FalconmetricsFlutter
 
-- `init({required String apiKey})` - Initialize the SDK with your API key
+- `init({required String apiKey, String? fbAppId, TrackingOptions? trackingOptions})` - Initialize the SDK
 - `trackEvent({required TrackingEvent event})` - Track an event
 - `setTrackingEnabled({required bool enabled})` - Enable or disable tracking
 - `isTrackingEnabled()` - Check if tracking is enabled
 - `getIDFA()` - iOS only: Get the IDFA (Identifier for Advertisers)
 - `requestIDFA()` - iOS only: Request the IDFA permission from the user
 - `getTrackingAuthorizationStatus()` - iOS only: Get the current tracking authorization status
+
+#### TrackingOptions
+
+- `ipAddressTracking: IpAddressTracking`
+  - `IpAddressTracking.full` – store full IP address
+  - `IpAddressTracking.anonymised` – store anonymised IP address
+  - `IpAddressTracking.disabled` – do not collect/store IP address
 
 ### TrackingEvent Types
 
