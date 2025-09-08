@@ -21,7 +21,6 @@ func convertTrackingEvent(event: Pb_TrackingEvent) throws -> FalconMetrics.BaseE
             .withCurrency(event.addedToCart.currency)
             .withProductCategory( event.addedToCart.productCategory)
             .withCartId( event.addedToCart.cartID)
-        
 
     case .subscribe:
         return FalconMetricsSdk.shared.createSubscriptionBuilder()
@@ -36,7 +35,6 @@ func convertTrackingEvent(event: Pb_TrackingEvent) throws -> FalconMetrics.BaseE
             .withTransactionId( event.purchase.transactionID)
             .withProductPrice(Int(event.purchase.productPriceInCents))
             .withCurrency(event.purchase.currency)
-//            .withRevenue(Int(event.purchase.revenueInCents))
             .withProductCategory(event.purchase.productCategory)
             .withCartId(event.purchase.cartID)
             .withPaymentMethod(event.purchase.paymentMethod)
@@ -54,4 +52,18 @@ func convertTrackingEvent(event: Pb_TrackingEvent) throws -> FalconMetrics.BaseE
     @unknown default:
         throw NSError(domain: "TrackingError", code: 2, userInfo: [NSLocalizedDescriptionKey: "Unknown event case"])
     }
+}
+
+func convertUserData(_ userData: Pb_UserData) -> UserData {
+    return UserData(
+        email: userData.email,
+        phoneNumber: userData.phoneNumber,
+        firstName: userData.firstName,
+        lastName: userData.lastName,
+        postalCode: userData.postalCode,
+        city: userData.city,
+        state: userData.state,
+        dateOfBirth: userData.dateOfBirth,
+        country: userData.country
+    )
 }

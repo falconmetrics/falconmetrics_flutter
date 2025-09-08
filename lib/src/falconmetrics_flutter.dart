@@ -1,5 +1,7 @@
 import 'package:falconmetrics_flutter/src/events.dart';
 import 'package:falconmetrics_flutter/src/model/tracking_authorization_status.dart';
+import 'package:falconmetrics_flutter/src/model/tracking_options.dart';
+import 'package:falconmetrics_flutter/src/model/user_data.dart';
 
 import 'platform/falconmetrics_flutter_platform_interface.dart';
 
@@ -13,10 +15,15 @@ class FalconmetricsFlutter {
   ///
   /// Supply your unique [apiKey] to initialise the plugin for your app.
   /// Optionally supply your [fbAppId] to enable meta referrer support.
-  Future<void> init({required String apiKey, String? fbAppId}) {
+  Future<void> init({
+    required String apiKey,
+    String? fbAppId,
+    TrackingOptions trackingOptions = const TrackingOptions(),
+  }) {
     return FalconmetricsFlutterPlatform.instance.init(
       apiKey: apiKey,
       fbAppId: fbAppId,
+      trackingOptions: trackingOptions,
     );
   }
 
@@ -32,8 +39,11 @@ class FalconmetricsFlutter {
   /// Tracks a conversion event
   ///
   /// Use [event] to track a conversion event.
-  Future<void> trackEvent({required TrackingEvent event}) {
-    return FalconmetricsFlutterPlatform.instance.trackEvent(event: event);
+  Future<void> trackEvent({required TrackingEvent event, UserData? userData}) {
+    return FalconmetricsFlutterPlatform.instance.trackEvent(
+      event: event,
+      userData: userData,
+    );
   }
 
   /// Enables or disables tracking functionality.
@@ -64,6 +74,17 @@ class FalconmetricsFlutter {
   /// iOS only: Requests the IDFA (Identifier for advertisers) of the device.
   Future<TrackingAuthorizationStatus> requestIDFA() {
     return FalconmetricsFlutterPlatform.instance.requestIDFA();
+  }
+
+  /// Updates the tracking options
+  /// This allows you to update the tracking options based on user consent.
+  /// Use [trackingOptions] to update the tracking options.
+  Future<void> updateTrackingOptions({
+    required TrackingOptions trackingOptions,
+  }) {
+    return FalconmetricsFlutterPlatform.instance.updateTrackingOptions(
+      trackingOptions: trackingOptions,
+    );
   }
 
   /// iOS only: Returns the tracking authorization status of the device.

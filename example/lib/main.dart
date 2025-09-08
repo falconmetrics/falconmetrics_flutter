@@ -43,7 +43,15 @@ class _MyAppState extends State<MyApp> {
 
   void _trackEvent() {
     widget.falconmetricsFlutter.trackEvent(
-      event: const CompleteRegistrationEvent(),
+      event: const PurchaseEvent(
+        itemIds: ['habit'],
+        quantity: 1,
+        transactionId: 'habit',
+        productPriceInCents: 2000,
+        currency: 'USD',
+        revenueInCents: 2000,
+      ),
+      userData: UserData(email: 'foo@bar.com'),
     );
     setState(() {
       _result = 'Event tracked!';

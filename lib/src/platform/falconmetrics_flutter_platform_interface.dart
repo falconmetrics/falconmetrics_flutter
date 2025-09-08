@@ -1,6 +1,8 @@
 import 'package:falconmetrics_flutter/src/events.dart';
 import 'package:falconmetrics_flutter/src/model/tracking_authorization_status.dart'
     show TrackingAuthorizationStatus;
+import 'package:falconmetrics_flutter/src/model/tracking_options.dart';
+import 'package:falconmetrics_flutter/src/model/user_data.dart';
 import 'package:falconmetrics_flutter/src/platform/falconmetrics_flutter_method_channel.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
@@ -30,7 +32,12 @@ abstract class FalconmetricsFlutterPlatform extends PlatformInterface {
   ///
   /// Supply your unique [apiKey] to initialise the plugin for your app.
   /// Optionally supply your [fbAppId] to enable meta referrer support.
-  Future<void> init({required String apiKey, String? fbAppId}) {
+  /// Optionally supply your [trackingOptions] to configure tracking options.
+  Future<void> init({
+    required String apiKey,
+    TrackingOptions trackingOptions = const TrackingOptions(),
+    String? fbAppId,
+  }) {
     throw UnimplementedError('init() has not been implemented.');
   }
 
@@ -41,8 +48,17 @@ abstract class FalconmetricsFlutterPlatform extends PlatformInterface {
   }
 
   /// Tracks a conversion event
-  Future<void> trackEvent({required TrackingEvent event}) {
+  Future<void> trackEvent({required TrackingEvent event, UserData? userData}) {
     throw UnimplementedError('trackEvent() has not been implemented.');
+  }
+
+  /// Updates the tracking options
+  Future<void> updateTrackingOptions({
+    required TrackingOptions trackingOptions,
+  }) {
+    throw UnimplementedError(
+      'updateTrackingOptions() has not been implemented.',
+    );
   }
 
   /// Enables or disables tracking events

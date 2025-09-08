@@ -1,3 +1,7 @@
+# 1.1.0
+* Added userdata for tracking events
+* Provide more control over ip address tracking
+
 ## 1.0.1
 * Fix issue that make app crash on iOS when NSUserTrackingUsageDescription is not set
 
