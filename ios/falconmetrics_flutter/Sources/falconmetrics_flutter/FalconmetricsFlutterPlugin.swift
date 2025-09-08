@@ -48,26 +48,45 @@ public class FalconmetricsFlutterPlugin: NSObject, FlutterPlugin {
         FalconMetricsSdk.shared.setDebugLogging(enabled: enabled)
         result(nil)
     case "trackEvent":
-        guard let eventData = call.arguments as? FlutterStandardTypedData else {
-                result(FlutterError(code: "INVALID_ARGUMENTS", message: "Expected byte array", details: nil))
-                return
+        // Expecting a map with 'event' and optional 'userData' as protobuf byte arrays
+        guard let args = call.arguments as? [String: Any],
+              let eventBytes = args["event"] as? FlutterStandardTypedData else {
+            result(FlutterError(code: "INVALID_ARGUMENTS", message: "Expected arguments map with 'event' bytes", details: nil))
+            return
+        }
+        do {
+            // Step 1: Deserialize from protobufs
+            let protoEvent = try Pb_TrackingEvent(serializedData: eventBytes.data)
+
+            var _protoUserData: Pb_UserData? = nil
+            if let userDataBytes = args["userData"] as? FlutterStandardTypedData {
+                // userData is optional; parse if provided
+                _protoUserData = try? Pb_UserData(serializedData: userDataBytes.data)
             }
-            do {
-                // Step 1: Deserialize from protobuf
-                let protoEvent = try Pb_TrackingEvent(serializedData: eventData.data)
-                // Step 2: Convert to SDK tracking event
-                let builder = try convertTrackingEvent(event: protoEvent)
-                
-                // Step 3: Start tracking in background
-                Task.detached {
+            
+            // Step 2: Convert user data if provided
+            var userData: UserData? = nil
+            if let protoUserData = _protoUserData {
+                userData = convertUserData(protoUserData)
+            }
+
+            // Step 3: Convert to SDK tracking event builder
+            let builder = try convertTrackingEvent(event: protoEvent)
+       
+            // Step 4: Start tracking in background
+            Task.detached {
+                if let userData = userData {
+                    await builder.track(userData: userData)
+                } else {
                     await builder.track()
                 }
-                
-                // Return immediately without waiting for tracking to complete
-                result(nil)
-            } catch {
-                result(FlutterError(code: "PARSE_ERROR", message: "Failed to parse TrackingEvent", details: error.localizedDescription))
             }
+
+            // Return immediately without waiting for tracking to complete
+            result(nil)
+        } catch {
+            result(FlutterError(code: "PARSE_ERROR", message: "Failed to parse TrackingEvent", details: error.localizedDescription))
+        }
     case "setTrackingEnabled":
         guard let args = call.arguments as? [String: Any],
               let enabled = args["trackingEnabled"] as? Bool else {

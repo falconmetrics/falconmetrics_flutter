@@ -21,7 +21,6 @@ func convertTrackingEvent(event: Pb_TrackingEvent) throws -> FalconMetrics.BaseE
             .withCurrency(event.addedToCart.currency)
             .withProductCategory( event.addedToCart.productCategory)
             .withCartId( event.addedToCart.cartID)
-        
 
     case .subscribe:
         return FalconMetricsSdk.shared.createSubscriptionBuilder()
@@ -53,4 +52,39 @@ func convertTrackingEvent(event: Pb_TrackingEvent) throws -> FalconMetrics.BaseE
     @unknown default:
         throw NSError(domain: "TrackingError", code: 2, userInfo: [NSLocalizedDescriptionKey: "Unknown event case"])
     }
+
+
+func convertUserData(_ userData: Pb_UserData) -> UserData {
+    var builder = FalconMetricsSdk.shared.createUserDataBuilder()
+    
+    if userData.hasEmail && !userData.email.isEmpty {
+        builder = builder.withEmail(userData.email)
+    }
+    if userData.hasPhoneNumber && !userData.phoneNumber.isEmpty {
+        builder = builder.withPhoneNumber(userData.phoneNumber)
+    }
+    if userData.hasFirstName && !userData.firstName.isEmpty {
+        builder = builder.withFirstName(userData.firstName)
+    }
+    if userData.hasLastName && !userData.lastName.isEmpty {
+        builder = builder.withLastName(userData.lastName)
+    }
+    if userData.hasDateOfBirth && !userData.dateOfBirth.isEmpty {
+        builder = builder.withDateOfBirth(userData.dateOfBirth)
+    }
+    if userData.hasCity && !userData.city.isEmpty {
+        builder = builder.withCity(userData.city)
+    }
+    if userData.hasState && !userData.state.isEmpty {
+        builder = builder.withState(userData.state)
+    }
+    if userData.hasPostalCode && !userData.postalCode.isEmpty {
+        builder = builder.withPostalCode(userData.postalCode)
+    }
+    if userData.hasCountry && !userData.country.isEmpty {
+        builder = builder.withCountry(userData.country)
+    }
+    
+    return builder.build()
+}
 }
