@@ -29,7 +29,7 @@ public class FalconmetricsFlutterPlugin: NSObject, FlutterPlugin {
                     ))
                     return
                 }
-                let ipTracking = args["ipAddressTracking"] as? String? ?? "full"
+                let ipTracking = (args["ipAddressTracking"] as? String) ?? "full"
                 Task {
                     await FalconMetricsSdk.shared.initialize(apiKey: apiKey, trackingOptions: TrackingOptions(ipAddressCollection: convertIpTracking(ipTracking: ipTracking)) )
                 }
@@ -116,20 +116,23 @@ public class FalconmetricsFlutterPlugin: NSObject, FlutterPlugin {
             result(FlutterError(code: "INVALID_VERSION", message: "This method is only available on iOS 14.0 and above", details: nil))
         }
     case "updateTrackingOptions":
-        guard let args = call.arguments as? [String: Any] else {
-                    result(FlutterError(
-                        code: "INVALID_ARGUMENTS",
-                        message: "Arguments is required",
-                        details: nil
-                    ))
-                    return
-                }
-                let ipTracking = args["ipAddressTracking"] as? String? ?? "full"
-                Task {
-                    await FalconMetricsSdk.shared.updateTrackingOptions(trackinOptions: TrackingOptions(ipAddressCollection: convertIpTracking(ipTracking: ipTracking)) )
-                }
-
-        result(nil)
+            guard let args = call.arguments as? [String: Any] else {
+                result(FlutterError(
+                    code: "INVALID_ARGUMENTS",
+                    message: "Arguments map is required",
+                    details: nil
+                ))
+                return
+            }
+            let ipTracking = (args["ipAddressTracking"] as? String) ?? "full"
+            Task {
+                await FalconMetricsSdk.shared.updateTrackingOptions(
+                    trackingOptions: TrackingOptions(
+                        ipAddressCollection: convertIpTracking(ipTracking: ipTracking)
+                    )
+                )
+            }
+            result(nil)
     case "getTrackingAuthorizationStatus":
         if #available(iOS 14.0, *){
             let status =  FalconMetricsSdk.shared.getTrackingAuthorizationStatus()

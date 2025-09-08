@@ -35,7 +35,7 @@ abstract class FalconmetricsFlutterPlatform extends PlatformInterface {
   /// Optionally supply your [trackingOptions] to configure tracking options.
   Future<void> init({
     required String apiKey,
-    required TrackingOptions trackingOptions,
+    TrackingOptions trackingOptions = const TrackingOptions(),
     String? fbAppId,
   }) {
     throw UnimplementedError('init() has not been implemented.');

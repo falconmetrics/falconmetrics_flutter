@@ -20,7 +20,7 @@ class MethodChannelFalconmetricsFlutter extends FalconmetricsFlutterPlatform {
   @override
   Future<void> init({
     required String apiKey,
-    required TrackingOptions trackingOptions,
+    TrackingOptions trackingOptions = const TrackingOptions(),
     String? fbAppId,
   }) async {
     await methodChannel.invokeMethod<void>('init', {

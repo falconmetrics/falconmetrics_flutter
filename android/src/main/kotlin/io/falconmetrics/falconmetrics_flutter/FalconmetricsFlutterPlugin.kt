@@ -10,6 +10,7 @@ import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
+import com.google.protobuf.InvalidProtocolBufferException
 import pb.Event
 import pb.Userdata
 
@@ -55,15 +56,29 @@ class FalconmetricsFlutterPlugin : FlutterPlugin, MethodCallHandler {
             falconMetrics.setDebugLogging(enabled)
             result.success(null)
         } else if (call.method == "trackEvent") {
-            val event = call.argument<ByteArray>("event")
-            val userData = call.argument<ByteArray>("userData")
-            val tmp = convertTrackingEvent(Event.TrackingEvent.parseFrom(event))
-            falconMetrics.trackEvent(
-                tmp, convertUserData(
-                    Userdata.UserData.parseFrom(userData)
-                )
-            )
-            result.success(null)
+            val eventBytes = call.argument<ByteArray>("event")
+            val userDataBytes = call.argument<ByteArray>("userData")
+            
+            if (eventBytes == null) {
+                result.error("INVALID_ARGUMENTS", "Missing required 'event' bytes", null)
+                return
+            }
+            
+            try {
+                val trackingEvent = convertTrackingEvent(Event.TrackingEvent.parseFrom(eventBytes))
+                val userData = if (userDataBytes != null) {
+                    convertUserData(Userdata.UserData.parseFrom(userDataBytes))
+                } else {
+                    convertUserData(null)
+                }
+                
+                falconMetrics.trackEvent(trackingEvent, userData)
+                result.success(null)
+            } catch (e: InvalidProtocolBufferException) {
+                result.error("INVALID_PROTOBUF", "Failed to parse protobuf: ${e.message}", null)
+            } catch (e: Exception) {
+                result.error("TRACK_EVENT_ERROR", "Failed to track event: ${e.message}", null)
+            }
         } else if (call.method == "setTrackingEnabled") {
             val enabled = call.argument<Boolean>("trackingEnabled")
             if (enabled == null) {
@@ -77,6 +92,7 @@ class FalconmetricsFlutterPlugin : FlutterPlugin, MethodCallHandler {
         } else if (call.method == "updateTrackingOptions") {
             val ipAddressTracking = call.argument<String>("ipAddressTracking")
             falconMetrics.updateTrackingOptions(FalconMetricsConfig(ipAddressTracking.toIpAddressTracking()))
+            result.success(null)
         } else {
             result.notImplemented()
         }

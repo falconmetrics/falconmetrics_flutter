@@ -41,6 +41,12 @@ void main() {
     ).thenAnswer((_) => Future.value());
 
     when(
+      () => FalconmetricsFlutterPlatform.instance.updateTrackingOptions(
+        trackingOptions: any(named: 'trackingOptions'),
+      ),
+    ).thenAnswer((_) => Future.value());
+
+    when(
       () => FalconmetricsFlutterPlatform.instance.trackEvent(
         event: any(named: 'event'),
       ),
@@ -73,7 +79,7 @@ void main() {
     );
 
     verify(
-      () => sut.init(
+      () => FalconmetricsFlutterPlatform.instance.init(
         apiKey: '123',
         fbAppId: '456',
         trackingOptions: TrackingOptions(
@@ -94,10 +100,30 @@ void main() {
     expect(result, false);
   });
 
+  test('updateTrackingOptions', () async {
+    await sut.updateTrackingOptions(
+      trackingOptions: TrackingOptions(
+        ipAddressTracking: IpAddressTracking.full,
+      ),
+    );
+
+    verify(
+      () => FalconmetricsFlutterPlatform.instance.updateTrackingOptions(
+        trackingOptions: TrackingOptions(
+          ipAddressTracking: IpAddressTracking.full,
+        ),
+      ),
+    ).called(1);
+  });
+
   test('setDebugLoggingEnabled', () async {
     await sut.setDebugLoggingEnabled(enabled: true);
 
-    verify(() => sut.setDebugLoggingEnabled(enabled: true)).called(1);
+    verify(
+      () => FalconmetricsFlutterPlatform.instance.setDebugLoggingEnabled(
+        enabled: true,
+      ),
+    ).called(1);
   });
 
   test('Track event', () async {
@@ -111,7 +137,7 @@ void main() {
     );
 
     verify(
-      () => sut.trackEvent(
+      () => FalconmetricsFlutterPlatform.instance.trackEvent(
         event: AddedToCartEvent(
           itemId: '123',
           quantity: 1,
