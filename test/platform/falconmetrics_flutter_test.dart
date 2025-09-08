@@ -1,5 +1,6 @@
 import 'package:falconmetrics_flutter/src/events.dart';
 import 'package:falconmetrics_flutter/src/falconmetrics_flutter.dart';
+import 'package:falconmetrics_flutter/src/model/tracking_options.dart';
 import 'package:falconmetrics_flutter/src/platform/falconmetrics_flutter_platform_interface.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -19,6 +20,7 @@ void main() {
 
   setUpAll(() {
     registerFallbackValue(CompleteRegistrationEvent());
+    registerFallbackValue(TrackingOptions());
   });
 
   setUp(() {
@@ -28,6 +30,7 @@ void main() {
       () => FalconmetricsFlutterPlatform.instance.init(
         apiKey: any(named: 'apiKey'),
         fbAppId: any(named: 'fbAppId'),
+        trackingOptions: any(named: 'trackingOptions'),
       ),
     ).thenAnswer((_) => Future.value());
 
@@ -60,10 +63,24 @@ void main() {
     FalconmetricsFlutterPlatform.instance = initialPlatform;
   });
 
-  test('getPlatformVersion', () async {
-    await sut.init(apiKey: '123', fbAppId: '456');
+  test('initialise', () async {
+    await sut.init(
+      apiKey: '123',
+      fbAppId: '456',
+      trackingOptions: TrackingOptions(
+        ipAddressTracking: IpAddressTracking.full,
+      ),
+    );
 
-    verify(() => sut.init(apiKey: '123', fbAppId: '456')).called(1);
+    verify(
+      () => sut.init(
+        apiKey: '123',
+        fbAppId: '456',
+        trackingOptions: TrackingOptions(
+          ipAddressTracking: IpAddressTracking.full,
+        ),
+      ),
+    ).called(1);
   });
 
   test('setTrackingEnabled', () async {

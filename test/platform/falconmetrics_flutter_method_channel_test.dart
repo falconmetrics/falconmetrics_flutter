@@ -1,6 +1,7 @@
 import 'package:falconmetrics_flutter/src/events.dart';
 import 'package:falconmetrics_flutter/src/generated/userdata.pb.dart'
     as pb_userdata;
+import 'package:falconmetrics_flutter/src/model/tracking_options.dart';
 import 'package:falconmetrics_flutter/src/platform/event_proto_converter.dart';
 import 'package:falconmetrics_flutter/src/platform/falconmetrics_flutter_method_channel.dart';
 import 'package:falconmetrics_flutter/src/user_data.dart';
@@ -34,11 +35,21 @@ void main() {
 
   test('It calls init with the correct arguments', () async {
     const String testApiKey = 'test_api_key_123';
-    await platform.init(apiKey: testApiKey, fbAppId: '456');
+    await platform.init(
+      apiKey: testApiKey,
+      fbAppId: '456',
+      trackingOptions: TrackingOptions(
+        ipAddressTracking: IpAddressTracking.anonymised,
+      ),
+    );
 
     expect(log, hasLength(1));
     expect(log.first.method, 'init');
-    expect(log.first.arguments, {'apiKey': testApiKey, 'fbAppId': '456'});
+    expect(log.first.arguments, {
+      'apiKey': testApiKey,
+      'fbAppId': '456',
+      'ipAddressTracking': 'anonymised',
+    });
   });
 
   test('It calls setDebugLoggingEnabled with the correct arguments', () async {

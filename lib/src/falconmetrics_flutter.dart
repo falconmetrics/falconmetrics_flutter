@@ -1,5 +1,6 @@
 import 'package:falconmetrics_flutter/src/events.dart';
 import 'package:falconmetrics_flutter/src/model/tracking_authorization_status.dart';
+import 'package:falconmetrics_flutter/src/model/tracking_options.dart';
 import 'package:falconmetrics_flutter/src/user_data.dart';
 
 import 'platform/falconmetrics_flutter_platform_interface.dart';
@@ -14,10 +15,15 @@ class FalconmetricsFlutter {
   ///
   /// Supply your unique [apiKey] to initialise the plugin for your app.
   /// Optionally supply your [fbAppId] to enable meta referrer support.
-  Future<void> init({required String apiKey, String? fbAppId}) {
+  Future<void> init({
+    required String apiKey,
+    String? fbAppId,
+    TrackingOptions trackingOptions = const TrackingOptions(),
+  }) {
     return FalconmetricsFlutterPlatform.instance.init(
       apiKey: apiKey,
       fbAppId: fbAppId,
+      trackingOptions: trackingOptions,
     );
   }
 
@@ -34,7 +40,10 @@ class FalconmetricsFlutter {
   ///
   /// Use [event] to track a conversion event.
   Future<void> trackEvent({required TrackingEvent event, UserData? userData}) {
-    return FalconmetricsFlutterPlatform.instance.trackEvent(event: event, userData: userData);
+    return FalconmetricsFlutterPlatform.instance.trackEvent(
+      event: event,
+      userData: userData,
+    );
   }
 
   /// Enables or disables tracking functionality.

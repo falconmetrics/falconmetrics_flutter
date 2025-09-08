@@ -2,6 +2,7 @@ import 'package:falconmetrics_flutter/src/events.dart';
 import 'package:falconmetrics_flutter/src/generated/userdata.pb.dart'
     as pb_userdata;
 import 'package:falconmetrics_flutter/src/model/tracking_authorization_status.dart';
+import 'package:falconmetrics_flutter/src/model/tracking_options.dart';
 import 'package:falconmetrics_flutter/src/platform/event_proto_converter.dart';
 import 'package:falconmetrics_flutter/src/platform/falconmetrics_flutter_platform_interface.dart';
 import 'package:falconmetrics_flutter/src/user_data.dart';
@@ -17,10 +18,15 @@ class MethodChannelFalconmetricsFlutter extends FalconmetricsFlutterPlatform {
   );
 
   @override
-  Future<void> init({required String apiKey, String? fbAppId}) async {
+  Future<void> init({
+    required String apiKey,
+    required TrackingOptions trackingOptions,
+    String? fbAppId,
+  }) async {
     await methodChannel.invokeMethod<void>('init', {
       'apiKey': apiKey,
       'fbAppId': fbAppId,
+      'ipAddressTracking': trackingOptions.ipAddressTracking?.name,
     });
   }
 

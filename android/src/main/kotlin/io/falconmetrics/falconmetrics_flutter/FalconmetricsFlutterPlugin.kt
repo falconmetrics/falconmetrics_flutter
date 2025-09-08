@@ -35,11 +35,16 @@ class FalconmetricsFlutterPlugin : FlutterPlugin, MethodCallHandler {
         if (call.method == "init") {
             val apiKey = call.argument<String>("apiKey")
             val fbAppId = call.argument<String>("fbAppId")
+            val ipAddressTracking = call.argument<String>("ipAddressTracking")
             if (apiKey == null) {
                 result.error("INVALID_ARGUMENTS", "ApiKey argument is required", null)
                 return
             }
-            falconMetrics.init(apiKey, fbAppId, FalconMetricsConfig(IpAddressTracking.full))
+            falconMetrics.init(
+                apiKey,
+                fbAppId,
+                FalconMetricsConfig(ipAddressTracking = ipAddressTracking.toIpAddressTracking())
+            )
             result.success(null)
         } else if (call.method == "setDebugLoggingEnabled") {
             val enabled = call.argument<Boolean>("enabled")
@@ -76,5 +81,14 @@ class FalconmetricsFlutterPlugin : FlutterPlugin, MethodCallHandler {
 
     override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) {
         channel.setMethodCallHandler(null)
+    }
+}
+
+private fun String?.toIpAddressTracking(): IpAddressTracking {
+    return when (this?.lowercase()) {
+        "disabled" -> IpAddressTracking.disabled
+        "anonymised" -> IpAddressTracking.anonymised
+        "full" -> IpAddressTracking.full
+        else -> IpAddressTracking.full
     }
 }

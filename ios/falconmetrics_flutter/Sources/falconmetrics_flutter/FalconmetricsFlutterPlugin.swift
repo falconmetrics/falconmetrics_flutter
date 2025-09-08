@@ -29,8 +29,9 @@ public class FalconmetricsFlutterPlugin: NSObject, FlutterPlugin {
                     ))
                     return
                 }
+                let ipTracking = args["ipAddressTracking"] as? String? ?? "full"
                 Task {
-                    await FalconMetricsSdk.shared.initialize(apiKey: apiKey)
+                    await FalconMetricsSdk.shared.initialize(apiKey: apiKey, ipAddressCollection: convertIpTracking(ipTracking: ipTracking))
                 }
 
         result(nil)
@@ -135,4 +136,17 @@ public class FalconmetricsFlutterPlugin: NSObject, FlutterPlugin {
         result(nil)
     }
   }
+}
+
+private func convertIpTracking(ipTracking: String?) -> IpAddressCollection {
+    switch ipTracking?.lowercased() ?? "full" {
+        case "full":
+            return .full
+        case "anonymised":
+            return .anonymized
+        case "disabled":
+            return .disabled
+        default:
+            return .full
+    }
 }
