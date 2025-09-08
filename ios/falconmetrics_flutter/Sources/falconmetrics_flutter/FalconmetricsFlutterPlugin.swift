@@ -127,7 +127,7 @@ public class FalconmetricsFlutterPlugin: NSObject, FlutterPlugin {
             let ipTracking = (args["ipAddressTracking"] as? String) ?? "full"
             Task {
                 await FalconMetricsSdk.shared.updateTrackingOptions(
-                    trackingOptions: TrackingOptions(
+                    trackinOptions: TrackingOptions(
                         ipAddressCollection: convertIpTracking(ipTracking: ipTracking)
                     )
                 )
