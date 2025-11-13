@@ -1,3 +1,7 @@
+# 1.2.0
+* Update to latest protobuf
+* Small fixes
+
 # 1.1.0
 * Added userdata for tracking events
 * Provide more control over ip address tracking
