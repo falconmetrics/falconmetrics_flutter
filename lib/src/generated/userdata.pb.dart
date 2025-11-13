@@ -66,7 +66,7 @@ class UserData extends $pb.GeneratedMessage {
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  UserData clone() => UserData()..mergeFromMessage(this);
+  UserData clone() => deepCopy();
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
   UserData copyWith(void Function(UserData) updates) =>
       super.copyWith((message) => updates(message as UserData)) as UserData;
@@ -78,7 +78,6 @@ class UserData extends $pb.GeneratedMessage {
   static UserData create() => UserData._();
   @$core.override
   UserData createEmptyInstance() => create();
-  static $pb.PbList<UserData> createRepeated() => $pb.PbList<UserData>();
   @$core.pragma('dart2js:noInline')
   static UserData getDefault() =>
       _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<UserData>(create);
