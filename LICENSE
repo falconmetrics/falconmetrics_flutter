@@ -15,26 +15,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
-
--------------------------------------------------------------------------------
-
-NOTICE: BUNDLED NATIVE SDK COMPONENTS
-
-This Flutter SDK package includes precompiled binary SDKs for Android and iOS,
-which are **not** licensed under the MIT License.
-
-The native SDK components (i.e., AAR for Android and XCFramework for iOS)
-are proprietary software provided by FalconMetrics LLC and are subject to the
-FalconMetrics End User License Agreement (EULA).
-
-By using this SDK, you agree to the terms and conditions of the FalconMetrics EULA.
-
-For more details, refer to:
-
-- https://www.falconmetrics.io/terms
-
-You **may not** decompile, reverse engineer, or redistribute the native components
-outside the usage allowed in the EULA.
-
--------------------------------------------------------------------------------
-

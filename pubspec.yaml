@@ -1,6 +1,6 @@
 name: falconmetrics_flutter
 description: "Flutter plugin for FalconMetrics, a comprehensive mobile app attribution solution."
-version: 1.1.0
+version: 1.2.0
 homepage: https://falconmetrics.io
 
 environment:
@@ -12,7 +12,7 @@ dependencies:
   flutter:
     sdk: flutter
   plugin_platform_interface: ^2.0.2
-  protobuf: ^4.1.0
+  protobuf: ^5.1.0
 
 dev_dependencies:
   flutter_test:
